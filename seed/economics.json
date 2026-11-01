@@ -1,0 +1,704 @@
+{
+  "generatedBy": "stand-in",
+  "folder": {
+    "id": "seed-economics",
+    "name": "Economics",
+    "createdAt": 0
+  },
+  "pages": [
+    {
+      "id": "seed-micro",
+      "folderId": "seed-economics",
+      "title": "Microeconomics",
+      "editorState": "{\"root\":{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"root\",\"children\":[{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"heading\",\"tag\":\"h2\",\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"Consumer choice\",\"type\":\"text\",\"version\":1}]},{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"paragraph\",\"textFormat\":0,\"textStyle\":\"\",\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"Households choose bundles of goods that maximise utility subject to a budget constraint. Marginal utility falls as consumption rises, which is why demand curves slope down.\",\"type\":\"text\",\"version\":1}]},{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"heading\",\"tag\":\"h2\",\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"Firms and market structure\",\"type\":\"text\",\"version\":1}]},{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"paragraph\",\"textFormat\":0,\"textStyle\":\"\",\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"Under perfect competition firms are price takers. A monopoly restricts output and raises price above marginal cost, which creates a deadweight loss. Oligopoly sits in between and depends on strategic interaction.\",\"type\":\"text\",\"version\":1}]}]}}",
+      "plainText": "Consumer choice\n\nHouseholds choose bundles of goods that maximise utility subject to a budget constraint. Marginal utility falls as consumption rises, which is why demand curves slope down.\n\nFirms and market structure\n\nUnder perfect competition firms are price takers. A monopoly restricts output and raises price above marginal cost, which creates a deadweight loss. Oligopoly sits in between and depends on strategic interaction.",
+      "createdAt": 0,
+      "updatedAt": 0,
+      "analysedText": "Microeconomics\nConsumer choice\n\nHouseholds choose bundles of goods that maximise utility subject to a budget constraint. Marginal utility falls as consumption rises, which is why demand curves slope down.\n\nFirms and market structure\n\nUnder perfect competition firms are price takers. A monopoly restricts output and raises price above marginal cost, which creates a deadweight loss. Oligopoly sits in between and depends on strategic interaction."
+    },
+    {
+      "id": "seed-macro",
+      "folderId": "seed-economics",
+      "title": "Macroeconomics",
+      "editorState": "{\"root\":{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"root\",\"children\":[{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"heading\",\"tag\":\"h2\",\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"Output and inflation\",\"type\":\"text\",\"version\":1}]},{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"paragraph\",\"textFormat\":0,\"textStyle\":\"\",\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"Gross domestic product measures total output. Aggregate demand and aggregate supply explain short-run swings in output and the price level. The Phillips curve links unemployment and inflation.\",\"type\":\"text\",\"version\":1}]},{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"heading\",\"tag\":\"h2\",\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"Policy\",\"type\":\"text\",\"version\":1}]},{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"paragraph\",\"textFormat\":0,\"textStyle\":\"\",\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"Central banks use interest rates to manage inflation. Fiscal policy changes government spending and taxation, and the multiplier measures how much output responds.\",\"type\":\"text\",\"version\":1}]}]}}",
+      "plainText": "Output and inflation\n\nGross domestic product measures total output. Aggregate demand and aggregate supply explain short-run swings in output and the price level. The Phillips curve links unemployment and inflation.\n\nPolicy\n\nCentral banks use interest rates to manage inflation. Fiscal policy changes government spending and taxation, and the multiplier measures how much output responds.",
+      "createdAt": 1,
+      "updatedAt": 0,
+      "analysedText": "Macroeconomics\nOutput and inflation\n\nGross domestic product measures total output. Aggregate demand and aggregate supply explain short-run swings in output and the price level. The Phillips curve links unemployment and inflation.\n\nPolicy\n\nCentral banks use interest rates to manage inflation. Fiscal policy changes government spending and taxation, and the multiplier measures how much output responds."
+    },
+    {
+      "id": "seed-supply",
+      "folderId": "seed-economics",
+      "title": "Supply and demand",
+      "editorState": "{\"root\":{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"root\",\"children\":[{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"heading\",\"tag\":\"h2\",\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"Equilibrium\",\"type\":\"text\",\"version\":1}]},{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"paragraph\",\"textFormat\":0,\"textStyle\":\"\",\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"A market clears where quantity supplied equals quantity demanded. A price ceiling below equilibrium causes a shortage; a price floor above it causes a surplus.\",\"type\":\"text\",\"version\":1}]},{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"heading\",\"tag\":\"h2\",\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"Elasticity\",\"type\":\"text\",\"version\":1}]},{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"paragraph\",\"textFormat\":0,\"textStyle\":\"\",\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"Price elasticity of demand measures how strongly buyers respond to a price change. Necessities tend to be inelastic. Disruptions in supply chains shift the supply curve left and raise prices.\",\"type\":\"text\",\"version\":1}]}]}}",
+      "plainText": "Equilibrium\n\nA market clears where quantity supplied equals quantity demanded. A price ceiling below equilibrium causes a shortage; a price floor above it causes a surplus.\n\nElasticity\n\nPrice elasticity of demand measures how strongly buyers respond to a price change. Necessities tend to be inelastic. Disruptions in supply chains shift the supply curve left and raise prices.",
+      "createdAt": 2,
+      "updatedAt": 0,
+      "analysedText": "Supply and demand\nEquilibrium\n\nA market clears where quantity supplied equals quantity demanded. A price ceiling below equilibrium causes a shortage; a price floor above it causes a surplus.\n\nElasticity\n\nPrice elasticity of demand measures how strongly buyers respond to a price change. Necessities tend to be inelastic. Disruptions in supply chains shift the supply curve left and raise prices."
+    },
+    {
+      "id": "seed-pestel",
+      "folderId": "seed-economics",
+      "title": "PESTEL",
+      "editorState": "{\"root\":{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"root\",\"children\":[{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"heading\",\"tag\":\"h2\",\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"The framework\",\"type\":\"text\",\"version\":1}]},{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"paragraph\",\"textFormat\":0,\"textStyle\":\"\",\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"PESTEL analysis scans the external business environment across political, economic, social, technological, environmental and legal factors. Firms use it in strategic planning before entering a market.\",\"type\":\"text\",\"version\":1}]},{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"heading\",\"tag\":\"h2\",\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"Using it well\",\"type\":\"text\",\"version\":1}]},{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"paragraph\",\"textFormat\":0,\"textStyle\":\"\",\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"A useful analysis ranks factors by impact and likelihood instead of listing them. It pairs well with SWOT analysis, which adds internal strengths and weaknesses.\",\"type\":\"text\",\"version\":1}]}]}}",
+      "plainText": "The framework\n\nPESTEL analysis scans the external business environment across political, economic, social, technological, environmental and legal factors. Firms use it in strategic planning before entering a market.\n\nUsing it well\n\nA useful analysis ranks factors by impact and likelihood instead of listing them. It pairs well with SWOT analysis, which adds internal strengths and weaknesses.",
+      "createdAt": 3,
+      "updatedAt": 0,
+      "analysedText": "PESTEL\nThe framework\n\nPESTEL analysis scans the external business environment across political, economic, social, technological, environmental and legal factors. Firms use it in strategic planning before entering a market.\n\nUsing it well\n\nA useful analysis ranks factors by impact and likelihood instead of listing them. It pairs well with SWOT analysis, which adds internal strengths and weaknesses."
+    }
+  ],
+  "sources": [
+    {
+      "id": "2e878e5126ec9545",
+      "title": "Statistical Microeconomics",
+      "authors": [
+        "Belal E. Baaquie"
+      ],
+      "year": 2012,
+      "abstract": "A statistical generalization is made of microeconomics in the spirit of going from classical to statistical mechanics. The price and quantity of every commodity1 traded in the market, at each instant of time, is considered to be an independent random variable: all prices and quantities are considered to be stochastic processes, with the observed market prices being a random sample of the stochastic prices. The dynamics of market prices is determined by an action functional and, for concreteness, a specific model is proposed. The model can be calibrated from the unequal time correlation of the market commodity prices. A perturbation expansion for the correlation functions is defined in powers of the inverse of the total budget of the aggregate consumer and the propagator for the market prices is evaluated.",
+      "url": "https://arxiv.org/abs/1211.7172v1",
+      "origin": "arxiv"
+    },
+    {
+      "id": "b682a9a1c3cefd44",
+      "title": "Elementary Microeconomics of the Talmudic Rule",
+      "authors": [
+        "Anton Salikhmetov"
+      ],
+      "year": 2018,
+      "abstract": "This paper takes a look at the Talmudic rule aka the 1/N rule aka the uniform investment strategy from the viewpoint of elementary microeconomics. Specifically, we derive the cardinal utility function for a Talmud-obeying agent which happens to have the Cobb-Douglas form. Further, we investigate individual supply and demand due to rebalancing and compare them to market depth of an exchange. Finally, we discuss how operating as a liquidity provider can benefit the Talmud-obeying agent with every exchange transaction in terms of the identified utility function.",
+      "url": "https://arxiv.org/abs/1901.00814v1",
+      "origin": "arxiv"
+    },
+    {
+      "id": "878559ccda5b6fe3",
+      "title": "On optimal strategies for utility maximizers in the Arbitrage Pricing Model",
+      "authors": [
+        "Miklos Rasonyi"
+      ],
+      "year": 2016,
+      "abstract": "We consider a popular model of microeconomics with countably many assets: the Arbitrage Pricing Model. We study the problem of optimal investment under an expected utility criterion and look for conditions ensuring the existence of optimal strategies. Previous results required a certain restrictive hypothesis on the tails of asset return distributions. Using a different method, we manage to remove this hypothesis, at the price of stronger assumptions on the moments of asset returns.",
+      "url": "https://arxiv.org/abs/1602.05758v3",
+      "origin": "arxiv"
+    },
+    {
+      "id": "e0c9531aeb0cb77a",
+      "title": "Toward Socialist Economics: A Manifesto",
+      "authors": [
+        "Bay Area Collective of Socialist Economists"
+      ],
+      "year": 1969,
+      "abstract": "While the manifesto should be of interest to all MR readers, non-economists may be troubled by some of the technical terms used. The following explanations are offered in the hope that they will remove possible stumbling blocks. Microeconomics (or micro-theory) deals with the economic behavior of individual firms and households. Macroeconomics (or macro-theory) deals with the behavior of the larger variables: for example, national income, consumption, production, and investment. Marginal analysis is the theoretical apparatus used by bourgeois economics in its effort to explain profits and the prices of commodities, labor, and land. Linear programming is a mathematical method used to calculate the most effective way of combining different variables to achieve a given objective. —The Editors.This article can also be found at the Monthly Review website, where most recent articles are published in full.Click here to purchase a PDF version of this article at the Monthly Review website.",
+      "url": "https://doi.org/10.14452/mr-021-07-1969-11_3",
+      "doi": "10.14452/mr-021-07-1969-11_3",
+      "origin": "openalex"
+    },
+    {
+      "id": "430a25a120218f1a",
+      "title": "Monetary Policy Rules and Macroeconomic Stability: Evidence and Some Theory*",
+      "authors": [
+        "Richard H. Clarida",
+        "Jordi Galí Y",
+        "Mark L. Gertler"
+      ],
+      "year": 2000,
+      "abstract": "We estimate a forward-looking monetary policy reaction function for the postwar United States economy, before and after Volcker's appointment as Fed Chairman in 1979. Our results point to substantial differences in the estimated rule across periods. In particular, interest rate policy in the Volcker-Greenspan period appears to have been much more sensitive to changes in expected inflation than in the pre-Volcker period. We then compare some of the implications of the estimated rules for the equilibrium properties of inflation and output, using a simple macroeconomic model, and show that the Volcker-Greenspan rule is stabilizing.",
+      "url": "https://doi.org/10.1162/003355300554692",
+      "doi": "10.1162/003355300554692",
+      "origin": "openalex"
+    },
+    {
+      "id": "adaebede21b9ec7a",
+      "title": "The Macroeconomic Effects of Tax Changes: Estimates Based on a New Measure of Fiscal Shocks",
+      "authors": [
+        "Christina Romer",
+        "David Romer"
+      ],
+      "year": 2010,
+      "abstract": "This paper investigates the impact of tax changes on economic activity. We use the narrative record, such as presidential speeches and Congressional reports, to identify the size, timing, and principal motivation for all major postwar tax policy actions. This analysis allows us to separate legislated changes into those taken for reasons related to prospective economic conditions and those taken for more exogenous reasons. The behavior of output following these more exogenous changes indicates that tax increases are highly contractionary. The effects are strongly significant, highly robust, and much larger than those obtained using broader measures of tax changes. (JEL E32, E62, H20, N12)",
+      "url": "https://doi.org/10.1257/aer.100.3.763",
+      "doi": "10.1257/aer.100.3.763",
+      "origin": "openalex"
+    },
+    {
+      "id": "bf2a92f0e80eb1b4",
+      "title": "The Macroeconomic Impacts of Entitlements",
+      "authors": [
+        "Ateeb Akhter Shah Syed",
+        "Kaneez Fatima",
+        "Riffat Arshad"
+      ],
+      "year": 2021,
+      "abstract": "The worries expressed by Alan Greenspan that the long run economic growth of the United States will fade away due to increasing burden of entitlements motivated us to empirically investigate the impact of entitlements of key macroeconomic variables. To examine this contemporary issue, we estimate a vector error-correction model is used to analyze the impact of entitlements on the price level, real output, and the long-term interest rate. The results show that a shock to entitlements leads to decrease in output and lends support to the assertion made by Alan Greenspan. Several robustness checks are conducted and the results of the model qualitatively remains unchanged.",
+      "url": "https://arxiv.org/abs/2102.01609v1",
+      "origin": "arxiv"
+    },
+    {
+      "id": "5c16063e6a01b14f",
+      "title": "Tests of thermal macroeconomic theory on simulated micro-economies",
+      "authors": [
+        "Yihang Luo",
+        "R. S. MacKay",
+        "Nick Chater"
+      ],
+      "year": 2024,
+      "abstract": "In this paper, we test predictions of a new theory of macroeconomics, called \"thermal macroeconomics.\" The theory aims to apply the mathematical structure of classical thermodynamics, including analogues of temperature and entropy, to predict aspects of the aggregate behaviour of populations of economic agents without analyzing their detailed interactions. We test the theory by comparing its predictions with the behaviour of a variety of simulated micro-economies in which goods and money can be exchanged between agents, confirming the predictions of the theory. The paper serves also to illustrate and make more tangible the predictions of thermal macroeconomics.",
+      "url": "https://arxiv.org/abs/2410.20497v1",
+      "origin": "arxiv"
+    },
+    {
+      "id": "c2ec3d664d5e69df",
+      "title": "Study On Demand And Supply Of Liquefied Petroleum Gas (Lpg) In Nepal",
+      "authors": [
+        "Devilal Sharma"
+      ],
+      "year": 2016,
+      "abstract": "Supply and demand is perhaps one of the most fundamental concepts of economics and it is the backbone of a market economy. Demand refers to how much (quantity) of a product or service is desired by buyers. The quantity demanded is the amount of a product people are willing to buy at a certain price; the relationship between price and quantity demanded is known as the demand relationship. Supply represents how much the market can offer. The quantity supplied refers to the amount of a certain good producers are willing to supply when receiving a certain price. The correlation between price and how much of a good or service is supplied to the market is known as the supply relationship. Price,therefore, is a reflection of supply and demand(Scheuer, 2010).",
+      "url": "https://doi.org/10.5281/zenodo.45193",
+      "doi": "10.5281/zenodo.45193",
+      "origin": "openalex"
+    },
+    {
+      "id": "09c373ac511e637e",
+      "title": "THEORY OF SUPPLY AND DEMAND",
+      "authors": [
+        "Velieva Susanna",
+        "Kuldoshzoda Basher"
+      ],
+      "year": 2022,
+      "abstract": "This article provides partial information about demand and supply and the relationship between them. In addition, we can learn about the market balance in the article. The article describes the view of supply demand in Uzbekistan and the world.",
+      "url": "https://doi.org/10.5281/zenodo.7464229",
+      "doi": "10.5281/zenodo.7464229",
+      "origin": "openalex"
+    },
+    {
+      "id": "ae431aa5e7643e1f",
+      "title": "Supply and Demand in Microeconomics",
+      "authors": [
+        "Hasni Dyah Kurniawati"
+      ],
+      "year": 2023,
+      "abstract": ": In everyday life, there will be supply and demand in the fulfillment in a human’s needs. The interaction of demand by consumers and supply by producers occurs in a market. In a market, a consumer makes a demand to meet their daily needs. The demand made by consumers is their way to obtain utility where consumers indeed have to spend according to their income. A producer on the other hand will sell their goods and/or services in a certain quantity and price so that the producer will gain a profit that they hope for. Based on the interaction of demand by consumers and supply by producers, a price agreement can finally be determined so that market prices and the number of products traded are formed.",
+      "url": "https://doi.org/10.5281/zenodo.7686977",
+      "doi": "10.5281/zenodo.7686977",
+      "origin": "openalex"
+    },
+    {
+      "id": "1db1d36da53abe8a",
+      "title": "Price equations with symmetric supply/demand; implications for fat tails",
+      "authors": [
+        "Carey Caginalp",
+        "Gunduz Caginalp"
+      ],
+      "year": 2019,
+      "abstract": "Implementing a set of microeconomic criteria, we develop price dynamics equations using a function of demand/supply with key symmetry properties. The function of demand/supply can be linear or nonlinear. The type of function determines the nature of the tail of the distribution based on the randomness in the supply and demand. For example, if supply and demand are normally distributed, and the function is assumed to be linear, then the density of relative price change has behavior $x^{-2}$ for large $x$ (i.e., large deviations). The exponent approaches $-1$ if the function of supply and demand involves a large exponent. The falloff is exponential, i.e., $e^{-x}$, if the function of supply and demand is logarithmic.",
+      "url": "https://arxiv.org/abs/1904.00267v1",
+      "origin": "arxiv"
+    },
+    {
+      "id": "b88560df60f44b53",
+      "title": "EXTERNAL FACTORS INFLUENCE THE ENTREPRENEURSHIP DEVELOPMENT",
+      "authors": [
+        "Петя Николаева Николова"
+      ],
+      "year": 2020,
+      "abstract": "The paper will discuss groups of factors which have impact on the entrepreneurship activities. These groups are: the PESTEL framework and the Human factor. Analyses will be making on the political, technological, environmental, legal and socio-cultural conditions and on the industry’s. The paper will study further the debate on the Human factor and why it is so important for the success of the firms.",
+      "url": "http://research.bfu.bg:4000/handle/123456789/2106",
+      "origin": "openalex"
+    },
+    {
+      "id": "56b265cb755d9a18",
+      "title": "Using PEST analysis to improve business performance",
+      "authors": [
+        "Harvey Carruthers"
+      ],
+      "year": 2009,
+      "abstract": "THE acronym PEST aims to make us look at political, economic, social and technological pressures for change when assessing the business environment. Here, Harvey Carruthers discusses some of the factors that might need to be considered when applying the PEST model to veterinary practice.",
+      "url": "https://doi.org/10.1136/inpract.31.1.37",
+      "doi": "10.1136/inpract.31.1.37",
+      "origin": "openalex"
+    },
+    {
+      "id": "d851a9708814fd67",
+      "title": "The state of agriculture in Bulgaria PESTLE analysis.",
+      "authors": [
+        "Mihaela Mihailova"
+      ],
+      "year": 2020,
+      "abstract": "In this research we are identifying the processes that are key factors for change in the agricultural environment. The PESTLE analysis is used to sort the state of every of the panels and find which one has the most impact. In our case we are identifying macroeconomic factors that have influence on the future development of the sector of agriculture in Bulgaria. In Bulgaria this kind of research has not been done using the PESTLE and will help future researchers to identify strengths and weaknesses in Bulgarian political, economic, sociocultural and technological environments. The legal framework and environmental factors are particularly important for agriculture and have been added in this order because the legal framework carries a higher importance.",
+      "url": "https://agriacad.eu/ojs/index.php/bjas/article/view/2549",
+      "origin": "openalex"
+    },
+    {
+      "id": "5602d6f72a4ddab4",
+      "title": "EXTERNAL FACTORS AND THEIR IMPACT ON ENTERPRISE STRATEGIC MANAGEMENT – A LITERATURE REVIEW",
+      "authors": [
+        "Kosovare Mustafa Sadiku"
+      ],
+      "year": 2022,
+      "abstract": "Businesses can’t control external factors but must respond to them. These political, economic, social, technological, environmental and competitive factors are represented by the acronym PESTEC. This research is based on secondary data following the methodology of literature review for different periods of time to understand which of these 5 factors has the greatest impact on the strategic management of the enterprise. From the data obtained we have concluded that all external factors have a high impact on the strategic management of the enterprise. The management of the enterprise in time should be informed of the expected changes that may come from political, economic, social or cultural factors. All these factors have their importance and impact on the good management of the enterprise and even more so in its strategic aspect. Article visualizations:",
+      "url": "https://doi.org/10.46827/ejhrms.v6i1.1291",
+      "doi": "10.46827/ejhrms.v6i1.1291",
+      "origin": "openalex"
+    }
+  ],
+  "suggestions": [
+    {
+      "pageId": "seed-micro",
+      "sourceId": "2e878e5126ec9545",
+      "folderId": "seed-economics",
+      "fitGap": {
+        "summary": "A statistical generalization is made of microeconomics in the spirit of going from classical to statistical mechanics. The price and quantity of every commodity1 traded in the market, at each instant of time, is considered to be an independent random variable: all prices and quantities are considered to be stochastic processes, with the observed market prices being a random sample of the stochastic prices.",
+        "whyItHelps": [
+          "Mentions microeconomics, price, consumer from your notes."
+        ],
+        "weakPoints": [
+          "Does not mention utility, marginal, firms, choice."
+        ],
+        "keyPoints": [
+          "A statistical generalization is made of microeconomics in the spirit of going from classical to statistical mechanics.",
+          "The price and quantity of every commodity1 traded in the market, at each instant of time, is considered to be an independent random variable: all prices and qua",
+          "The dynamics of market prices is determined by an action functional and, for concreteness, a specific model is proposed."
+        ],
+        "relevance": 25,
+        "basedOn": "abstract"
+      },
+      "status": "new"
+    },
+    {
+      "pageId": "seed-micro",
+      "sourceId": "b682a9a1c3cefd44",
+      "folderId": "seed-economics",
+      "fitGap": {
+        "summary": "This paper takes a look at the Talmudic rule aka the 1/N rule aka the uniform investment strategy from the viewpoint of elementary microeconomics. Specifically, we derive the cardinal utility function for a Talmud-obeying agent which happens to have the Cobb-Douglas form.",
+        "whyItHelps": [
+          "Mentions microeconomics, utility from your notes."
+        ],
+        "weakPoints": [
+          "Does not mention marginal, firms, price, consumer."
+        ],
+        "keyPoints": [
+          "This paper takes a look at the Talmudic rule aka the 1/N rule aka the uniform investment strategy from the viewpoint of elementary microeconomics.",
+          "Specifically, we derive the cardinal utility function for a Talmud-obeying agent which happens to have the Cobb-Douglas form.",
+          "Further, we investigate individual supply and demand due to rebalancing and compare them to market depth of an exchange."
+        ],
+        "relevance": 17,
+        "basedOn": "abstract"
+      },
+      "status": "new"
+    },
+    {
+      "pageId": "seed-micro",
+      "sourceId": "878559ccda5b6fe3",
+      "folderId": "seed-economics",
+      "fitGap": {
+        "summary": "We consider a popular model of microeconomics with countably many assets: the Arbitrage Pricing Model. We study the problem of optimal investment under an expected utility criterion and look for conditions ensuring the existence of optimal strategies.",
+        "whyItHelps": [
+          "Mentions utility, price, microeconomics from your notes."
+        ],
+        "weakPoints": [
+          "Does not mention marginal, firms, consumer, choice."
+        ],
+        "keyPoints": [
+          "We consider a popular model of microeconomics with countably many assets: the Arbitrage Pricing Model.",
+          "We study the problem of optimal investment under an expected utility criterion and look for conditions ensuring the existence of optimal strategies.",
+          "Previous results required a certain restrictive hypothesis on the tails of asset return distributions."
+        ],
+        "relevance": 25,
+        "basedOn": "abstract"
+      },
+      "status": "new"
+    },
+    {
+      "pageId": "seed-micro",
+      "sourceId": "e0c9531aeb0cb77a",
+      "folderId": "seed-economics",
+      "fitGap": {
+        "summary": "While the manifesto should be of interest to all MR readers, non-economists may be troubled by some of the technical terms used. The following explanations are offered in the hope that they will remove possible stumbling blocks.",
+        "whyItHelps": [
+          "Mentions marginal, firms, microeconomics, households from your notes."
+        ],
+        "weakPoints": [
+          "Does not mention utility, price, consumer, choice."
+        ],
+        "keyPoints": [
+          "While the manifesto should be of interest to all MR readers, non-economists may be troubled by some of the technical terms used.",
+          "The following explanations are offered in the hope that they will remove possible stumbling blocks.",
+          "Microeconomics (or micro-theory) deals with the economic behavior of individual firms and households."
+        ],
+        "relevance": 33,
+        "basedOn": "abstract"
+      },
+      "status": "new"
+    },
+    {
+      "pageId": "seed-macro",
+      "sourceId": "430a25a120218f1a",
+      "folderId": "seed-economics",
+      "fitGap": {
+        "summary": "We estimate a forward-looking monetary policy reaction function for the postwar United States economy, before and after Volcker's appointment as Fed Chairman in 1979. Our results point to substantial differences in the estimated rule across periods.",
+        "whyItHelps": [
+          "Mentions output, inflation, policy from your notes."
+        ],
+        "weakPoints": [
+          "Does not mention measures, aggregate, macroeconomics, gross."
+        ],
+        "keyPoints": [
+          "We estimate a forward-looking monetary policy reaction function for the postwar United States economy, before and after Volcker's appointment as Fed Chairman in",
+          "Our results point to substantial differences in the estimated rule across periods.",
+          "In particular, interest rate policy in the Volcker-Greenspan period appears to have been much more sensitive to changes in expected inflation than in the pre-Vo"
+        ],
+        "relevance": 25,
+        "basedOn": "abstract"
+      },
+      "status": "accepted"
+    },
+    {
+      "pageId": "seed-macro",
+      "sourceId": "adaebede21b9ec7a",
+      "folderId": "seed-economics",
+      "fitGap": {
+        "summary": "This paper investigates the impact of tax changes on economic activity. We use the narrative record, such as presidential speeches and Congressional reports, to identify the size, timing, and principal motivation for all major postwar tax policy actions.",
+        "whyItHelps": [
+          "Mentions output, measures, policy, changes from your notes."
+        ],
+        "weakPoints": [
+          "Does not mention inflation, aggregate, fiscal, macroeconomics."
+        ],
+        "keyPoints": [
+          "This paper investigates the impact of tax changes on economic activity.",
+          "We use the narrative record, such as presidential speeches and Congressional reports, to identify the size, timing, and principal motivation for all major postw",
+          "This analysis allows us to separate legislated changes into those taken for reasons related to prospective economic conditions and those taken for more exogenou"
+        ],
+        "relevance": 33,
+        "basedOn": "abstract"
+      },
+      "status": "new"
+    },
+    {
+      "pageId": "seed-macro",
+      "sourceId": "bf2a92f0e80eb1b4",
+      "folderId": "seed-economics",
+      "fitGap": {
+        "summary": "The worries expressed by Alan Greenspan that the long run economic growth of the United States will fade away due to increasing burden of entitlements motivated us to empirically investigate the impact of entitlements of key macroeconomic variables. To examine this contemporary issue, we estimate a vector error-correction model is used to analyze the impact of entitlements on the price level, real output, and the long-term interest rate.",
+        "whyItHelps": [
+          "Mentions output from your notes."
+        ],
+        "weakPoints": [
+          "Does not mention inflation, measures, aggregate, policy."
+        ],
+        "keyPoints": [
+          "The worries expressed by Alan Greenspan that the long run economic growth of the United States will fade away due to increasing burden of entitlements motivated",
+          "To examine this contemporary issue, we estimate a vector error-correction model is used to analyze the impact of entitlements on the price level, real output, a",
+          "The results show that a shock to entitlements leads to decrease in output and lends support to the assertion made by Alan Greenspan."
+        ],
+        "relevance": 8,
+        "basedOn": "abstract"
+      },
+      "status": "new"
+    },
+    {
+      "pageId": "seed-macro",
+      "sourceId": "5c16063e6a01b14f",
+      "folderId": "seed-economics",
+      "fitGap": {
+        "summary": "In this paper, we test predictions of a new theory of macroeconomics, called \"thermal macroeconomics. \" The theory aims to apply the mathematical structure of classical thermodynamics, including analogues of temperature and entropy, to predict aspects of the aggregate behaviour of populations of economic agents without analyzing their detailed interactions.",
+        "whyItHelps": [
+          "Mentions aggregate, macroeconomics from your notes."
+        ],
+        "weakPoints": [
+          "Does not mention output, inflation, measures, policy."
+        ],
+        "keyPoints": [
+          "In this paper, we test predictions of a new theory of macroeconomics, called \"thermal macroeconomics.",
+          "\" The theory aims to apply the mathematical structure of classical thermodynamics, including analogues of temperature and entropy, to predict aspects of the agg",
+          "We test the theory by comparing its predictions with the behaviour of a variety of simulated micro-economies in which goods and money can be exchanged between a"
+        ],
+        "relevance": 17,
+        "basedOn": "abstract"
+      },
+      "status": "new"
+    },
+    {
+      "pageId": "seed-supply",
+      "sourceId": "c2ec3d664d5e69df",
+      "folderId": "seed-economics",
+      "fitGap": {
+        "summary": "Supply and demand is perhaps one of the most fundamental concepts of economics and it is the backbone of a market economy. Demand refers to how much (quantity) of a product or service is desired by buyers.",
+        "whyItHelps": [
+          "Mentions supply, price, demand, quantity from your notes."
+        ],
+        "weakPoints": [
+          "Does not mention equilibrium, causes, elasticity, clears."
+        ],
+        "keyPoints": [
+          "Supply and demand is perhaps one of the most fundamental concepts of economics and it is the backbone of a market economy.",
+          "Demand refers to how much (quantity) of a product or service is desired by buyers.",
+          "The quantity demanded is the amount of a product people are willing to buy at a certain price; the relationship between price and quantity demanded is known as "
+        ],
+        "relevance": 58,
+        "basedOn": "abstract"
+      },
+      "status": "new"
+    },
+    {
+      "pageId": "seed-supply",
+      "sourceId": "09c373ac511e637e",
+      "folderId": "seed-economics",
+      "fitGap": {
+        "summary": "This article provides partial information about demand and supply and the relationship between them. In addition, we can learn about the market balance in the article.",
+        "whyItHelps": [
+          "Mentions supply, demand, market from your notes."
+        ],
+        "weakPoints": [
+          "The abstract is too thin to judge.",
+          "Does not mention price, equilibrium, quantity, causes."
+        ],
+        "keyPoints": [
+          "This article provides partial information about demand and supply and the relationship between them.",
+          "In addition, we can learn about the market balance in the article.",
+          "The article describes the view of supply demand in Uzbekistan and the world."
+        ],
+        "relevance": 25,
+        "basedOn": "abstract"
+      },
+      "status": "new"
+    },
+    {
+      "pageId": "seed-supply",
+      "sourceId": "ae431aa5e7643e1f",
+      "folderId": "seed-economics",
+      "fitGap": {
+        "summary": ": In everyday life, there will be supply and demand in the fulfillment in a human’s needs. The interaction of demand by consumers and supply by producers occurs in a market.",
+        "whyItHelps": [
+          "Mentions supply, price, demand, quantity from your notes."
+        ],
+        "weakPoints": [
+          "Does not mention equilibrium, causes, elasticity, clears."
+        ],
+        "keyPoints": [
+          ": In everyday life, there will be supply and demand in the fulfillment in a human’s needs.",
+          "The interaction of demand by consumers and supply by producers occurs in a market.",
+          "In a market, a consumer makes a demand to meet their daily needs."
+        ],
+        "relevance": 42,
+        "basedOn": "abstract"
+      },
+      "status": "new"
+    },
+    {
+      "pageId": "seed-supply",
+      "sourceId": "1db1d36da53abe8a",
+      "folderId": "seed-economics",
+      "fitGap": {
+        "summary": "Implementing a set of microeconomic criteria, we develop price dynamics equations using a function of demand/supply with key symmetry properties. The function of demand/supply can be linear or nonlinear.",
+        "whyItHelps": [
+          "Mentions price, supply, demand from your notes."
+        ],
+        "weakPoints": [
+          "Does not mention equilibrium, quantity, causes, elasticity."
+        ],
+        "keyPoints": [
+          "Implementing a set of microeconomic criteria, we develop price dynamics equations using a function of demand/supply with key symmetry properties.",
+          "The function of demand/supply can be linear or nonlinear.",
+          "The type of function determines the nature of the tail of the distribution based on the randomness in the supply and demand."
+        ],
+        "relevance": 25,
+        "basedOn": "abstract"
+      },
+      "status": "new"
+    },
+    {
+      "pageId": "seed-pestel",
+      "sourceId": "b88560df60f44b53",
+      "folderId": "seed-economics",
+      "fitGap": {
+        "summary": "The paper will discuss groups of factors which have impact on the entrepreneurship activities. These groups are: the PESTEL framework and the Human factor.",
+        "whyItHelps": [
+          "Mentions factors, pestel, framework, political from your notes."
+        ],
+        "weakPoints": [
+          "Does not mention analysis, external, well, scans."
+        ],
+        "keyPoints": [
+          "The paper will discuss groups of factors which have impact on the entrepreneurship activities.",
+          "These groups are: the PESTEL framework and the Human factor.",
+          "Analyses will be making on the political, technological, environmental, legal and socio-cultural conditions and on the industry’s."
+        ],
+        "relevance": 33,
+        "basedOn": "abstract"
+      },
+      "status": "accepted"
+    },
+    {
+      "pageId": "seed-pestel",
+      "sourceId": "56b265cb755d9a18",
+      "folderId": "seed-economics",
+      "fitGap": {
+        "summary": "THE acronym PEST aims to make us look at political, economic, social and technological pressures for change when assessing the business environment. Here, Harvey Carruthers discusses some of the factors that might need to be considered when applying the PEST model to veterinary practice.",
+        "whyItHelps": [
+          "Mentions business, factors, environment, political from your notes."
+        ],
+        "weakPoints": [
+          "The abstract is too thin to judge.",
+          "Does not mention analysis, pestel, well, framework."
+        ],
+        "keyPoints": [
+          "THE acronym PEST aims to make us look at political, economic, social and technological pressures for change when assessing the business environment.",
+          "Here, Harvey Carruthers discusses some of the factors that might need to be considered when applying the PEST model to veterinary practice."
+        ],
+        "relevance": 42,
+        "basedOn": "abstract"
+      },
+      "status": "new"
+    },
+    {
+      "pageId": "seed-pestel",
+      "sourceId": "d851a9708814fd67",
+      "folderId": "seed-economics",
+      "fitGap": {
+        "summary": "In this research we are identifying the processes that are key factors for change in the agricultural environment. The PESTLE analysis is used to sort the state of every of the panels and find which one has the most impact.",
+        "whyItHelps": [
+          "Mentions analysis, factors, framework, environment from your notes."
+        ],
+        "weakPoints": [
+          "Does not mention pestel, well, scans, external."
+        ],
+        "keyPoints": [
+          "In this research we are identifying the processes that are key factors for change in the agricultural environment.",
+          "The PESTLE analysis is used to sort the state of every of the panels and find which one has the most impact.",
+          "In our case we are identifying macroeconomic factors that have influence on the future development of the sector of agriculture in Bulgaria."
+        ],
+        "relevance": 50,
+        "basedOn": "abstract"
+      },
+      "status": "new"
+    },
+    {
+      "pageId": "seed-pestel",
+      "sourceId": "5602d6f72a4ddab4",
+      "folderId": "seed-economics",
+      "fitGap": {
+        "summary": "Businesses can’t control external factors but must respond to them. These political, economic, social, technological, environmental and competitive factors are represented by the acronym PESTEC.",
+        "whyItHelps": [
+          "Mentions factors, external, strategic, impact from your notes."
+        ],
+        "weakPoints": [
+          "Does not mention analysis, pestel, well, framework."
+        ],
+        "keyPoints": [
+          "Businesses can’t control external factors but must respond to them.",
+          "These political, economic, social, technological, environmental and competitive factors are represented by the acronym PESTEC.",
+          "This research is based on secondary data following the methodology of literature review for different periods of time to understand which of these 5 factors has"
+        ],
+        "relevance": 33,
+        "basedOn": "abstract"
+      },
+      "status": "new"
+    }
+  ],
+  "tree": [
+    {
+      "id": "t0",
+      "label": "Microeconomics",
+      "sourceIds": []
+    },
+    {
+      "id": "t0-0",
+      "label": "utility",
+      "parentId": "t0",
+      "sourceIds": [
+        "878559ccda5b6fe3"
+      ]
+    },
+    {
+      "id": "t0-1",
+      "label": "marginal",
+      "parentId": "t0",
+      "sourceIds": []
+    },
+    {
+      "id": "t0-2",
+      "label": "firms",
+      "parentId": "t0",
+      "sourceIds": []
+    },
+    {
+      "id": "t1",
+      "label": "Macroeconomics",
+      "sourceIds": []
+    },
+    {
+      "id": "t1-0",
+      "label": "output",
+      "parentId": "t1",
+      "sourceIds": []
+    },
+    {
+      "id": "t1-1",
+      "label": "inflation",
+      "parentId": "t1",
+      "sourceIds": []
+    },
+    {
+      "id": "t1-2",
+      "label": "measures",
+      "parentId": "t1",
+      "sourceIds": []
+    },
+    {
+      "id": "t2",
+      "label": "Supply and demand",
+      "sourceIds": []
+    },
+    {
+      "id": "t2-0",
+      "label": "price",
+      "parentId": "t2",
+      "sourceIds": [
+        "1db1d36da53abe8a"
+      ]
+    },
+    {
+      "id": "t2-1",
+      "label": "equilibrium",
+      "parentId": "t2",
+      "sourceIds": []
+    },
+    {
+      "id": "t2-2",
+      "label": "quantity",
+      "parentId": "t2",
+      "sourceIds": []
+    },
+    {
+      "id": "t3",
+      "label": "PESTEL",
+      "sourceIds": []
+    },
+    {
+      "id": "t3-0",
+      "label": "analysis",
+      "parentId": "t3",
+      "sourceIds": [
+        "56b265cb755d9a18",
+        "d851a9708814fd67"
+      ]
+    },
+    {
+      "id": "t3-1",
+      "label": "factors",
+      "parentId": "t3",
+      "sourceIds": [
+        "b88560df60f44b53",
+        "5602d6f72a4ddab4"
+      ]
+    },
+    {
+      "id": "t3-2",
+      "label": "well",
+      "parentId": "t3",
+      "sourceIds": []
+    }
+  ]
+}

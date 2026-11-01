@@ -1,0 +1,24 @@
+# Decisions
+
+- Model: `muse-spark-1.3`, the version Meta's docs recommend for new work. Base URL `https://api.meta.ai/v1`, Bearer auth, Chat Completions format.
+- `chat()` takes a JSON schema instead of `json: true`: Meta documents `response_format: json_schema` but no plain JSON mode. Zod plus one retry still applies.
+- `reasoning_effort: "low"` on every call to control cost; Muse Spark always reasons and rejects `"none"`.
+- `temperature` stays unset by default, as Meta advises for Muse Spark.
+- No API key available during the build, so a labelled keyword stand-in sits behind `model.ts`.
+- Muse Spark Open skipped: it is not on the Model API and needs a separate host and key. Muse Image and Voice also skipped as optional.
+- OpenAlex uses `search.semantic`: keyword search returned biology papers for "supply and demand". Same cost per call.
+- OpenAlex filters to English articles with abstracts, so unreadable or abstract-less results never reach the model.
+- Added `field` to topic output, appended to searches to keep short concepts in the right discipline.
+- Regex parser for arXiv Atom instead of an XML dependency; the format is fixed and it is tested.
+- War and politics terms are filtered from search results, because arXiv surfaced them from plain economics queries.
+- Added `pageId` to `Suggestion` so suggestions shift by page, as the demo requires.
+- Added `createdAt` and `analysedText` to `Page`, for stable ordering and to skip re-analysing unchanged notes.
+- At most 4 new sources analysed per run, and only after 40 characters of change, to protect the credit budget.
+- A decline is a ranking penalty, not a ban on similar papers, so one decline cannot empty the panel.
+- Server-side cache files for demo mode live in `seed/demo-cache.json`; the browser seed is `seed/economics.json`.
+- `/source` lists accepted sources directly in the slash menu instead of opening a separate picker.
+- Folder names use `window.prompt`; no rename or delete for pages and folders, as the brief does not ask for them.
+- Neurolib has a centre folder bubble: without it the top-level topics drift apart in the force layout.
+- Neurolib has a topic list beside the canvas, because a canvas has no keyboard or screen reader path.
+- Rate limits and the arXiv gate are per server instance; good enough for a demo, noted in code.
+- Dark mode follows the system setting; no manual switch.
