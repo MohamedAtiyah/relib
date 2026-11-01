@@ -1,0 +1,213 @@
+@import "tailwindcss";
+
+:root {
+  --paper: #faf5eb;
+  --ink: #14161f;
+  --surface: #ffffff;
+  --sand: #f1e8d6;
+  --hairline: #e4dccb;
+  --muted: #5b5e6b;
+  --spark: #e07a2e;
+  --spark-ink: #a94a14;
+  --spark-wash: #fbe6d2;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #14161f;
+    --ink: #faf5eb;
+    --surface: #1e212c;
+    --sand: #262a38;
+    --hairline: #2e3240;
+    --muted: #a3a6b3;
+    --spark-ink: #f29a5a;
+    --spark-wash: #3a2415;
+    color-scheme: dark;
+  }
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-surface: var(--surface);
+  --color-sand: var(--sand);
+  --color-hairline: var(--hairline);
+  --color-muted: var(--muted);
+  --color-spark: var(--spark);
+  --color-spark-ink: var(--spark-ink);
+  --color-spark-wash: var(--spark-wash);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-fraunces);
+  --radius-card: 12px;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-inter), system-ui, sans-serif;
+}
+
+:focus-visible {
+  outline: 2px solid var(--spark-ink);
+  outline-offset: 1px;
+}
+
+/* Editor blocks */
+.rl-editor {
+  outline: none;
+  min-height: 50vh;
+  line-height: 1.7;
+  font-size: 16px;
+  padding-bottom: 30vh;
+}
+.rl-editor p {
+  margin: 0.35em 0;
+}
+.rl-editor h1,
+.rl-editor h2,
+.rl-editor h3 {
+  font-family: var(--font-fraunces), serif;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+.rl-editor h1 {
+  font-size: 1.9em;
+  margin: 1em 0 0.3em;
+}
+.rl-editor h2 {
+  font-size: 1.45em;
+  margin: 0.9em 0 0.25em;
+}
+.rl-editor h3 {
+  font-size: 1.15em;
+  margin: 0.8em 0 0.2em;
+}
+.rl-editor blockquote {
+  border-left: 2px solid var(--hairline);
+  color: var(--muted);
+  margin: 0.6em 0;
+  padding-left: 14px;
+}
+.rl-editor code,
+.rl-code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.875em;
+}
+.rl-code {
+  display: block;
+  background: var(--sand);
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin: 0.6em 0;
+  white-space: pre-wrap;
+}
+.rl-editor a {
+  color: var(--spark-ink);
+  text-decoration: underline;
+}
+.rl-editor hr {
+  border: 0;
+  border-top: 1px solid var(--hairline);
+  margin: 1.2em 0;
+}
+.rl-editor hr.selected {
+  border-top-color: var(--spark-ink);
+}
+.rl-ul {
+  list-style: disc;
+  padding-left: 22px;
+}
+.rl-ol {
+  list-style: decimal;
+  padding-left: 22px;
+}
+.rl-nested {
+  list-style: none;
+}
+.rl-todo-off,
+.rl-todo-on {
+  position: relative;
+  list-style: none;
+  margin-left: -22px;
+  padding-left: 26px;
+  outline: none;
+}
+.rl-todo-off::before,
+.rl-todo-on::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 0.32em;
+  width: 15px;
+  height: 15px;
+  border: 1px solid var(--muted);
+  border-radius: 4px;
+  cursor: pointer;
+}
+.rl-todo-on {
+  color: var(--muted);
+  text-decoration: line-through;
+}
+.rl-todo-on::before {
+  background: var(--ink);
+  border-color: var(--ink);
+}
+.rl-callout {
+  background: var(--sand);
+  border-radius: 12px;
+  padding: 10px 14px;
+}
+.rl-toggle {
+  position: relative;
+  padding-left: 24px;
+  margin: 0.35em 0;
+}
+.rl-toggle::before {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 0.72em;
+  border-left: 6px solid var(--muted);
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  transform: rotate(90deg);
+  transition: transform 0.12s;
+  cursor: pointer;
+}
+.rl-toggle[data-closed="true"]::before {
+  transform: none;
+}
+.rl-toggle[data-closed="true"] > :not(:first-child) {
+  display: none;
+}
+.rl-table {
+  border-collapse: collapse;
+  margin: 0.8em 0;
+  width: 100%;
+}
+.rl-table th,
+.rl-table td {
+  border: 1px solid var(--hairline);
+  padding: 6px 10px;
+  text-align: left;
+  vertical-align: top;
+  min-width: 80px;
+}
+.rl-table th {
+  background: var(--sand);
+  font-weight: 500;
+}
+.rl-bold {
+  font-weight: 600;
+}
+.rl-italic {
+  font-style: italic;
+}
+.rl-underline {
+  text-decoration: underline;
+}
+.rl-strike {
+  text-decoration: line-through;
+}
