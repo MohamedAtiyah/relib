@@ -14,6 +14,7 @@ import {
 } from "lexical";
 import type { ReactNode } from "react";
 import type { Source } from "@/lib/schemas";
+import { PythonCell } from "./PythonCell";
 
 export class CalloutNode extends ParagraphNode {
   static getType() {
@@ -147,3 +148,51 @@ export class SourceNode extends DecoratorNode<ReactNode> {
 }
 
 export const $createSourceNode = (source: SourceData) => new SourceNode(source);
+
+type SerializedPython = SerializedLexicalNode & { code: string; output: string };
+
+// A Python cell: the code and its last output are saved with the note.
+export class PythonNode extends DecoratorNode<ReactNode> {
+  __code: string;
+  __output: string;
+
+  constructor(code = "", output = "", key?: NodeKey) {
+    super(key);
+    this.__code = code;
+    this.__output = output;
+  }
+  static getType() {
+    return "python";
+  }
+  static clone(node: PythonNode) {
+    return new PythonNode(node.__code, node.__output, node.__key);
+  }
+  static importJSON(json: SerializedPython) {
+    return new PythonNode(json.code, json.output);
+  }
+  exportJSON(): SerializedPython {
+    return { ...super.exportJSON(), code: this.__code, output: this.__output };
+  }
+  createDOM() {
+    return document.createElement("div");
+  }
+  updateDOM() {
+    return false;
+  }
+  isInline() {
+    return false;
+  }
+  getTextContent() {
+    return `${this.__code}\n${this.__output}`;
+  }
+  set(code: string, output: string) {
+    const self = this.getWritable();
+    self.__code = code;
+    self.__output = output;
+  }
+  decorate() {
+    return <PythonCell nodeKey={this.__key} code={this.__code} output={this.__output} />;
+  }
+}
+
+export const $createPythonNode = () => new PythonNode();

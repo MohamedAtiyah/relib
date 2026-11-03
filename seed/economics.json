@@ -1,19 +1,42 @@
 {
-  "generatedBy": "stand-in",
-  "folder": {
-    "id": "seed-economics",
-    "name": "Economics",
-    "createdAt": 0
-  },
+  "generatedBy": "muse-spark",
+  "folders": [
+    {
+      "id": "seed-economics",
+      "name": "Economics",
+      "kind": "study",
+      "agentRole": "Tutor",
+      "createdAt": 1789894800000,
+      "lastOpenedAt": 1792227600000
+    },
+    {
+      "id": "seed-remote",
+      "name": "Remote work study",
+      "kind": "research",
+      "agentRole": "Research assistant",
+      "createdAt": 1789894800001,
+      "lastOpenedAt": 1792227600000
+    }
+  ],
   "pages": [
+    {
+      "id": "seed-supply",
+      "folderId": "seed-economics",
+      "title": "Supply and demand",
+      "editorState": "{\"root\":{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"root\",\"children\":[{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"heading\",\"tag\":\"h2\",\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"Equilibrium\",\"type\":\"text\",\"version\":1}]},{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"paragraph\",\"textFormat\":0,\"textStyle\":\"\",\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"A market clears where quantity supplied equals quantity demanded. A price ceiling below equilibrium causes a shortage; a price floor above it causes a surplus.\",\"type\":\"text\",\"version\":1}]},{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"heading\",\"tag\":\"h2\",\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"Elasticity\",\"type\":\"text\",\"version\":1}]},{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"paragraph\",\"textFormat\":0,\"textStyle\":\"\",\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"Price elasticity of demand measures how strongly buyers respond to a price change. Necessities tend to be inelastic. Disruptions in supply chains shift the supply curve left and raise prices.\",\"type\":\"text\",\"version\":1}]}]}}",
+      "plainText": "Equilibrium\n\nA market clears where quantity supplied equals quantity demanded. A price ceiling below equilibrium causes a shortage; a price floor above it causes a surplus.\n\nElasticity\n\nPrice elasticity of demand measures how strongly buyers respond to a price change. Necessities tend to be inelastic. Disruptions in supply chains shift the supply curve left and raise prices.",
+      "createdAt": 1790758800004,
+      "updatedAt": 1792400400000,
+      "analysedText": "Supply and demand\nEquilibrium\n\nA market clears where quantity supplied equals quantity demanded. A price ceiling below equilibrium causes a shortage; a price floor above it causes a surplus.\n\nElasticity\n\nPrice elasticity of demand measures how strongly buyers respond to a price change. Necessities tend to be inelastic. Disruptions in supply chains shift the supply curve left and raise prices."
+    },
     {
       "id": "seed-micro",
       "folderId": "seed-economics",
       "title": "Microeconomics",
       "editorState": "{\"root\":{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"root\",\"children\":[{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"heading\",\"tag\":\"h2\",\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"Consumer choice\",\"type\":\"text\",\"version\":1}]},{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"paragraph\",\"textFormat\":0,\"textStyle\":\"\",\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"Households choose bundles of goods that maximise utility subject to a budget constraint. Marginal utility falls as consumption rises, which is why demand curves slope down.\",\"type\":\"text\",\"version\":1}]},{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"heading\",\"tag\":\"h2\",\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"Firms and market structure\",\"type\":\"text\",\"version\":1}]},{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"paragraph\",\"textFormat\":0,\"textStyle\":\"\",\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"Under perfect competition firms are price takers. A monopoly restricts output and raises price above marginal cost, which creates a deadweight loss. Oligopoly sits in between and depends on strategic interaction.\",\"type\":\"text\",\"version\":1}]}]}}",
       "plainText": "Consumer choice\n\nHouseholds choose bundles of goods that maximise utility subject to a budget constraint. Marginal utility falls as consumption rises, which is why demand curves slope down.\n\nFirms and market structure\n\nUnder perfect competition firms are price takers. A monopoly restricts output and raises price above marginal cost, which creates a deadweight loss. Oligopoly sits in between and depends on strategic interaction.",
-      "createdAt": 0,
-      "updatedAt": 0,
+      "createdAt": 1790758800005,
+      "updatedAt": 1792141200000,
       "analysedText": "Microeconomics\nConsumer choice\n\nHouseholds choose bundles of goods that maximise utility subject to a budget constraint. Marginal utility falls as consumption rises, which is why demand curves slope down.\n\nFirms and market structure\n\nUnder perfect competition firms are price takers. A monopoly restricts output and raises price above marginal cost, which creates a deadweight loss. Oligopoly sits in between and depends on strategic interaction."
     },
     {
@@ -22,19 +45,9 @@
       "title": "Macroeconomics",
       "editorState": "{\"root\":{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"root\",\"children\":[{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"heading\",\"tag\":\"h2\",\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"Output and inflation\",\"type\":\"text\",\"version\":1}]},{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"paragraph\",\"textFormat\":0,\"textStyle\":\"\",\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"Gross domestic product measures total output. Aggregate demand and aggregate supply explain short-run swings in output and the price level. The Phillips curve links unemployment and inflation.\",\"type\":\"text\",\"version\":1}]},{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"heading\",\"tag\":\"h2\",\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"Policy\",\"type\":\"text\",\"version\":1}]},{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"paragraph\",\"textFormat\":0,\"textStyle\":\"\",\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"Central banks use interest rates to manage inflation. Fiscal policy changes government spending and taxation, and the multiplier measures how much output responds.\",\"type\":\"text\",\"version\":1}]}]}}",
       "plainText": "Output and inflation\n\nGross domestic product measures total output. Aggregate demand and aggregate supply explain short-run swings in output and the price level. The Phillips curve links unemployment and inflation.\n\nPolicy\n\nCentral banks use interest rates to manage inflation. Fiscal policy changes government spending and taxation, and the multiplier measures how much output responds.",
-      "createdAt": 1,
-      "updatedAt": 0,
+      "createdAt": 1790758800006,
+      "updatedAt": 1792141200000,
       "analysedText": "Macroeconomics\nOutput and inflation\n\nGross domestic product measures total output. Aggregate demand and aggregate supply explain short-run swings in output and the price level. The Phillips curve links unemployment and inflation.\n\nPolicy\n\nCentral banks use interest rates to manage inflation. Fiscal policy changes government spending and taxation, and the multiplier measures how much output responds."
-    },
-    {
-      "id": "seed-supply",
-      "folderId": "seed-economics",
-      "title": "Supply and demand",
-      "editorState": "{\"root\":{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"root\",\"children\":[{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"heading\",\"tag\":\"h2\",\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"Equilibrium\",\"type\":\"text\",\"version\":1}]},{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"paragraph\",\"textFormat\":0,\"textStyle\":\"\",\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"A market clears where quantity supplied equals quantity demanded. A price ceiling below equilibrium causes a shortage; a price floor above it causes a surplus.\",\"type\":\"text\",\"version\":1}]},{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"heading\",\"tag\":\"h2\",\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"Elasticity\",\"type\":\"text\",\"version\":1}]},{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"paragraph\",\"textFormat\":0,\"textStyle\":\"\",\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"Price elasticity of demand measures how strongly buyers respond to a price change. Necessities tend to be inelastic. Disruptions in supply chains shift the supply curve left and raise prices.\",\"type\":\"text\",\"version\":1}]}]}}",
-      "plainText": "Equilibrium\n\nA market clears where quantity supplied equals quantity demanded. A price ceiling below equilibrium causes a shortage; a price floor above it causes a surplus.\n\nElasticity\n\nPrice elasticity of demand measures how strongly buyers respond to a price change. Necessities tend to be inelastic. Disruptions in supply chains shift the supply curve left and raise prices.",
-      "createdAt": 2,
-      "updatedAt": 0,
-      "analysedText": "Supply and demand\nEquilibrium\n\nA market clears where quantity supplied equals quantity demanded. A price ceiling below equilibrium causes a shortage; a price floor above it causes a surplus.\n\nElasticity\n\nPrice elasticity of demand measures how strongly buyers respond to a price change. Necessities tend to be inelastic. Disruptions in supply chains shift the supply curve left and raise prices."
     },
     {
       "id": "seed-pestel",
@@ -42,169 +55,213 @@
       "title": "PESTEL",
       "editorState": "{\"root\":{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"root\",\"children\":[{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"heading\",\"tag\":\"h2\",\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"The framework\",\"type\":\"text\",\"version\":1}]},{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"paragraph\",\"textFormat\":0,\"textStyle\":\"\",\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"PESTEL analysis scans the external business environment across political, economic, social, technological, environmental and legal factors. Firms use it in strategic planning before entering a market.\",\"type\":\"text\",\"version\":1}]},{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"heading\",\"tag\":\"h2\",\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"Using it well\",\"type\":\"text\",\"version\":1}]},{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"paragraph\",\"textFormat\":0,\"textStyle\":\"\",\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"A useful analysis ranks factors by impact and likelihood instead of listing them. It pairs well with SWOT analysis, which adds internal strengths and weaknesses.\",\"type\":\"text\",\"version\":1}]}]}}",
       "plainText": "The framework\n\nPESTEL analysis scans the external business environment across political, economic, social, technological, environmental and legal factors. Firms use it in strategic planning before entering a market.\n\nUsing it well\n\nA useful analysis ranks factors by impact and likelihood instead of listing them. It pairs well with SWOT analysis, which adds internal strengths and weaknesses.",
-      "createdAt": 3,
-      "updatedAt": 0,
+      "createdAt": 1790758800007,
+      "updatedAt": 1792141200000,
       "analysedText": "PESTEL\nThe framework\n\nPESTEL analysis scans the external business environment across political, economic, social, technological, environmental and legal factors. Firms use it in strategic planning before entering a market.\n\nUsing it well\n\nA useful analysis ranks factors by impact and likelihood instead of listing them. It pairs well with SWOT analysis, which adds internal strengths and weaknesses."
+    },
+    {
+      "id": "seed-remote-lit",
+      "folderId": "seed-remote",
+      "title": "Literature notes",
+      "editorState": "{\"root\":{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"root\",\"children\":[{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"heading\",\"tag\":\"h2\",\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"Productivity\",\"type\":\"text\",\"version\":1}]},{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"paragraph\",\"textFormat\":0,\"textStyle\":\"\",\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"Studies of working from home report mixed effects on productivity. Call centre experiments found higher output, while software teams reported slower collaboration and fewer new ideas.\",\"type\":\"text\",\"version\":1}]},{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"heading\",\"tag\":\"h2\",\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"Wellbeing\",\"type\":\"text\",\"version\":1}]},{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"paragraph\",\"textFormat\":0,\"textStyle\":\"\",\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"Remote workers save commuting time but report more isolation. Hybrid schedules of two or three office days appear to balance focus work with team contact.\",\"type\":\"text\",\"version\":1}]}]}}",
+      "plainText": "Productivity\n\nStudies of working from home report mixed effects on productivity. Call centre experiments found higher output, while software teams reported slower collaboration and fewer new ideas.\n\nWellbeing\n\nRemote workers save commuting time but report more isolation. Hybrid schedules of two or three office days appear to balance focus work with team contact.",
+      "createdAt": 1790758800008,
+      "updatedAt": 1792141200000,
+      "analysedText": "Literature notes\nProductivity\n\nStudies of working from home report mixed effects on productivity. Call centre experiments found higher output, while software teams reported slower collaboration and fewer new ideas.\n\nWellbeing\n\nRemote workers save commuting time but report more isolation. Hybrid schedules of two or three office days appear to balance focus work with team contact."
+    },
+    {
+      "id": "seed-remote-method",
+      "folderId": "seed-remote",
+      "title": "Method",
+      "editorState": "{\"root\":{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"root\",\"children\":[{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"heading\",\"tag\":\"h2\",\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"Design\",\"type\":\"text\",\"version\":1}]},{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"paragraph\",\"textFormat\":0,\"textStyle\":\"\",\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"A survey of employees at three firms, comparing self-reported focus time and meeting load across fully remote, hybrid and office-based teams.\",\"type\":\"text\",\"version\":1}]},{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"heading\",\"tag\":\"h2\",\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"Analysis\",\"type\":\"text\",\"version\":1}]},{\"direction\":null,\"format\":\"\",\"indent\":0,\"version\":1,\"type\":\"paragraph\",\"textFormat\":0,\"textStyle\":\"\",\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"Regression of weekly output on days in the office, controlling for role, tenure and team size. Interviews with managers add context to the survey results.\",\"type\":\"text\",\"version\":1}]}]}}",
+      "plainText": "Design\n\nA survey of employees at three firms, comparing self-reported focus time and meeting load across fully remote, hybrid and office-based teams.\n\nAnalysis\n\nRegression of weekly output on days in the office, controlling for role, tenure and team size. Interviews with managers add context to the survey results.",
+      "createdAt": 1790758800009,
+      "updatedAt": 1792141200000,
+      "analysedText": "Method\nDesign\n\nA survey of employees at three firms, comparing self-reported focus time and meeting load across fully remote, hybrid and office-based teams.\n\nAnalysis\n\nRegression of weekly output on days in the office, controlling for role, tenure and team size. Interviews with managers add context to the survey results."
+    }
+  ],
+  "presets": [
+    {
+      "id": "default",
+      "name": "University report",
+      "fields": [
+        {
+          "label": "Title",
+          "value": ""
+        },
+        {
+          "label": "Author",
+          "value": ""
+        },
+        {
+          "label": "Course",
+          "value": "ECON 101"
+        },
+        {
+          "label": "Date",
+          "value": ""
+        }
+      ],
+      "citationStyle": "APA 7",
+      "sections": [
+        "Abstract",
+        "Introduction",
+        "Literature review",
+        "Method",
+        "Findings",
+        "Discussion",
+        "References"
+      ]
     }
   ],
   "sources": [
     {
-      "id": "2e878e5126ec9545",
-      "title": "Statistical Microeconomics",
+      "id": "78993e2b865aa92f",
+      "title": "The Theory of Choice and the Constancy of Economic Laws",
       "authors": [
-        "Belal E. Baaquie"
+        "Nicholas Georgescu\u2010Roegen"
       ],
-      "year": 2012,
-      "abstract": "A statistical generalization is made of microeconomics in the spirit of going from classical to statistical mechanics. The price and quantity of every commodity1 traded in the market, at each instant of time, is considered to be an independent random variable: all prices and quantities are considered to be stochastic processes, with the observed market prices being a random sample of the stochastic prices. The dynamics of market prices is determined by an action functional and, for concreteness, a specific model is proposed. The model can be calibrated from the unequal time correlation of the market commodity prices. A perturbation expansion for the correlation functions is defined in powers of the inverse of the total budget of the aggregate consumer and the propagator for the market prices is evaluated.",
-      "url": "https://arxiv.org/abs/1211.7172v1",
-      "origin": "arxiv"
-    },
-    {
-      "id": "b682a9a1c3cefd44",
-      "title": "Elementary Microeconomics of the Talmudic Rule",
-      "authors": [
-        "Anton Salikhmetov"
-      ],
-      "year": 2018,
-      "abstract": "This paper takes a look at the Talmudic rule aka the 1/N rule aka the uniform investment strategy from the viewpoint of elementary microeconomics. Specifically, we derive the cardinal utility function for a Talmud-obeying agent which happens to have the Cobb-Douglas form. Further, we investigate individual supply and demand due to rebalancing and compare them to market depth of an exchange. Finally, we discuss how operating as a liquidity provider can benefit the Talmud-obeying agent with every exchange transaction in terms of the identified utility function.",
-      "url": "https://arxiv.org/abs/1901.00814v1",
-      "origin": "arxiv"
-    },
-    {
-      "id": "878559ccda5b6fe3",
-      "title": "On optimal strategies for utility maximizers in the Arbitrage Pricing Model",
-      "authors": [
-        "Miklos Rasonyi"
-      ],
-      "year": 2016,
-      "abstract": "We consider a popular model of microeconomics with countably many assets: the Arbitrage Pricing Model. We study the problem of optimal investment under an expected utility criterion and look for conditions ensuring the existence of optimal strategies. Previous results required a certain restrictive hypothesis on the tails of asset return distributions. Using a different method, we manage to remove this hypothesis, at the price of stronger assumptions on the moments of asset returns.",
-      "url": "https://arxiv.org/abs/1602.05758v3",
-      "origin": "arxiv"
-    },
-    {
-      "id": "e0c9531aeb0cb77a",
-      "title": "Toward Socialist Economics: A Manifesto",
-      "authors": [
-        "Bay Area Collective of Socialist Economists"
-      ],
-      "year": 1969,
-      "abstract": "While the manifesto should be of interest to all MR readers, non-economists may be troubled by some of the technical terms used. The following explanations are offered in the hope that they will remove possible stumbling blocks. Microeconomics (or micro-theory) deals with the economic behavior of individual firms and households. Macroeconomics (or macro-theory) deals with the behavior of the larger variables: for example, national income, consumption, production, and investment. Marginal analysis is the theoretical apparatus used by bourgeois economics in its effort to explain profits and the prices of commodities, labor, and land. Linear programming is a mathematical method used to calculate the most effective way of combining different variables to achieve a given objective. —The Editors.This article can also be found at the Monthly Review website, where most recent articles are published in full.Click here to purchase a PDF version of this article at the Monthly Review website.",
-      "url": "https://doi.org/10.14452/mr-021-07-1969-11_3",
-      "doi": "10.14452/mr-021-07-1969-11_3",
+      "year": 1950,
+      "abstract": "Introduction, 125. \u2014 I. The theory of consumer's choice, 126. \u2014 II. Four qualifying postulates, 128. \u2014 III. The constancy of economic laws, 133. \u2014 IV. Determinateness of consumer equilibrium, 134. \u2014 V. Conclusion, 138.",
+      "url": "https://doi.org/10.2307/1881962",
+      "doi": "10.2307/1881962",
       "origin": "openalex"
     },
     {
-      "id": "430a25a120218f1a",
-      "title": "Monetary Policy Rules and Macroeconomic Stability: Evidence and Some Theory*",
+      "id": "12d68e14dac8bb1b",
+      "title": "Requiem for the Representative Consumer? Aggregate Implications of Microeconomic Consumption Behavior",
       "authors": [
-        "Richard H. Clarida",
-        "Jordi Galí Y",
-        "Mark L. Gertler"
+        "Christopher D. Carroll"
       ],
       "year": 2000,
-      "abstract": "We estimate a forward-looking monetary policy reaction function for the postwar United States economy, before and after Volcker's appointment as Fed Chairman in 1979. Our results point to substantial differences in the estimated rule across periods. In particular, interest rate policy in the Volcker-Greenspan period appears to have been much more sensitive to changes in expected inflation than in the pre-Volcker period. We then compare some of the implications of the estimated rules for the equilibrium properties of inflation and output, using a simple macroeconomic model, and show that the Volcker-Greenspan rule is stabilizing.",
-      "url": "https://doi.org/10.1162/003355300554692",
-      "doi": "10.1162/003355300554692",
+      "abstract": "Requiem for the Representative Consumer? Aggregate Implications of Microeconomic Consumption Behavior by Christopher D. Carroll. Published in volume 90, issue 2, pages 110-115 of American Economic Review, May 2000",
+      "url": "https://doi.org/10.1257/aer.90.2.110",
+      "doi": "10.1257/aer.90.2.110",
       "origin": "openalex"
     },
     {
-      "id": "adaebede21b9ec7a",
-      "title": "The Macroeconomic Effects of Tax Changes: Estimates Based on a New Measure of Fiscal Shocks",
+      "id": "91576c2739040cff",
+      "title": "Rethinking the Choice Behavior of Sugar Metabolism in Bacteria",
       "authors": [
-        "Christina Romer",
-        "David Romer"
+        "Jeffrey D. Varner"
       ],
-      "year": 2010,
-      "abstract": "This paper investigates the impact of tax changes on economic activity. We use the narrative record, such as presidential speeches and Congressional reports, to identify the size, timing, and principal motivation for all major postwar tax policy actions. This analysis allows us to separate legislated changes into those taken for reasons related to prospective economic conditions and those taken for more exogenous reasons. The behavior of output following these more exogenous changes indicates that tax increases are highly contractionary. The effects are strongly significant, highly robust, and much larger than those obtained using broader measures of tax changes. (JEL E32, E62, H20, N12)",
-      "url": "https://doi.org/10.1257/aer.100.3.763",
-      "doi": "10.1257/aer.100.3.763",
-      "origin": "openalex"
-    },
-    {
-      "id": "bf2a92f0e80eb1b4",
-      "title": "The Macroeconomic Impacts of Entitlements",
-      "authors": [
-        "Ateeb Akhter Shah Syed",
-        "Kaneez Fatima",
-        "Riffat Arshad"
-      ],
-      "year": 2021,
-      "abstract": "The worries expressed by Alan Greenspan that the long run economic growth of the United States will fade away due to increasing burden of entitlements motivated us to empirically investigate the impact of entitlements of key macroeconomic variables. To examine this contemporary issue, we estimate a vector error-correction model is used to analyze the impact of entitlements on the price level, real output, and the long-term interest rate. The results show that a shock to entitlements leads to decrease in output and lends support to the assertion made by Alan Greenspan. Several robustness checks are conducted and the results of the model qualitatively remains unchanged.",
-      "url": "https://arxiv.org/abs/2102.01609v1",
+      "year": 2026,
+      "abstract": "Ramkrishna, Kompala, and Tsao proposed the cybernetic model of microbial growth, in which cells allocate enzyme synthesis resources according to a matching rule that mimics rational decision-making. The matching rule was later shown to be optimal under general assumptions about the underlying return-on-investment structure, yet the specific objective the cell maximizes, and the constraints bounding that choice, were never written down as an explicit economic decision. Here we supply that missing decision, recasting cybernetic enzyme-synthesis control as a consumer choice problem from microeconomic theory: the cell allocates a limited proteome budget among competing catabolic enzymes as a linear program (LP), maximizing a linear growth utility subject to a linear proteome budget constraint. Because the utility is linear, the LP's solution is geometric: whenever the iso-utility line's slope differs from the budget constraint's, the optimum is a corner, and the entire proteome budget is allocated to the enzyme for the single most profitable substrate. Corner solutions correspond to diauxic growth, and sequential substrate consumption follows from the choice of corner rather than a distinct regulatory mechanism. Only when the two slopes coincide does the optimum spread across the entire budget line instead of concentrating at a single corner; this degenerate case underlies simultaneous substrate use. Using only parameters estimated independently from single-substrate experiments, the LP-derived cybernetic variables reproduced the diauxic and triauxic batch growth of Klebsiella oxytoca on glucose-xylose and glucose-xylose-lactose mixtures, achieving a fit comparable to the classical matching law. Thus, sequential substrate use is the generic outcome of growth-maximizing specialization under perfect substitutability, and co-utilization is the degenerate case of equal profitability.",
+      "url": "https://arxiv.org/abs/2607.07677v3",
       "origin": "arxiv"
     },
     {
-      "id": "5c16063e6a01b14f",
-      "title": "Tests of thermal macroeconomic theory on simulated micro-economies",
+      "id": "17263e68f2a23b11",
+      "title": "The Theory of Choice: A Critical Guide.",
       "authors": [
-        "Yihang Luo",
-        "R. S. MacKay",
-        "Nick Chater"
+        "Ken Binmore",
+        "H. S. Hargreaves-Heap",
+        "Martin Hollis",
+        "B. Lyons",
+        "Robert Sugden",
+        "Albert Weale"
       ],
-      "year": 2024,
-      "abstract": "In this paper, we test predictions of a new theory of macroeconomics, called \"thermal macroeconomics.\" The theory aims to apply the mathematical structure of classical thermodynamics, including analogues of temperature and entropy, to predict aspects of the aggregate behaviour of populations of economic agents without analyzing their detailed interactions. We test the theory by comparing its predictions with the behaviour of a variety of simulated micro-economies in which goods and money can be exchanged between agents, confirming the predictions of the theory. The paper serves also to illustrate and make more tangible the predictions of thermal macroeconomics.",
-      "url": "https://arxiv.org/abs/2410.20497v1",
-      "origin": "arxiv"
-    },
-    {
-      "id": "c2ec3d664d5e69df",
-      "title": "Study On Demand And Supply Of Liquefied Petroleum Gas (Lpg) In Nepal",
-      "authors": [
-        "Devilal Sharma"
-      ],
-      "year": 2016,
-      "abstract": "Supply and demand is perhaps one of the most fundamental concepts of economics and it is the backbone of a market economy. Demand refers to how much (quantity) of a product or service is desired by buyers. The quantity demanded is the amount of a product people are willing to buy at a certain price; the relationship between price and quantity demanded is known as the demand relationship. Supply represents how much the market can offer. The quantity supplied refers to the amount of a certain good producers are willing to supply when receiving a certain price. The correlation between price and how much of a good or service is supplied to the market is known as the supply relationship. Price,therefore, is a reflection of supply and demand(Scheuer, 2010).",
-      "url": "https://doi.org/10.5281/zenodo.45193",
-      "doi": "10.5281/zenodo.45193",
+      "year": 1993,
+      "abstract": "Introduction. Part I: Individual Choice: 1. Rationality. 2. Consumer Theory. 3. How People Choose. 4. Risk, Ignorance and Imagination. 5. Homo Economicus Homo Sociologicus. 6. Autonomy. Part II: Interactive Choice: 7. Game Theory. 8. Bargaining. 9. Game Theory Applied. 10. Organizations. 11. Cultural Exchange. 12. Anarchic Order. Part III: Collective Choice: 13. Social Choice. 14. Democracy. 15. Power. 16. Planning. 17. Agendas. 18. Social Justice. Keywords. Bibliography. Index.",
+      "url": "https://doi.org/10.2307/2554575",
+      "doi": "10.2307/2554575",
       "origin": "openalex"
     },
     {
-      "id": "09c373ac511e637e",
-      "title": "THEORY OF SUPPLY AND DEMAND",
+      "id": "87a0a731b92e62f2",
+      "title": "MACROECONOMIC MODELS USED IN THE STRUCTURAL ANALYSIS OF THE GROSS DOMESTIC PRODUCT",
       "authors": [
-        "Velieva Susanna",
-        "Kuldoshzoda Basher"
+        "Constantin Anghelache",
+        "Gabriela Victoria Anghelache"
+      ],
+      "year": 2013,
+      "abstract": "This paper describes a use case for macro economical models, the objective being the structural analysis of the Gross Domestic Product. The authors offer a snapshot on GDP evolution, the econometric models proposed for analysis are designed with the help of EViews software. Its performances are determined through the optics of the statistical tests.",
+      "url": "http://www.revistadestatistica.ro/Articole/2013/RRS_06_2013_a2_en.pdf",
+      "origin": "openalex"
+    },
+    {
+      "id": "cccadb65270ef800",
+      "title": "NATIONAL ACCOUNTING SYSTEM MACRO AND MICROECONOMIC INDICATORS AND GROSS DOMESTIC PRODUCT",
+      "authors": [
+        "Karjavov Zayniddin Karjavovich"
       ],
       "year": 2022,
-      "abstract": "This article provides partial information about demand and supply and the relationship between them. In addition, we can learn about the market balance in the article. The article describes the view of supply demand in Uzbekistan and the world.",
-      "url": "https://doi.org/10.5281/zenodo.7464229",
-      "doi": "10.5281/zenodo.7464229",
+      "abstract": "In this article, the volume of production, services and their growth in the national economy is determined and analyzed at the macroeconomic level through a system of indicators. Macroeconomic indicators are used to analyze the state of the economy as a whole, its growth or decline, and draw conclusions. They help the state determine its economic policy. The system of macroeconomic indicators allows you to visualize the gross domestic product and all stages of its movement, ie the stages of production, distribution, redistribution and consequent use. One of the key macroeconomic indicators is GDP. Gross domestic product is the market value of all final goods and services created in the territory of the country, regardless of who created them for a certain period (one year), on which these topics are discussed.",
+      "url": "https://doi.org/10.55640/eijmrms-02-04-36",
+      "doi": "10.55640/eijmrms-02-04-36",
       "origin": "openalex"
     },
     {
-      "id": "ae431aa5e7643e1f",
-      "title": "Supply and Demand in Microeconomics",
+      "id": "14067f6ca5e14078",
+      "title": "Evolution of Gross Domestic Product - Analysis Models",
       "authors": [
-        "Hasni Dyah Kurniawati"
+        "Constantin Anghelache",
+        "Catalin Deatcu",
+        "Daniel Dumitrescu",
+        "Adina Mihaela Dinu"
       ],
-      "year": 2023,
-      "abstract": ": In everyday life, there will be supply and demand in the fulfillment in a human’s needs. The interaction of demand by consumers and supply by producers occurs in a market. In a market, a consumer makes a demand to meet their daily needs. The demand made by consumers is their way to obtain utility where consumers indeed have to spend according to their income. A producer on the other hand will sell their goods and/or services in a certain quantity and price so that the producer will gain a profit that they hope for. Based on the interaction of demand by consumers and supply by producers, a price agreement can finally be determined so that market prices and the number of products traded are formed.",
-      "url": "https://doi.org/10.5281/zenodo.7686977",
-      "doi": "10.5281/zenodo.7686977",
+      "year": 2013,
+      "abstract": "This paper describes a use case for macro economical models, the objective being the structural analysis of the Gross Domestic Product. The authors first introduce the theoretical foundation of the model, then offer a snapshot on GDP evolution. The econometric models proposed for analysis are designed with the help of EViews software and their performance and reliability are described through the optics of the statistical tests.",
+      "url": "http://www.revistadestatistica.ro/suplimente/2013/3_2013/srrs3_2013a16.pdf",
       "origin": "openalex"
     },
     {
-      "id": "1db1d36da53abe8a",
-      "title": "Price equations with symmetric supply/demand; implications for fat tails",
+      "id": "c7acb32233a211ae",
+      "title": "A Category Theory Framework for Macroeconomic Modeling: The Case of Argentina's Bimonetary Economy",
       "authors": [
-        "Carey Caginalp",
-        "Gunduz Caginalp"
+        "Luciano Pollicino"
       ],
-      "year": 2019,
-      "abstract": "Implementing a set of microeconomic criteria, we develop price dynamics equations using a function of demand/supply with key symmetry properties. The function of demand/supply can be linear or nonlinear. The type of function determines the nature of the tail of the distribution based on the randomness in the supply and demand. For example, if supply and demand are normally distributed, and the function is assumed to be linear, then the density of relative price change has behavior $x^{-2}$ for large $x$ (i.e., large deviations). The exponent approaches $-1$ if the function of supply and demand involves a large exponent. The falloff is exponential, i.e., $e^{-x}$, if the function of supply and demand is logarithmic.",
-      "url": "https://arxiv.org/abs/1904.00267v1",
+      "year": 2025,
+      "abstract": "Traditional macroeconomic models, based on static algebraic systems, fail to capture the dynamics of a bimonetary economy like Argentina's. This paper proposes a framework based on category theory to develop a more flexible and structured model that represents the evolving relationships between key variables such as inflation expectations, interest rates, and currency demand. Using concepts like objects, morphisms, learning/forgetful functors, limits, and colimits, the model is applied to empirical data from 2018-2023. The findings reveal a significant structural misalignment between the equilibrium and observed exchange rates and propose a new aggregate indicator to measure devaluation risk. The framework demonstrates a strong synergy with modern computational tools like machine learning, offering a more robust approach to policy analysis and forecasting in complex economies.",
+      "url": "https://arxiv.org/abs/2508.13233v1",
       "origin": "arxiv"
     },
     {
-      "id": "b88560df60f44b53",
-      "title": "EXTERNAL FACTORS INFLUENCE THE ENTREPRENEURSHIP DEVELOPMENT",
+      "id": "66ba843166f033d7",
+      "title": "Price Controls, Binding Constraints, and Intertemporal Economic Decision Making",
       "authors": [
-        "Петя Николаева Николова"
+        "Dwight R. Lee"
       ],
-      "year": 2020,
-      "abstract": "The paper will discuss groups of factors which have impact on the entrepreneurship activities. These groups are: the PESTEL framework and the Human factor. Analyses will be making on the political, technological, environmental, legal and socio-cultural conditions and on the industry’s. The paper will study further the debate on the Human factor and why it is so important for the success of the firms.",
-      "url": "http://research.bfu.bg:4000/handle/123456789/2106",
+      "year": 1978,
+      "abstract": "A constraint on a decision variable is normally thought to be binding only if it prevents that variable from taking on its unrestricted current equilibrium value. This paper establishes that this is not true when decisions are intertemporally related. In such a decision-making environment, imposing a price ceiling, for example, which is greater than the current equilibrium price can be binding in that it will alter current price. Likewise, the removal of a price ceiling which exceeds current price can result in a change in that price. Among other things, this result casts doubt on the widespread view that price ceilings on petroleum products are not binding because current prices are less than the ceilings.",
+      "url": "https://doi.org/10.1086/260668",
+      "doi": "10.1086/260668",
       "origin": "openalex"
+    },
+    {
+      "id": "523b01f3b1001d2a",
+      "title": "The Allocative Cost of Price Ceilings in the U.S. Residential Market for Natural Gas",
+      "authors": [
+        "Lucas W. Davis",
+        "Lutz Kilian"
+      ],
+      "year": 2011,
+      "abstract": "A direct consequence of restricting the price of a good for which secondary markets do not exist is that, in the presence of excess demand, the good will not be allocated to the buyers who value it the most. We demonstrate the empirical importance of this allocative cost for the U.S. residential market for natural gas, which was subject to price ceilings during 1954\u201389. Using a household-level, discrete-continuous model of natural gas demand, we estimate that the allocative cost in this market averaged $3.6 billion annually, nearly tripling previous estimates of the net welfare loss to U.S. consumers.",
+      "url": "https://doi.org/10.1086/660124",
+      "doi": "10.1086/660124",
+      "origin": "openalex"
+    },
+    {
+      "id": "141c56dc194cba11",
+      "title": "Information equilibrium as an economic principle",
+      "authors": [
+        "Jason Smith"
+      ],
+      "year": 2015,
+      "abstract": "A general information equilibrium model in the case of ideal information transfer is defined and then used to derive the relationship between supply (information destination) and demand (information source) with the price as the detector of information exchange between demand and supply. We recover the properties of the traditional economic supply-demand diagram. Information equilibrium is then applied to macroeconomic problems, recovering some common macroeconomic models in particular limits like the AD-AS model, IS-LM model (in a low inflation limit), the quantity theory of money (in a high inflation limit) and the Solow-Swan growth model. Information equilibrium results in empirically accurate models of inflation and interest rates, and can be used to motivate a 'statistical economics', analogous to statistical mechanics for thermodynamics.",
+      "url": "https://arxiv.org/abs/1510.02435v1",
+      "origin": "arxiv"
+    },
+    {
+      "id": "e3b76c0c52928b54",
+      "title": "Elementary Bitcoin economics: from production and transaction demand to values",
+      "authors": [
+        "Misha Perepelitsa"
+      ],
+      "year": 2022,
+      "abstract": "In this paper we give an elementary analysis of economics of Bitcoin that combines the transaction demand by the consumers and the supply of hashrate by miners. We argue that the decreasing block reward will have no significant effect on the exchange rate (price) of Bitcoin and thus the network will be transitioning to a regime where transaction fees will play a bigger part of miners' revenue. We consider a simple model where consumers demand bitcoins for transactions, but not for hoarding bitcoins, and we analyze market equilibrium where the demand is matched with the hashrate supplied by miners. Our main conclusion is that the exchange rate of Bitcoin cannot be determined from the market equilibrium and so our arguments support the hypothesis that Bitcoin price has no economic fundamentals and is free to fluctuate according to the present demand for hoarding and speculation. We point out that increasing fees bear the risk of Bitcoin being outcompeted by its main rival Ethereum, and that decreasing revenues to miners depreciate the perception of Bitcoin as a medium for store value (hoarding demand) which will have effect its exchange rate.",
+      "url": "https://arxiv.org/abs/2211.07035v1",
+      "origin": "arxiv"
     },
     {
       "id": "56b265cb755d9a18",
@@ -219,486 +276,949 @@
       "origin": "openalex"
     },
     {
-      "id": "d851a9708814fd67",
-      "title": "The state of agriculture in Bulgaria PESTLE analysis.",
+      "id": "ce0ef1c61d17a376",
+      "title": "PEST - Analysis and SWOT - Analysis as the Most Important Tools to Strengthen the Competitive Advantages of Commercial Enterprises",
       "authors": [
-        "Mihaela Mihailova"
+        "\u041b. \u0411. \u0428\u0430\u0431\u0430\u043d\u043e\u0432\u0430",
+        "Gulnara N. Ismagilova",
+        "\u0421\u0430\u043b\u0438\u043c\u043e\u0432 \u041b\u0435\u043d\u0430\u0440 \u041d\u0430\u0438\u043b\u043e\u0432\u0438\u0447",
+        "\u041c. \u0413. \u0410\u0445\u043c\u0430\u0434\u0435\u0435\u0432"
       ],
-      "year": 2020,
-      "abstract": "In this research we are identifying the processes that are key factors for change in the agricultural environment. The PESTLE analysis is used to sort the state of every of the panels and find which one has the most impact. In our case we are identifying macroeconomic factors that have influence on the future development of the sector of agriculture in Bulgaria. In Bulgaria this kind of research has not been done using the PESTLE and will help future researchers to identify strengths and weaknesses in Bulgarian political, economic, sociocultural and technological environments. The legal framework and environmental factors are particularly important for agriculture and have been added in this order because the legal framework carries a higher importance.",
-      "url": "https://agriacad.eu/ojs/index.php/bjas/article/view/2549",
+      "year": 2015,
+      "abstract": "Commercial enterprises operating in the regional market, forced to constantly monitor changes in the environment that have a direct impact on its business.To effectively analyze the external environment has developed special techniques, among which the most popular PEST - and SWOT \u2013 analysis. The results of this analysis can reveal not only the strengths but also weaknesses in the enterprise, as well as to identify the threat in the short term, to optimize the functioning of the enterprise and to strengthen its competitive position. DOI: 10.5901/mjss.2015.v6n3p705",
+      "url": "https://doi.org/10.5901/mjss.2015.v6n3p705",
+      "doi": "10.5901/mjss.2015.v6n3p705",
       "origin": "openalex"
     },
     {
-      "id": "5602d6f72a4ddab4",
-      "title": "EXTERNAL FACTORS AND THEIR IMPACT ON ENTERPRISE STRATEGIC MANAGEMENT – A LITERATURE REVIEW",
+      "id": "d42b5cc5d0e3038a",
+      "title": "PESTLE ANALYSIS",
       "authors": [
-        "Kosovare Mustafa Sadiku"
+        "Hemant Vilas Belsare"
+      ],
+      "year": 2025,
+      "abstract": "The strategic management tool PESTLE analysis assists businesses in their evaluation of macro-environmental external factors that influence their operations. Modern businesses need to understand external macro-environmental factors due to their essential role in strategic decision-making process. The research document presents an extensive analysis about PESTLE analysis which incorporates its fundamental elements along with its evolution throughout history as well as its benefits and drawbacks together with its constraints. Organizations achieve better external response through analyzing political, economic, social, technological, legal, and environmental factors. Management scientists utilize PESTLE analysis to build resilient organizational strategies through this research investigation. The article demonstrates how PESTLE analysis assists organizations with sustainable practices through the organization context. Recent research and industry examples in this article demonstrate how PESTLE analysis stands vital in modern practices of strategic planning within global business environments. Organizations can use such analysis results to maintain long-term success and establish their competitive position through market leadership.",
+      "url": "https://doi.org/10.21474/ijar01/20411",
+      "doi": "10.21474/ijar01/20411",
+      "origin": "openalex"
+    },
+    {
+      "id": "7172c28c58348d87",
+      "title": "Ecological dimension of PESTEL analysis in small enterprises in the Republic of Serbia",
+      "authors": [
+        "Marinovi\u0107 Matovi\u0107 Ivana",
+        "Ljiljana Arsi\u0107"
+      ],
+      "year": 2020,
+      "abstract": "Strategic decision-making seeks to analyze the external environment in which business organizations operate. External environmental factors are analyzed and monitored using PESTEL analysis. PESTEL analysis provides insight into organization's business opportunities and threats, in order to rapidly adapt to new market conditions. The objective of this paper is to present the use and the importance of PESTEL model for the analysis of ecological factors in business environment. The most common challenges of environmental analysis, and examples of positive practice from the Republic of Serbia, are presented in this paper. The paper represents a professional contribution to the business community, specifically, it helps organizations to improve their ecological performances through more efficient use of opportunities and elimination of threats arising from ecological factors.",
+      "url": "https://doi.org/10.5937/ror2001063m",
+      "doi": "10.5937/ror2001063m",
+      "origin": "openalex"
+    },
+    {
+      "id": "93dbe03e855d6bcb",
+      "title": "Hybrid team management: The long and winding road",
+      "authors": [
+        "Anna Wiatr",
+        "Beata Skowron-Mielnik"
       ],
       "year": 2022,
-      "abstract": "Businesses can’t control external factors but must respond to them. These political, economic, social, technological, environmental and competitive factors are represented by the acronym PESTEC. This research is based on secondary data following the methodology of literature review for different periods of time to understand which of these 5 factors has the greatest impact on the strategic management of the enterprise. From the data obtained we have concluded that all external factors have a high impact on the strategic management of the enterprise. The management of the enterprise in time should be informed of the expected changes that may come from political, economic, social or cultural factors. All these factors have their importance and impact on the good management of the enterprise and even more so in its strategic aspect. Article visualizations:",
-      "url": "https://doi.org/10.46827/ejhrms.v6i1.1291",
-      "doi": "10.46827/ejhrms.v6i1.1291",
+      "abstract": "\u2022 Employees\u2019 choices are at the heart of a hybrid team. \u2022 Hybrid team management processes are people oriented. \u2022 Human relations are critical in hybrid organizations. \u2022 Effective communication is transparent, on time and without ambiguity. \u2022 Hybrid teams need ego free leadership.",
+      "url": "https://doi.org/10.1016/j.orgdyn.2022.100936",
+      "doi": "10.1016/j.orgdyn.2022.100936",
+      "origin": "openalex"
+    },
+    {
+      "id": "e7af86f4b3f18f85",
+      "title": "The impacts of remote work on travel: insights from nearly three years of monthly surveys",
+      "authors": [
+        "Nicholas S. Caros",
+        "Xiaotong Guo",
+        "Yunhan Zheng",
+        "Jinhua Zhao"
+      ],
+      "year": 2023,
+      "abstract": "Remote work has expanded dramatically since 2020, upending longstanding travel patterns and behavior. More fundamentally, the flexibility for remote workers to choose when and where to work has created much stronger connections between travel behavior and organizational behavior. This paper uses a large and comprehensive monthly longitudinal survey over nearly three years to identify new trends in work location choice, mode choice and departure time of remote workers. The travel behavior of remote workers is found to be highly associated with employer characteristics, task characteristics, employer remote work policies, coordination between colleagues and attitudes towards remote work. Approximately one third of all remote work hours are shown to take place outside of the home, accounting for over one third of all commuting trips. These commutes to \"third places\" are shorter, less likely to occur during peak periods, and more likely to use sustainable travel modes than commutes to an employer's primary workplace. Hybrid work arrangements are also associated with a greater number of non-work trips than fully remote and fully in-person arrangements. Implications of this research for policy makers, shared mobility provides and land use planning are discussed.",
+      "url": "https://arxiv.org/abs/2303.06186v1",
+      "origin": "arxiv"
+    },
+    {
+      "id": "650230ec31b88ed0",
+      "title": "ALTERNATIVE WORK SCHEDULES: TWO FIELD QUASI\u2010EXPERIMENTS",
+      "authors": [
+        "Randall B. Dunham",
+        "Jon L. Pierce",
+        "Maria B. Casta\u00f1eda"
+      ],
+      "year": 1987,
+      "abstract": "In the first (N= 140) of two quasi\u2010experimental field studies, trial group employees were changed from a 5/40 to a 4/40 work schedule for four months then returned to a 5/40 schedule. In a second study (N= 102), trial group employees were changed from 5/40 to flextime. Reactions were evaluated using a model for understanding the impact of work schedules. The effects of schedule changes matched those anticipated by pre\u2010intervention surveys of employees. Factors related to organizational effectiveness were enhanced where specific organizational needs were met. Interference with personal activities was reduced where employees had experienced specific difficulties. The most powerful effect, however, was on worker attitudes toward specific work schedules. In addition, a mild positive (perhaps Hawthorne) effect was evident for a wide range of general worker reactions.",
+      "url": "https://doi.org/10.1111/j.1744-6570.1987.tb00602.x",
+      "doi": "10.1111/j.1744-6570.1987.tb00602.x",
+      "origin": "openalex"
+    },
+    {
+      "id": "6899d24706058b31",
+      "title": "Navigating the new normal: Examining coattendance in a hybrid work environment",
+      "authors": [
+        "Marie\u2010Laure Charpignon",
+        "Yuan Yuan",
+        "Dehao Zhang",
+        "Fereshteh Amini",
+        "Longqi Yang",
+        "Sonia Jaffe",
+        "Siddharth Suri"
+      ],
+      "year": 2023,
+      "abstract": "The recent rise of hybrid work poses novel challenges for synchronizing in-office work schedules. Using anonymized building access data, we quantified coattendance patterns among ~43k employees at a large global technology company. We used two-way fixed effects regression models to investigate the association between an employee's presence in the office and that of their manager and teammates. Our analysis shows that employee in-person attendance was 29% higher when their manager was present. Moreover, a 1-SD increase in the share of teammates who were present yielded a 16% increase in the individual employee's attendance. We also observed greater coattendance among employees who were recently hired, have a Corporate or Operations role, or work in shared office spaces. Thus, we find evidence of some voluntary alignment of work schedules. Companies could bolster such organic coordination by leveraging digital scheduling tools or providing guidance specifically aimed at increasing coattendance.",
+      "url": "https://doi.org/10.1073/pnas.2310431120",
+      "doi": "10.1073/pnas.2310431120",
+      "origin": "openalex"
+    },
+    {
+      "id": "52335ef7cafb45fe",
+      "title": "Method Comparison\u2014A Different Approach",
+      "authors": [
+        "M A Pollock",
+        "S G Jefferson",
+        "John W Kane",
+        "K Lomax",
+        "G MacKinnon",
+        "C B Winnard"
+      ],
+      "year": 1992,
+      "abstract": "The commonly accepted method of analysing data from method comparison studies is regression analysis, a method which has limitations. This study illustrates the use of a graphical presentation of data, the difference plot, which can be used as an alternative to least squares regression analysis. The data from comparison studies performed on five methods were analysed both by Deming's regression analysis, with calculation of the correlation coefficient, and by the difference plot. The results show that in most cases much more relevant information was obtained from the difference plot.",
+      "url": "https://doi.org/10.1177/000456329202900512",
+      "doi": "10.1177/000456329202900512",
+      "origin": "openalex"
+    },
+    {
+      "id": "26bcfc8e9d323a1c",
+      "title": "Applying regression & correlation : a guide for students and researchers",
+      "authors": [
+        "Jeremy N. V. Miles",
+        "Mark E. Shevlin"
+      ],
+      "year": 2001,
+      "abstract": "PART ONE: I NEED TO DO REGRESSION ANALYSIS TOMORROW Building Models with Regression and Correlation More Than One Independent Variable Multiples Regression Categorical Independent Variables PART TWO: I NEED TO DO REGRESSION ANALYSIS NEXT WEEK Assumptions in Regression Analysis Issues in Regression Analysis PART THREE: I NEED TO KNOW MORE OF THE THINGS THAT REGRESSION CAN DO Nonlinear and Logistic Regression Moderator and Mediator Analysis Introducing Some Advanced Techniques Multilevel Modelling and Structural Equation Modelling",
+      "url": "http://ci.nii.ac.jp/ncid/BA50471330?l=en",
+      "origin": "openalex"
+    },
+    {
+      "id": "6375224148169816",
+      "title": "How to Elicit Explainability Requirements? A Comparison of Interviews, Focus Groups, and Surveys",
+      "authors": [
+        "Martin Obaidi",
+        "Jakob Droste",
+        "Hannah Deters",
+        "Marc Herrmann",
+        "Raymond Ochsner",
+        "Jil Kl\u00fcnder",
+        "Kurt Schneider"
+      ],
+      "year": 2025,
+      "abstract": "As software systems grow increasingly complex, explainability has become a crucial non-functional requirement for transparency, user trust, and regulatory compliance. Eliciting explainability requirements is challenging, as different methods capture varying levels of detail and structure. This study examines the efficiency and effectiveness of three commonly used elicitation methods - focus groups, interviews, and online surveys - while also assessing the role of taxonomy usage in structuring and improving the elicitation process. We conducted a case study at a large German IT consulting company, utilizing a web-based personnel management software. A total of two focus groups, 18 interviews, and an online survey with 188 participants were analyzed. The results show that interviews were the most efficient, capturing the highest number of distinct needs per participant per time spent. Surveys collected the most explanation needs overall but had high redundancy. Delayed taxonomy introduction resulted in a greater number and diversity of needs, suggesting that a two-phase approach is beneficial. Based on our findings, we recommend a hybrid approach combining surveys and interviews to balance efficiency and coverage. Future research should explore how automation can support elicitation and how taxonomies can be better integrated into different methods.",
+      "url": "https://arxiv.org/abs/2505.23684v4",
+      "origin": "arxiv"
+    },
+    {
+      "id": "725aaa1bc0da7464",
+      "title": "Examples of the Use of Elements for Clarifying Regression Analyses",
+      "authors": [
+        "R. G. Newton",
+        "D. J. Spurrell"
+      ],
+      "year": 1967,
+      "abstract": "R. G. Newton, D. J. Spurrell, Examples of the Use of Elements for Clarifying Regression Analyses, Journal of the Royal Statistical Society. Series C (Applied Statistics), Vol. 16, No. 2 (1967), pp. 165-172",
+      "url": "https://doi.org/10.2307/2985778",
+      "doi": "10.2307/2985778",
       "origin": "openalex"
     }
   ],
   "suggestions": [
     {
       "pageId": "seed-micro",
-      "sourceId": "2e878e5126ec9545",
+      "sourceId": "78993e2b865aa92f",
       "folderId": "seed-economics",
       "fitGap": {
-        "summary": "A statistical generalization is made of microeconomics in the spirit of going from classical to statistical mechanics. The price and quantity of every commodity1 traded in the market, at each instant of time, is considered to be an independent random variable: all prices and quantities are considered to be stochastic processes, with the observed market prices being a random sample of the stochastic prices.",
+        "summary": "The source titled 'The Theory of Choice and the Constancy of Economic Laws' is organized around the theory of consumer's choice and economic laws. Its listed sections cover consumer choice, four qualifying postulates, constancy of economic laws, and determinateness of consumer equilibrium.",
         "whyItHelps": [
-          "Mentions microeconomics, price, consumer from your notes."
+          "Potentially supports the notes' 'Consumer choice' point that households choose bundles that maximise utility subject to a budget constraint, because it lists 'The theory of consumer's choice' and 'Determinateness of consumer equilibrium', but headings alone provide no usable detail."
         ],
         "weakPoints": [
-          "Does not mention utility, marginal, firms, choice."
+          "The source text provided is too thin to judge substantive help, as it consists only of a title and section headings with page numbers and no substantive claims.",
+          "It does not cover the notes' specific points that marginal utility falls as consumption rises and demand curves slope down.",
+          "It does not cover the notes' 'Firms and market structure' content on perfect competition as price takers, monopoly restricting output above marginal cost with deadweight loss, and oligopoly strategic interaction."
         ],
         "keyPoints": [
-          "A statistical generalization is made of microeconomics in the spirit of going from classical to statistical mechanics.",
-          "The price and quantity of every commodity1 traded in the market, at each instant of time, is considered to be an independent random variable: all prices and qua",
-          "The dynamics of market prices is determined by an action functional and, for concreteness, a specific model is proposed."
+          "Includes a section on the theory of consumer's choice.",
+          "Includes a section on four qualifying postulates.",
+          "Includes sections on the constancy of economic laws and determinateness of consumer equilibrium."
         ],
-        "relevance": 25,
+        "relevance": 20,
         "basedOn": "abstract"
       },
-      "status": "new"
+      "status": "new",
+      "createdAt": 1792486800000
     },
     {
       "pageId": "seed-micro",
-      "sourceId": "b682a9a1c3cefd44",
+      "sourceId": "12d68e14dac8bb1b",
       "folderId": "seed-economics",
       "fitGap": {
-        "summary": "This paper takes a look at the Talmudic rule aka the 1/N rule aka the uniform investment strategy from the viewpoint of elementary microeconomics. Specifically, we derive the cardinal utility function for a Talmud-obeying agent which happens to have the Cobb-Douglas form.",
-        "whyItHelps": [
-          "Mentions microeconomics, utility from your notes."
-        ],
+        "summary": "The source is an article titled 'Requiem for the Representative Consumer? Aggregate Implications of Microeconomic Consumption Behavior' by Christopher D. Carroll. It was published in the American Economic Review, volume 90, issue 2, pages 110-115, in May 2000.",
+        "whyItHelps": [],
         "weakPoints": [
-          "Does not mention marginal, firms, price, consumer."
+          "The source text is too thin to judge: it provides only bibliographic information with no findings, arguments, or data.",
+          "It does not cover what the notes need on consumer choice, such as utility maximization subject to budget constraint, falling marginal utility, or why demand curves slope down.",
+          "It does not cover what the notes need on firms and market structure, such as perfect competition price-taking, monopoly restriction and deadweight loss, or oligopoly strategic interaction."
         ],
         "keyPoints": [
-          "This paper takes a look at the Talmudic rule aka the 1/N rule aka the uniform investment strategy from the viewpoint of elementary microeconomics.",
-          "Specifically, we derive the cardinal utility function for a Talmud-obeying agent which happens to have the Cobb-Douglas form.",
-          "Further, we investigate individual supply and demand due to rebalancing and compare them to market depth of an exchange."
+          "The article is authored by Christopher D. Carroll.",
+          "Its title concerns the representative consumer and aggregate implications of microeconomic consumption behavior.",
+          "It was published in American Economic Review volume 90, issue 2, pages 110-115 in May 2000."
         ],
-        "relevance": 17,
+        "relevance": 5,
         "basedOn": "abstract"
       },
-      "status": "new"
+      "status": "new",
+      "createdAt": 1792486740000
     },
     {
       "pageId": "seed-micro",
-      "sourceId": "878559ccda5b6fe3",
+      "sourceId": "91576c2739040cff",
       "folderId": "seed-economics",
       "fitGap": {
-        "summary": "We consider a popular model of microeconomics with countably many assets: the Arbitrage Pricing Model. We study the problem of optimal investment under an expected utility criterion and look for conditions ensuring the existence of optimal strategies.",
+        "summary": "The authors recast cybernetic enzyme-synthesis control as a microeconomic consumer-choice linear program in which bacteria maximize linear growth utility subject to a linear proteome budget constraint. When iso-utility and budget slopes differ the optimum is a corner allocation producing diauxic growth, while coincident slopes produce simultaneous substrate use.",
         "whyItHelps": [
-          "Mentions utility, price, microeconomics from your notes."
+          "Supports the notes' statement 'Households choose bundles of goods that maximise utility subject to a budget constraint' by providing a direct analogue where the cell allocates a proteome budget among catabolic enzymes maximizing growth utility subject to a proteome budget constraint.",
+          "Illustrates the geometry of utility maximization under a budget constraint with corner versus budget-line optima, reinforcing the notes' consumer choice maximization framework."
         ],
         "weakPoints": [
-          "Does not mention marginal, firms, consumer, choice."
+          "Does not address the notes' point that 'Marginal utility falls as consumption rises, which is why demand curves slope down' - its utility is explicitly linear, not diminishing.",
+          "Does not cover any of the 'Firms and market structure' notes: perfect competition price takers, monopoly restricting output above marginal cost creating deadweight loss, or oligopoly strategic interaction.",
+          "Source text is truncated mid-sentence at 'Using only parameters estimated independently from single-substrate experiments,' so its empirical claim is too thin to judge."
         ],
         "keyPoints": [
-          "We consider a popular model of microeconomics with countably many assets: the Arbitrage Pricing Model.",
-          "We study the problem of optimal investment under an expected utility criterion and look for conditions ensuring the existence of optimal strategies.",
-          "Previous results required a certain restrictive hypothesis on the tails of asset return distributions."
+          "Cells allocate limited proteome budget among competing catabolic enzymes to maximize linear growth utility subject to a linear proteome budget constraint.",
+          "When iso-utility slope differs from budget constraint slope, the linear program optimum is a corner with all budget to the single most profitable substrate.",
+          "Corner solutions correspond to diauxic growth and sequential use, while coincident slopes give spread allocation underlying simultaneous substrate use."
         ],
-        "relevance": 25,
+        "relevance": 30,
         "basedOn": "abstract"
       },
-      "status": "new"
+      "status": "new",
+      "createdAt": 1792486680000
     },
     {
       "pageId": "seed-micro",
-      "sourceId": "e0c9531aeb0cb77a",
+      "sourceId": "17263e68f2a23b11",
       "folderId": "seed-economics",
       "fitGap": {
-        "summary": "While the manifesto should be of interest to all MR readers, non-economists may be troubled by some of the technical terms used. The following explanations are offered in the hope that they will remove possible stumbling blocks.",
+        "summary": "The source text is the table of contents for The Theory of Choice: A Critical Guide, listing an introduction and 18 chapters across individual, interactive, and collective choice. It provides only chapter titles and keywords with no substantive explanations, definitions, or analysis.",
         "whyItHelps": [
-          "Mentions marginal, firms, microeconomics, households from your notes."
+          "The chapter title '2. Consumer Theory' topically corresponds to the notes on households choosing bundles that maximise utility subject to a budget constraint, but offers no explanatory support",
+          "The chapter titles '7. Game Theory' and '9. Game Theory Applied' topically correspond to the notes on oligopoly depending on strategic interaction, but offer no explanatory support"
         ],
         "weakPoints": [
-          "Does not mention utility, price, consumer, choice."
+          "The source text is too thin to judge substantive help because it contains only chapter titles with no content on budget constraints, marginal utility, or demand curves",
+          "It provides no coverage of the notes' firms and market structure content on perfect competition as price takers, monopoly output restriction above marginal cost, or deadweight loss",
+          "It gives no mechanisms or definitions needed by the notes for utility maximization or oligopolistic strategic interaction"
         ],
         "keyPoints": [
-          "While the manifesto should be of interest to all MR readers, non-economists may be troubled by some of the technical terms used.",
-          "The following explanations are offered in the hope that they will remove possible stumbling blocks.",
-          "Microeconomics (or micro-theory) deals with the economic behavior of individual firms and households."
+          "The source is organized into three parts: Individual Choice, Interactive Choice, and Collective Choice",
+          "Part I includes chapters titled Rationality, Consumer Theory, and How People Choose",
+          "Part II includes chapters titled Game Theory, Bargaining, and Game Theory Applied"
         ],
-        "relevance": 33,
+        "relevance": 15,
         "basedOn": "abstract"
       },
-      "status": "new"
+      "status": "new",
+      "createdAt": 1792486620000
     },
     {
       "pageId": "seed-macro",
-      "sourceId": "430a25a120218f1a",
+      "sourceId": "87a0a731b92e62f2",
       "folderId": "seed-economics",
       "fitGap": {
-        "summary": "We estimate a forward-looking monetary policy reaction function for the postwar United States economy, before and after Volcker's appointment as Fed Chairman in 1979. Our results point to substantial differences in the estimated rule across periods.",
+        "summary": "This paper presents a use case for macroeconomic models for the structural analysis of Gross Domestic Product. It offers a snapshot of GDP evolution using econometric models built in EViews and assessed with statistical tests.",
         "whyItHelps": [
-          "Mentions output, inflation, policy from your notes."
+          "Supports the notes' content that 'Gross domestic product measures total output' by focusing on structural analysis of GDP and its evolution."
         ],
         "weakPoints": [
-          "Does not mention measures, aggregate, macroeconomics, gross."
+          "Source is too thin to judge in detail, as only title and abstract are available with no results or model specifics.",
+          "Does not cover the notes' need on aggregate demand and aggregate supply explaining short-run swings in output and the price level.",
+          "Does not cover the notes' need on the Phillips curve linking unemployment and inflation.",
+          "Does not cover the notes' need on central banks using interest rates to manage inflation, nor fiscal policy changes and the multiplier."
         ],
         "keyPoints": [
-          "We estimate a forward-looking monetary policy reaction function for the postwar United States economy, before and after Volcker's appointment as Fed Chairman in",
-          "Our results point to substantial differences in the estimated rule across periods.",
-          "In particular, interest rate policy in the Volcker-Greenspan period appears to have been much more sensitive to changes in expected inflation than in the pre-Vo"
+          "Presents macroeconomic models as a tool for structural analysis of Gross Domestic Product.",
+          "Offers a snapshot on GDP evolution.",
+          "Econometric models are designed with EViews software and evaluated through statistical tests."
         ],
         "relevance": 25,
         "basedOn": "abstract"
       },
-      "status": "accepted"
+      "status": "accepted",
+      "createdAt": 1792141200000
     },
     {
       "pageId": "seed-macro",
-      "sourceId": "adaebede21b9ec7a",
+      "sourceId": "cccadb65270ef800",
       "folderId": "seed-economics",
       "fitGap": {
-        "summary": "This paper investigates the impact of tax changes on economic activity. We use the narrative record, such as presidential speeches and Congressional reports, to identify the size, timing, and principal motivation for all major postwar tax policy actions.",
+        "summary": "The source describes macroeconomic indicators as tools to analyze overall economic growth or decline and to help the state determine economic policy. It defines GDP as the market value of all final goods and services produced within a country's territory over one year and notes its movement through production, distribution, redistribution and use.",
         "whyItHelps": [
-          "Mentions output, measures, policy, changes from your notes."
+          "Directly supports 'Gross domestic product measures total output' by defining GDP as the market value of final goods and services.",
+          "Broadly relates to 'They help the state determine its economic policy' but without the notes' specific interest-rate and fiscal-policy mechanisms."
         ],
         "weakPoints": [
-          "Does not mention inflation, aggregate, fiscal, macroeconomics."
+          "Does not cover aggregate demand and aggregate supply or short-run swings in output and the price level.",
+          "Does not cover the Phillips curve link between unemployment and inflation.",
+          "Does not cover central banks using interest rates, fiscal policy changes to spending and taxation, or the multiplier."
         ],
         "keyPoints": [
-          "This paper investigates the impact of tax changes on economic activity.",
-          "We use the narrative record, such as presidential speeches and Congressional reports, to identify the size, timing, and principal motivation for all major postw",
-          "This analysis allows us to separate legislated changes into those taken for reasons related to prospective economic conditions and those taken for more exogenou"
+          "Macroeconomic indicators are used to analyze the state of the economy as a whole, its growth or decline.",
+          "The system of indicators visualizes GDP and stages of its movement: production, distribution, redistribution and use.",
+          "GDP is the market value of all final goods and services created in the territory of the country for one year, regardless of who created them."
         ],
-        "relevance": 33,
+        "relevance": 35,
         "basedOn": "abstract"
       },
-      "status": "new"
+      "status": "new",
+      "createdAt": 1792486500000
     },
     {
       "pageId": "seed-macro",
-      "sourceId": "bf2a92f0e80eb1b4",
+      "sourceId": "14067f6ca5e14078",
       "folderId": "seed-economics",
       "fitGap": {
-        "summary": "The worries expressed by Alan Greenspan that the long run economic growth of the United States will fade away due to increasing burden of entitlements motivated us to empirically investigate the impact of entitlements of key macroeconomic variables. To examine this contemporary issue, we estimate a vector error-correction model is used to analyze the impact of entitlements on the price level, real output, and the long-term interest rate.",
+        "summary": "This paper presents macro-economic models for the structural analysis of Gross Domestic Product, covering the theoretical foundation and a snapshot of GDP evolution. The proposed econometric models were built in EViews and their performance and reliability are described through statistical tests.",
         "whyItHelps": [
-          "Mentions output from your notes."
+          "Supports the specific note content that 'Gross domestic product measures total output' by providing theoretical foundation and analysis models for GDP and its evolution."
         ],
         "weakPoints": [
-          "Does not mention inflation, measures, aggregate, policy."
+          "Does not cover the notes' aggregate demand and aggregate supply explanation of short-run swings in output and the price level.",
+          "Does not cover the notes' Phillips curve link between unemployment and inflation.",
+          "Does not cover the notes' policy topics: central banks using interest rates to manage inflation, fiscal policy changes to spending and taxation, or the multiplier.",
+          "Source text is only title plus abstract and is too thin to judge detailed findings, data, or conclusions."
         ],
         "keyPoints": [
-          "The worries expressed by Alan Greenspan that the long run economic growth of the United States will fade away due to increasing burden of entitlements motivated",
-          "To examine this contemporary issue, we estimate a vector error-correction model is used to analyze the impact of entitlements on the price level, real output, a",
-          "The results show that a shock to entitlements leads to decrease in output and lends support to the assertion made by Alan Greenspan."
+          "Objective is structural analysis of Gross Domestic Product using macro economical models.",
+          "Paper introduces theoretical foundation of the model and offers a snapshot on GDP evolution.",
+          "Econometric models are designed with EViews software and assessed for performance and reliability via statistical tests."
         ],
-        "relevance": 8,
+        "relevance": 30,
         "basedOn": "abstract"
       },
-      "status": "new"
+      "status": "new",
+      "createdAt": 1792486440000
     },
     {
       "pageId": "seed-macro",
-      "sourceId": "5c16063e6a01b14f",
+      "sourceId": "c7acb32233a211ae",
       "folderId": "seed-economics",
       "fitGap": {
-        "summary": "In this paper, we test predictions of a new theory of macroeconomics, called \"thermal macroeconomics. \" The theory aims to apply the mathematical structure of classical thermodynamics, including analogues of temperature and entropy, to predict aspects of the aggregate behaviour of populations of economic agents without analyzing their detailed interactions.",
+        "summary": "This paper proposes a category-theory framework for Argentina's bimonetary economy to model evolving relationships among inflation expectations, interest rates, and currency demand using 2018-2023 data. It finds structural misalignment between equilibrium and observed exchange rates, proposes a new devaluation-risk indicator, and claims stronger policy analysis and forecasting with machine learning.",
         "whyItHelps": [
-          "Mentions aggregate, macroeconomics from your notes."
+          "Supports the notes content on interest rates and inflation by modeling relationships involving inflation expectations, interest rates, and currency demand.",
+          "Supports the broad notes content on Policy and policy analysis by offering a framework claimed for policy analysis and forecasting."
         ],
         "weakPoints": [
-          "Does not mention output, inflation, measures, policy."
+          "Does not cover notes need for gross domestic product as total output.",
+          "Does not cover notes need for aggregate demand and aggregate supply or Phillips curve unemployment-inflation link.",
+          "Does not cover notes need for central banks using interest rates to manage inflation, nor fiscal policy spending, taxation, and the multiplier."
         ],
         "keyPoints": [
-          "In this paper, we test predictions of a new theory of macroeconomics, called \"thermal macroeconomics.",
-          "\" The theory aims to apply the mathematical structure of classical thermodynamics, including analogues of temperature and entropy, to predict aspects of the agg",
-          "We test the theory by comparing its predictions with the behaviour of a variety of simulated micro-economies in which goods and money can be exchanged between a"
+          "Traditional static algebraic macro models fail to capture Argentina's bimonetary dynamics.",
+          "Category theory concepts like objects, morphisms, functors, limits and colimits model evolving links among inflation expectations, interest rates and currency demand for 2018-2023.",
+          "Findings show misalignment between equilibrium and observed exchange rates and propose a new aggregate devaluation-risk indicator with machine-learning synergy."
         ],
-        "relevance": 17,
+        "relevance": 20,
         "basedOn": "abstract"
       },
-      "status": "new"
+      "status": "new",
+      "createdAt": 1792486380000
     },
     {
       "pageId": "seed-supply",
-      "sourceId": "c2ec3d664d5e69df",
+      "sourceId": "66ba843166f033d7",
       "folderId": "seed-economics",
       "fitGap": {
-        "summary": "Supply and demand is perhaps one of the most fundamental concepts of economics and it is the backbone of a market economy. Demand refers to how much (quantity) of a product or service is desired by buyers.",
+        "summary": "The paper argues that when decisions are intertemporally related, a constraint can be binding even if it does not prevent the variable from taking its unrestricted current equilibrium value. Specifically, a price ceiling above current equilibrium price can alter current price and its removal can change price, casting doubt on the view that petroleum price ceilings are not binding when prices are below ceilings.",
         "whyItHelps": [
-          "Mentions supply, price, demand, quantity from your notes."
+          "Supports the notes' content 'A price ceiling below equilibrium causes a shortage' by examining when price ceilings relative to equilibrium price are binding",
+          "Supports the notes' content 'A market clears where quantity supplied equals quantity demanded' and equilibrium price by showing current equilibrium price can be altered by future constraints"
         ],
         "weakPoints": [
-          "Does not mention equilibrium, causes, elasticity, clears."
+          "Does not explain the notes' core equilibrium mechanism that quantity supplied equals quantity demanded to clear a market",
+          "Does not cover the notes' price floor above equilibrium causing surplus, elasticity, necessities being inelastic, or supply-curve shifts from disruptions",
+          "Abstract-only discussion of intertemporal binding constraints is too thin to judge shortage/surplus outcomes or elasticity measurement"
         ],
         "keyPoints": [
-          "Supply and demand is perhaps one of the most fundamental concepts of economics and it is the backbone of a market economy.",
-          "Demand refers to how much (quantity) of a product or service is desired by buyers.",
-          "The quantity demanded is the amount of a product people are willing to buy at a certain price; the relationship between price and quantity demanded is known as "
+          "A constraint is normally thought binding only if it blocks the unrestricted current equilibrium value",
+          "With intertemporally related decisions, a price ceiling above current equilibrium price can still alter current price",
+          "Removing a price ceiling that exceeds current price can change that price, doubting claims that petroleum ceilings are non-binding"
         ],
-        "relevance": 58,
+        "relevance": 50,
         "basedOn": "abstract"
       },
-      "status": "new"
+      "status": "new",
+      "createdAt": 1792486260000
     },
     {
       "pageId": "seed-supply",
-      "sourceId": "09c373ac511e637e",
+      "sourceId": "523b01f3b1001d2a",
       "folderId": "seed-economics",
       "fitGap": {
-        "summary": "This article provides partial information about demand and supply and the relationship between them. In addition, we can learn about the market balance in the article.",
+        "summary": "When price is restricted for a good with no secondary markets, excess demand means the good will not be allocated to buyers who value it most. For U.S. residential natural gas under 1954-89 price ceilings, a household-level discrete-continuous demand model estimates this allocative cost averaged $3.6 billion annually, nearly tripling previous estimates of net welfare loss to U.S. consumers.",
         "whyItHelps": [
-          "Mentions supply, demand, market from your notes."
+          "Directly supports the note that 'A price ceiling below equilibrium causes a shortage' by describing excess demand under price ceilings and quantifying it in the 1954-89 U.S. residential natural gas market.",
+          "Extends the notes on supply and demand and Equilibrium by showing a welfare consequence of preventing market clearing: misallocation away from buyers who value the good most."
         ],
         "weakPoints": [
-          "The abstract is too thin to judge.",
-          "Does not mention price, equilibrium, quantity, causes."
+          "Does not cover the note that 'a price floor above it causes a surplus'.",
+          "Does not cover the Elasticity notes on price elasticity of demand, inelastic necessities, or supply-chain disruptions shifting supply left and raising prices.",
+          "Does not define or explain the note that 'A market clears where quantity supplied equals quantity demanded'."
         ],
         "keyPoints": [
-          "This article provides partial information about demand and supply and the relationship between them.",
-          "In addition, we can learn about the market balance in the article.",
-          "The article describes the view of supply demand in Uzbekistan and the world."
+          "Without secondary markets, price ceilings with excess demand prevent allocation to highest-value buyers.",
+          "U.S. residential natural gas was subject to price ceilings during 1954-89.",
+          "Estimated allocative cost averaged $3.6 billion annually, nearly tripling previous estimates of net welfare loss to U.S. consumers."
         ],
-        "relevance": 25,
+        "relevance": 45,
         "basedOn": "abstract"
       },
-      "status": "new"
+      "status": "new",
+      "createdAt": 1792486200000
     },
     {
       "pageId": "seed-supply",
-      "sourceId": "ae431aa5e7643e1f",
+      "sourceId": "141c56dc194cba11",
       "folderId": "seed-economics",
       "fitGap": {
-        "summary": ": In everyday life, there will be supply and demand in the fulfillment in a human’s needs. The interaction of demand by consumers and supply by producers occurs in a market.",
+        "summary": "The source defines a general information equilibrium model with ideal information transfer where supply is the information destination, demand is the source, and price detects their exchange, recovering the traditional supply-demand diagram. It then applies the framework to macroeconomics, reproducing AD-AS, IS-LM, quantity theory and Solow-Swan in specific limits and yielding empirically accurate models of inflation and interest rates to motivate 'statistical economics.'",
         "whyItHelps": [
-          "Mentions supply, price, demand, quantity from your notes."
+          "Supports the notes' 'Supply and demand' and 'Equilibrium' and 'A market clears where quantity supplied equals quantity demanded' by stating it derives the supply-demand relationship and recovers the properties of the traditional economic supply-demand diagram."
         ],
         "weakPoints": [
-          "Does not mention equilibrium, causes, elasticity, clears."
+          "Does not cover the notes' price ceiling below equilibrium causes a shortage and price floor above it causes a surplus.",
+          "Does not cover the notes' elasticity content that price elasticity of demand measures buyer response and necessities tend to be inelastic.",
+          "Does not cover the notes' disruptions in supply chains shift the supply curve left and raise prices, and as an abstract it is too thin to judge detailed mechanisms."
         ],
         "keyPoints": [
-          ": In everyday life, there will be supply and demand in the fulfillment in a human’s needs.",
-          "The interaction of demand by consumers and supply by producers occurs in a market.",
-          "In a market, a consumer makes a demand to meet their daily needs."
+          "Defines information equilibrium with ideal information transfer where supply is information destination, demand is information source, and price is detector of exchange.",
+          "Recovers properties of the traditional economic supply-demand diagram and extends to AD-AS, IS-LM in low inflation limit, quantity theory in high inflation limit, and Solow-Swan model.",
+          "Produces empirically accurate models of inflation and interest rates and motivates 'statistical economics' analogous to statistical mechanics for thermodynamics."
         ],
-        "relevance": 42,
+        "relevance": 30,
         "basedOn": "abstract"
       },
-      "status": "new"
+      "status": "new",
+      "createdAt": 1792486140000
     },
     {
       "pageId": "seed-supply",
-      "sourceId": "1db1d36da53abe8a",
+      "sourceId": "e3b76c0c52928b54",
       "folderId": "seed-economics",
       "fitGap": {
-        "summary": "Implementing a set of microeconomic criteria, we develop price dynamics equations using a function of demand/supply with key symmetry properties. The function of demand/supply can be linear or nonlinear.",
+        "summary": "The paper models Bitcoin market equilibrium by combining consumers' transaction demand for bitcoins, excluding hoarding, with miners' supply of hashrate, arguing the falling block reward will not significantly affect the exchange rate as fees become a larger share of miner revenue. It concludes the exchange rate cannot be determined from that equilibrium, supporting the hypothesis that Bitcoin price has no economic fundamentals and moves with hoarding and speculative demand, while higher fees risk loss to Ethereum and lower miner revenues may weaken Bitcoin's store-of-value perception.",
         "whyItHelps": [
-          "Mentions price, supply, demand from your notes."
+          "Supports the notes' Equilibrium statement that 'A market clears where quantity supplied equals quantity demanded' by analyzing a market equilibrium where transaction demand is matched with hashrate supplied by miners.",
+          "Illustrates the notes' Supply and demand topic by combining transaction demand by consumers with supply of hashrate by miners in a simple equilibrium model."
         ],
         "weakPoints": [
-          "Does not mention equilibrium, quantity, causes, elasticity."
+          "Does not cover the notes' price-controls content: a price ceiling below equilibrium causes a shortage and a price floor above it causes a surplus.",
+          "Does not cover the notes' elasticity content: price elasticity of demand measures buyer response to price change and necessities tend to be inelastic.",
+          "Does not cover the notes' supply-shift content: disruptions in supply chains shift the supply curve left and raise prices."
         ],
         "keyPoints": [
-          "Implementing a set of microeconomic criteria, we develop price dynamics equations using a function of demand/supply with key symmetry properties.",
-          "The function of demand/supply can be linear or nonlinear.",
-          "The type of function determines the nature of the tail of the distribution based on the randomness in the supply and demand."
+          "The model matches consumers' transaction demand for bitcoins (excluding hoarding) with miners' supplied hashrate to analyze market equilibrium.",
+          "Decreasing block reward is argued to have no significant effect on Bitcoin's exchange rate, with transaction fees becoming a larger part of miner revenue.",
+          "Bitcoin's exchange rate cannot be determined from that equilibrium, implying price has no economic fundamentals and fluctuates with hoarding and speculative demand."
         ],
-        "relevance": 25,
+        "relevance": 30,
         "basedOn": "abstract"
       },
-      "status": "new"
-    },
-    {
-      "pageId": "seed-pestel",
-      "sourceId": "b88560df60f44b53",
-      "folderId": "seed-economics",
-      "fitGap": {
-        "summary": "The paper will discuss groups of factors which have impact on the entrepreneurship activities. These groups are: the PESTEL framework and the Human factor.",
-        "whyItHelps": [
-          "Mentions factors, pestel, framework, political from your notes."
-        ],
-        "weakPoints": [
-          "Does not mention analysis, external, well, scans."
-        ],
-        "keyPoints": [
-          "The paper will discuss groups of factors which have impact on the entrepreneurship activities.",
-          "These groups are: the PESTEL framework and the Human factor.",
-          "Analyses will be making on the political, technological, environmental, legal and socio-cultural conditions and on the industry’s."
-        ],
-        "relevance": 33,
-        "basedOn": "abstract"
-      },
-      "status": "accepted"
+      "status": "new",
+      "createdAt": 1792486080000
     },
     {
       "pageId": "seed-pestel",
       "sourceId": "56b265cb755d9a18",
       "folderId": "seed-economics",
       "fitGap": {
-        "summary": "THE acronym PEST aims to make us look at political, economic, social and technological pressures for change when assessing the business environment. Here, Harvey Carruthers discusses some of the factors that might need to be considered when applying the PEST model to veterinary practice.",
+        "summary": "The source defines PEST as a lens for political, economic, social and technological pressures for change when assessing the business environment. It presents Harvey Carruthers discussing factors to consider when applying the PEST model to veterinary practice.",
         "whyItHelps": [
-          "Mentions business, factors, environment, political from your notes."
+          "Supports the notes' framework point that analysis scans the external business environment across political, economic, social and technological factors.",
+          "Supports the notes' framework point that firms use it in strategic planning when assessing the business environment."
         ],
         "weakPoints": [
-          "The abstract is too thin to judge.",
-          "Does not mention analysis, pestel, well, framework."
+          "The provided source text is too thin to judge, consisting only of title and abstract with no detailed factors.",
+          "It does not cover the notes' environmental and legal factors needed to complete PESTEL.",
+          "It does not cover the notes' guidance on ranking factors by impact and likelihood or pairing with SWOT analysis."
         ],
         "keyPoints": [
-          "THE acronym PEST aims to make us look at political, economic, social and technological pressures for change when assessing the business environment.",
-          "Here, Harvey Carruthers discusses some of the factors that might need to be considered when applying the PEST model to veterinary practice."
+          "PEST stands for political, economic, social and technological pressures for change.",
+          "PEST is used when assessing the business environment.",
+          "The source applies PEST factors to veterinary practice via Harvey Carruthers."
         ],
-        "relevance": 42,
+        "relevance": 45,
         "basedOn": "abstract"
       },
-      "status": "new"
+      "status": "accepted",
+      "createdAt": 1792141200000
     },
     {
       "pageId": "seed-pestel",
-      "sourceId": "d851a9708814fd67",
+      "sourceId": "ce0ef1c61d17a376",
       "folderId": "seed-economics",
       "fitGap": {
-        "summary": "In this research we are identifying the processes that are key factors for change in the agricultural environment. The PESTLE analysis is used to sort the state of every of the panels and find which one has the most impact.",
+        "summary": "The abstract argues that commercial enterprises in regional markets must continuously monitor environmental changes affecting their business, with PEST- and SWOT-analysis as the most popular techniques for analyzing the external environment. It claims these analyses reveal enterprise strengths and weaknesses, identify short-term threats, and help optimize operations and strengthen competitive position.",
         "whyItHelps": [
-          "Mentions analysis, factors, framework, environment from your notes."
+          "Supports the note that 'PESTEL analysis scans the external business environment' by presenting PEST- and SWOT-analysis as techniques developed to effectively analyze the external environment.",
+          "Supports the note that 'It pairs well with SWOT analysis, which adds internal strengths and weaknesses' by stating the results can reveal not only strengths but also weaknesses in the enterprise."
         ],
         "weakPoints": [
-          "Does not mention pestel, well, scans, external."
+          "Does not cover the notes' six PESTEL factors across political, economic, social, technological, environmental and legal factors.",
+          "Does not cover the notes' point that a useful analysis ranks factors by impact and likelihood instead of listing them.",
+          "Does not cover the notes' use in strategic planning before entering a market; it only discusses monitoring the regional market and optimizing current functioning."
         ],
         "keyPoints": [
-          "In this research we are identifying the processes that are key factors for change in the agricultural environment.",
-          "The PESTLE analysis is used to sort the state of every of the panels and find which one has the most impact.",
-          "In our case we are identifying macroeconomic factors that have influence on the future development of the sector of agriculture in Bulgaria."
+          "Commercial enterprises must constantly monitor environmental changes that directly impact business.",
+          "PEST- and SWOT-analysis are the most popular techniques for analyzing the external environment.",
+          "The analysis results reveal strengths and weaknesses, identify short-term threats, and help optimize functioning and competitive position."
         ],
-        "relevance": 50,
+        "relevance": 55,
         "basedOn": "abstract"
       },
-      "status": "new"
+      "status": "new",
+      "createdAt": 1792485960000
     },
     {
       "pageId": "seed-pestel",
-      "sourceId": "5602d6f72a4ddab4",
+      "sourceId": "d42b5cc5d0e3038a",
       "folderId": "seed-economics",
       "fitGap": {
-        "summary": "Businesses can’t control external factors but must respond to them. These political, economic, social, technological, environmental and competitive factors are represented by the acronym PESTEC.",
+        "summary": "The source describes PESTLE analysis as a strategic management tool for evaluating macro-environmental external factors across political, economic, social, technological, legal, and environmental dimensions. It presents its elements, history, benefits, drawbacks, and role in building resilient strategies, sustainable practices, and long-term competitive success in global strategic planning.",
         "whyItHelps": [
-          "Mentions factors, external, strategic, impact from your notes."
+          "Supports the note that 'PESTEL analysis scans the external business environment across political, economic, social, technological, environmental and legal factors' by listing the same six factors for analyzing external response.",
+          "Supports the note that 'Firms use it in strategic planning before entering a market' by describing PESTLE as vital in modern practices of strategic planning within global business environments for long-term success and competitive position."
         ],
         "weakPoints": [
-          "Does not mention analysis, pestel, well, framework."
+          "Does not cover the notes' point that 'A useful analysis ranks factors by impact and likelihood instead of listing them.'",
+          "Does not cover the notes' point that 'It pairs well with SWOT analysis, which adds internal strengths and weaknesses.'"
         ],
         "keyPoints": [
-          "Businesses can’t control external factors but must respond to them.",
-          "These political, economic, social, technological, environmental and competitive factors are represented by the acronym PESTEC.",
-          "This research is based on secondary data following the methodology of literature review for different periods of time to understand which of these 5 factors has"
+          "PESTLE analysis evaluates macro-environmental external factors: political, economic, social, technological, legal, and environmental.",
+          "It is used to build resilient organizational strategies and improve external response.",
+          "It supports sustainable practices and long-term success and competitive position in global strategic planning."
         ],
-        "relevance": 33,
+        "relevance": 60,
         "basedOn": "abstract"
       },
-      "status": "new"
+      "status": "new",
+      "createdAt": 1792485900000
+    },
+    {
+      "pageId": "seed-pestel",
+      "sourceId": "7172c28c58348d87",
+      "folderId": "seed-economics",
+      "fitGap": {
+        "summary": "The paper presents the use and importance of the PESTEL model for analyzing ecological factors in the business environment. It covers common challenges of environmental analysis and examples of positive practice from the Republic of Serbia to help organizations improve ecological performance by using opportunities and eliminating threats.",
+        "whyItHelps": [
+          "Supports the note that 'PESTEL analysis scans the external business environment' by stating external factors are analyzed and monitored using PESTEL to reveal opportunities and threats",
+          "Supports the note that 'Firms use it in strategic planning before entering a market' by framing PESTEL as a tool for strategic decision-making and adapting to market conditions"
+        ],
+        "weakPoints": [
+          "Does not cover five of the six factors in the notes framework: political, economic, social, technological and legal factors",
+          "Does not address using it well by ranking factors by impact and likelihood instead of listing them",
+          "Does not address pairing with SWOT analysis to add internal strengths and weaknesses"
+        ],
+        "keyPoints": [
+          "PESTEL analysis is used to analyze and monitor external environmental factors",
+          "PESTEL provides insight into opportunities and threats to adapt to new market conditions",
+          "Ecological analysis involves challenges and positive practice examples from Serbia to improve ecological performance"
+        ],
+        "relevance": 35,
+        "basedOn": "abstract"
+      },
+      "status": "new",
+      "createdAt": 1792485840000
+    },
+    {
+      "pageId": "seed-remote-lit",
+      "sourceId": "93dbe03e855d6bcb",
+      "folderId": "seed-remote",
+      "fitGap": {
+        "summary": "The source presents hybrid team management as people-oriented and centered on employees' choices and human relations. It states that effective hybrid teams need transparent, timely, unambiguous communication and ego-free leadership.",
+        "whyItHelps": [
+          "Partly supports the Wellbeing note that 'Hybrid schedules of two or three office days appear to balance focus work with team contact' by emphasizing people-oriented management and critical human relations.",
+          "Partly supports the Productivity note about 'slower collaboration' in software teams by stating that effective communication must be transparent, on time and without ambiguity."
+        ],
+        "weakPoints": [
+          "The abstract is too thin to judge in detail, providing only five bullet points with no data, methods, or findings.",
+          "Does not cover the Productivity notes on call centre experiments finding higher output or software teams reporting slower collaboration and fewer new ideas.",
+          "Does not cover the Wellbeing notes on saving commuting time, reports of more isolation, or that two or three office days balance focus work with team contact."
+        ],
+        "keyPoints": [
+          "Employees' choices are at the heart of a hybrid team.",
+          "Hybrid team management processes are people oriented and human relations are critical in hybrid organizations.",
+          "Effective communication is transparent, on time and without ambiguity and requires ego free leadership."
+        ],
+        "relevance": 35,
+        "basedOn": "abstract"
+      },
+      "status": "accepted",
+      "createdAt": 1792141200000
+    },
+    {
+      "pageId": "seed-remote-lit",
+      "sourceId": "e7af86f4b3f18f85",
+      "folderId": "seed-remote",
+      "fitGap": {
+        "summary": "This paper uses nearly three years of monthly longitudinal surveys to link remote workers' travel choices to employer, task, policy, coordination and attitude factors. It finds substantial work outside the home and distinct travel patterns for third-place commutes and hybrid arrangements.",
+        "whyItHelps": [
+          "Marginally informs the Wellbeing note that remote workers save commuting time by showing third-place commutes are shorter and less peak-period.",
+          "Marginally informs the Wellbeing note on hybrid schedules by showing hybrid arrangements are associated with more non-work trips."
+        ],
+        "weakPoints": [
+          "Does not cover the Productivity note content on call-centre output gains or software-team collaboration and idea generation.",
+          "Does not cover the Wellbeing note content on isolation, saved commuting time as wellbeing benefit, or two-to-three-day hybrid balance of focus work and team contact."
+        ],
+        "keyPoints": [
+          "Approximately one third of remote work hours occur outside the home, accounting for over one third of commuting trips.",
+          "Commutes to third places are shorter, less peak-period, and more likely to use sustainable modes than commutes to employer workplaces.",
+          "Hybrid work is associated with more non-work trips than fully remote or fully in-person work."
+        ],
+        "relevance": 25,
+        "basedOn": "abstract"
+      },
+      "status": "new",
+      "createdAt": 1792485720000
+    },
+    {
+      "pageId": "seed-remote-lit",
+      "sourceId": "650230ec31b88ed0",
+      "folderId": "seed-remote",
+      "fitGap": {
+        "summary": "The source reports two field quasi-experiments testing a change from a 5/40 schedule to a 4/40 schedule (N=140) and to flextime (N=102). It found organizational effectiveness improved only where specific organizational needs were met and personal-activity interference fell only where specific difficulties existed, with the strongest effects on attitudes toward the schedules plus a mild general positive effect.",
+        "whyItHelps": [
+          "Provides only indirect context for the notes' Productivity point about mixed effects, since organizational effectiveness was enhanced only where specific organizational needs were met.",
+          "Provides only indirect context for the notes' Wellbeing point about work-personal balance, since interference with personal activities was reduced where employees had experienced specific difficulties."
+        ],
+        "weakPoints": [
+          "Does not cover the notes' Productivity content on working from home, call centre higher output, or software teams' slower collaboration and fewer new ideas.",
+          "Does not cover the notes' Wellbeing content on commuting-time savings, isolation, or hybrid schedules of two or three office days balancing focus and contact.",
+          "Too thin to judge productivity or wellbeing claims about remote/hybrid work because it tests compressed workweeks and flextime, not work location."
+        ],
+        "keyPoints": [
+          "Study 1 (N=140) changed employees from 5/40 to 4/40 for four months then back to 5/40; Study 2 (N=102) changed employees from 5/40 to flextime.",
+          "Effects matched pre-intervention employee surveys: organizational effectiveness improved where specific organizational needs were met and interference with personal activities fell where specific difficulties existed.",
+          "The most powerful effect was on attitudes toward the specific work schedules, plus a mild positive possibly Hawthorne effect on general worker reactions."
+        ],
+        "relevance": 15,
+        "basedOn": "abstract"
+      },
+      "status": "new",
+      "createdAt": 1792485660000
+    },
+    {
+      "pageId": "seed-remote-lit",
+      "sourceId": "6899d24706058b31",
+      "folderId": "seed-remote",
+      "fitGap": {
+        "summary": "Using building access data for ~43k employees, the study finds office attendance was 29% higher when a manager was present and 16% higher with a 1-SD increase in teammates present. Coattendance was stronger for recent hires, Corporate or Operations roles, and shared spaces, suggesting voluntary schedule alignment that could be supported by tools or guidance.",
+        "whyItHelps": [
+          "Provides background for the note on 'slower collaboration' among software teams by quantifying teammate and manager coattendance as a prerequisite for in-person collaboration.",
+          "Provides context for the note on 'Hybrid schedules of two or three office days appear to balance focus work with team contact' by showing evidence of voluntary alignment of in-office schedules."
+        ],
+        "weakPoints": [
+          "Does not address the notes' productivity claims about higher output in call centre experiments or slower collaboration and fewer new ideas in software teams.",
+          "Does not address the notes' wellbeing claims about commuting time savings versus isolation.",
+          "Does not evaluate the notes' claim that hybrid schedules of two or three office days balance focus work with team contact."
+        ],
+        "keyPoints": [
+          "Employee attendance was 29% higher when their manager was present in the office.",
+          "A 1-SD increase in share of teammates present yielded a 16% increase in individual attendance.",
+          "Greater coattendance was observed among recently hired employees, Corporate or Operations roles, and shared office spaces."
+        ],
+        "relevance": 20,
+        "basedOn": "abstract"
+      },
+      "status": "new",
+      "createdAt": 1792485600000
+    },
+    {
+      "pageId": "seed-remote-method",
+      "sourceId": "52335ef7cafb45fe",
+      "folderId": "seed-remote",
+      "fitGap": {
+        "summary": "The source addresses analysis of method comparison studies, noting that regression analysis is standard but limited and proposing the difference plot as an alternative. It compared Deming's regression with correlation coefficients to difference plots on five methods and found the difference plot yielded more relevant information in most cases.",
+        "whyItHelps": [
+          "Supports critical appraisal of the notes' 'Regression of weekly output on days in the office' by documenting limitations of regression analysis.",
+          "Supports consideration of alternatives to the notes' regression approach by describing the difference plot as an alternative presentation."
+        ],
+        "weakPoints": [
+          "Does not cover the notes' survey of employees at three firms or comparison of fully remote, hybrid and office-based teams.",
+          "Does not address self-reported focus time, meeting load, weekly output, days in office, or controls for role, tenure and team size.",
+          "Does not address manager interviews and is set in method-comparison of five methods rather than workplace work-arrangement research."
+        ],
+        "keyPoints": [
+          "Regression analysis is the commonly accepted method for analysing method comparison data but has limitations.",
+          "The difference plot is presented as a graphical alternative to least squares regression analysis.",
+          "Comparison of Deming's regression with correlation versus difference plots on five methods found the difference plot more informative in most cases."
+        ],
+        "relevance": 25,
+        "basedOn": "abstract"
+      },
+      "status": "new",
+      "createdAt": 1792485480000
+    },
+    {
+      "pageId": "seed-remote-method",
+      "sourceId": "26bcfc8e9d323a1c",
+      "folderId": "seed-remote",
+      "fitGap": {
+        "summary": "The source is a guide for students and researchers on regression and correlation organized into three parts for immediate, next-week, and further learning. It lists building models, multiple and categorical predictors, assumptions and issues, plus nonlinear, logistic, moderator/mediator, multilevel and structural equation modelling topics.",
+        "whyItHelps": [
+          "Supports the notes' 'Regression of weekly output on days in the office, controlling for role, tenure and team size' because it explicitly includes multiple regression and categorical independent variables."
+        ],
+        "weakPoints": [
+          "Does not cover the notes' survey of employees at three firms comparing self-reported focus time and meeting load across fully remote, hybrid and office-based teams.",
+          "Does not cover the notes' interviews with managers or provide any results for weekly output, role, tenure, or team size.",
+          "The source text provided is too thin to judge, consisting only of a title and contents list with no methods, data, or findings to evaluate."
+        ],
+        "keyPoints": [
+          "Covers building models with regression and correlation including more than one independent variable",
+          "Covers assumptions and issues in regression analysis",
+          "Covers advanced extensions including nonlinear and logistic regression, moderator and mediator analysis, and multilevel modelling and structural equation modelling"
+        ],
+        "relevance": 40,
+        "basedOn": "abstract"
+      },
+      "status": "new",
+      "createdAt": 1792485420000
+    },
+    {
+      "pageId": "seed-remote-method",
+      "sourceId": "6375224148169816",
+      "folderId": "seed-remote",
+      "fitGap": {
+        "summary": "This study compares focus groups, interviews, and online surveys for eliciting explainability requirements using web-based personnel management software at a large German IT consulting company. It finds interviews most efficient per participant-time while surveys yielded the most needs overall with high redundancy, and recommends a hybrid survey-interview approach with delayed taxonomy introduction.",
+        "whyItHelps": [
+          "Supports the Analysis note that 'Interviews with managers add context to the survey results' by recommending a hybrid approach combining surveys and interviews to balance efficiency and coverage.",
+          "Informs the Design note about 'A survey of employees...' by comparing surveys versus interviews and focus groups on efficiency versus total coverage and redundancy."
+        ],
+        "weakPoints": [
+          "Does not cover the notes' substantive comparison of self-reported focus time and meeting load across fully remote, hybrid and office-based teams.",
+          "Does not cover the notes' Analysis of regression of weekly output on days in the office controlling for role, tenure and team size.",
+          "Does not address the three-firm survey design or manager interviews about work-location context; too thin on quantitative output modeling to judge those note elements."
+        ],
+        "keyPoints": [
+          "Interviews were the most efficient method, capturing the highest number of distinct needs per participant per time spent.",
+          "Surveys with 188 participants collected the most explanation needs overall but had high redundancy.",
+          "Delayed taxonomy introduction resulted in greater number and diversity of needs, supporting a two-phase approach and a hybrid survey-plus-interview recommendation."
+        ],
+        "relevance": 20,
+        "basedOn": "abstract"
+      },
+      "status": "new",
+      "createdAt": 1792485360000
+    },
+    {
+      "pageId": "seed-remote-method",
+      "sourceId": "725aaa1bc0da7464",
+      "folderId": "seed-remote",
+      "fitGap": {
+        "summary": "The source is a 1967 article by R. G. Newton and D. J. Spurrell titled Examples of the Use of Elements for Clarifying Regression Analyses. It appeared in the Journal of the Royal Statistical Society Series C, Vol. 16, No. 2, pp. 165-172.",
+        "whyItHelps": [
+          "At the title level only, it touches the notes' Analysis content 'Regression of weekly output on days in the office' by indicating the paper concerns clarifying regression analyses."
+        ],
+        "weakPoints": [
+          "The provided text is too thin to judge substantive help because no abstract, methods, results, or examples are given.",
+          "It does not cover the notes' survey of employees at three firms or comparisons of self-reported focus time and meeting load across fully remote, hybrid and office-based teams.",
+          "It does not cover the notes' specific regression of weekly output on days in the office, controls for role, tenure and team size, or interviews with managers."
+        ],
+        "keyPoints": [
+          "The source title is Examples of the Use of Elements for Clarifying Regression Analyses.",
+          "The authors are R. G. Newton and D. J. Spurrell.",
+          "It was published in Journal of the Royal Statistical Society Series C, Vol. 16, No. 2 (1967), pp. 165-172."
+        ],
+        "relevance": 10,
+        "basedOn": "abstract"
+      },
+      "status": "new",
+      "createdAt": 1792485300000
     }
   ],
-  "tree": [
-    {
-      "id": "t0",
-      "label": "Microeconomics",
-      "sourceIds": []
-    },
-    {
-      "id": "t0-0",
-      "label": "utility",
-      "parentId": "t0",
-      "sourceIds": [
-        "878559ccda5b6fe3"
-      ]
-    },
-    {
-      "id": "t0-1",
-      "label": "marginal",
-      "parentId": "t0",
-      "sourceIds": []
-    },
-    {
-      "id": "t0-2",
-      "label": "firms",
-      "parentId": "t0",
-      "sourceIds": []
-    },
-    {
-      "id": "t1",
-      "label": "Macroeconomics",
-      "sourceIds": []
-    },
-    {
-      "id": "t1-0",
-      "label": "output",
-      "parentId": "t1",
-      "sourceIds": []
-    },
-    {
-      "id": "t1-1",
-      "label": "inflation",
-      "parentId": "t1",
-      "sourceIds": []
-    },
-    {
-      "id": "t1-2",
-      "label": "measures",
-      "parentId": "t1",
-      "sourceIds": []
-    },
-    {
-      "id": "t2",
-      "label": "Supply and demand",
-      "sourceIds": []
-    },
-    {
-      "id": "t2-0",
-      "label": "price",
-      "parentId": "t2",
-      "sourceIds": [
-        "1db1d36da53abe8a"
-      ]
-    },
-    {
-      "id": "t2-1",
-      "label": "equilibrium",
-      "parentId": "t2",
-      "sourceIds": []
-    },
-    {
-      "id": "t2-2",
-      "label": "quantity",
-      "parentId": "t2",
-      "sourceIds": []
-    },
-    {
-      "id": "t3",
-      "label": "PESTEL",
-      "sourceIds": []
-    },
-    {
-      "id": "t3-0",
-      "label": "analysis",
-      "parentId": "t3",
-      "sourceIds": [
-        "56b265cb755d9a18",
-        "d851a9708814fd67"
-      ]
-    },
-    {
-      "id": "t3-1",
-      "label": "factors",
-      "parentId": "t3",
-      "sourceIds": [
-        "b88560df60f44b53",
-        "5602d6f72a4ddab4"
-      ]
-    },
-    {
-      "id": "t3-2",
-      "label": "well",
-      "parentId": "t3",
-      "sourceIds": []
-    }
-  ]
+  "trees": {
+    "seed-economics": [
+      {
+        "id": "micro",
+        "label": "Microeconomics",
+        "sourceIds": []
+      },
+      {
+        "id": "macro",
+        "label": "Macroeconomics",
+        "sourceIds": []
+      },
+      {
+        "id": "supply",
+        "label": "Supply and Demand",
+        "sourceIds": []
+      },
+      {
+        "id": "pestel",
+        "label": "PESTEL Strategic Analysis",
+        "sourceIds": []
+      },
+      {
+        "id": "micro-consumer",
+        "label": "Consumer Choice Theory",
+        "parentId": "micro",
+        "sourceIds": [
+          "78993e2b865aa92f",
+          "17263e68f2a23b11",
+          "12d68e14dac8bb1b"
+        ]
+      },
+      {
+        "id": "micro-bacterial",
+        "label": "Bacterial Metabolism Choice",
+        "parentId": "micro",
+        "sourceIds": [
+          "91576c2739040cff"
+        ]
+      },
+      {
+        "id": "macro-gdp",
+        "label": "GDP Measurement Models",
+        "parentId": "macro",
+        "sourceIds": [
+          "87a0a731b92e62f2",
+          "cccadb65270ef800",
+          "14067f6ca5e14078"
+        ]
+      },
+      {
+        "id": "macro-modeling",
+        "label": "Macroeconomic Modeling Approaches",
+        "parentId": "macro",
+        "sourceIds": [
+          "c7acb32233a211ae"
+        ]
+      },
+      {
+        "id": "supply-controls",
+        "label": "Price Controls Effects",
+        "parentId": "supply",
+        "sourceIds": [
+          "66ba843166f033d7",
+          "523b01f3b1001d2a"
+        ]
+      },
+      {
+        "id": "supply-equilibrium",
+        "label": "Equilibrium Principles",
+        "parentId": "supply",
+        "sourceIds": [
+          "141c56dc194cba11",
+          "e3b76c0c52928b54"
+        ]
+      },
+      {
+        "id": "pestel-performance",
+        "label": "PEST Performance Tools",
+        "parentId": "pestel",
+        "sourceIds": [
+          "56b265cb755d9a18",
+          "ce0ef1c61d17a376"
+        ]
+      },
+      {
+        "id": "pestel-framework",
+        "label": "PESTEL Framework Dimensions",
+        "parentId": "pestel",
+        "sourceIds": [
+          "d42b5cc5d0e3038a",
+          "7172c28c58348d87"
+        ]
+      }
+    ],
+    "seed-remote": [
+      {
+        "id": "prod",
+        "label": "Productivity Effects",
+        "sourceIds": []
+      },
+      {
+        "id": "prod-out",
+        "label": "Work Output Studies",
+        "parentId": "prod",
+        "sourceIds": [
+          "650230ec31b88ed0"
+        ]
+      },
+      {
+        "id": "prod-collab",
+        "label": "Team Collaboration Issues",
+        "parentId": "prod",
+        "sourceIds": [
+          "93dbe03e855d6bcb"
+        ]
+      },
+      {
+        "id": "well",
+        "label": "Wellbeing Hybrid Work",
+        "sourceIds": []
+      },
+      {
+        "id": "well-travel",
+        "label": "Commuting Travel Impacts",
+        "parentId": "well",
+        "sourceIds": [
+          "e7af86f4b3f18f85"
+        ]
+      },
+      {
+        "id": "well-hybrid",
+        "label": "Hybrid Attendance Balance",
+        "parentId": "well",
+        "sourceIds": [
+          "6899d24706058b31"
+        ]
+      },
+      {
+        "id": "method",
+        "label": "Research Method Design",
+        "sourceIds": []
+      },
+      {
+        "id": "method-survey",
+        "label": "Survey Interview Methods",
+        "parentId": "method",
+        "sourceIds": [
+          "6375224148169816"
+        ]
+      },
+      {
+        "id": "method-reg",
+        "label": "Regression Analysis Guides",
+        "parentId": "method",
+        "sourceIds": [
+          "26bcfc8e9d323a1c",
+          "725aaa1bc0da7464"
+        ]
+      },
+      {
+        "id": "method-comp",
+        "label": "Method Comparison Approach",
+        "parentId": "method",
+        "sourceIds": [
+          "52335ef7cafb45fe"
+        ]
+      }
+    ]
+  }
 }

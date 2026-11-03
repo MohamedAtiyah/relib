@@ -39,6 +39,8 @@ export function SlashMenu({ ctx, sources }: { ctx: SlashContext; sources: Source
     const q = (query ?? "").toLowerCase();
     return [...COMMANDS, ...sourceCommands(sources)]
       .filter((c) => `${c.name} ${c.keywords}`.toLowerCase().includes(q))
+      // a command named like the query beats one that only has it as a keyword
+      .sort((a, b) => Number(b.name.startsWith(q)) - Number(a.name.startsWith(q)))
       .map((c) => new SlashOption(c));
   }, [query, sources]);
 

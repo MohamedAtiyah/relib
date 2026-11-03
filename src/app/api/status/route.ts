@@ -1,4 +1,4 @@
-import { modelMode } from "@/lib/model";
+import { caller } from "@/lib/route";
 
 export const dynamic = "force-dynamic";
-export const GET = () => Response.json({ mode: modelMode() });
+export const GET = async () => Response.json({ mode: (await caller()).mode });

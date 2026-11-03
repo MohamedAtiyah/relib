@@ -50,7 +50,7 @@ export async function runAgent(page: Page, onStage: (stage: Stage) => void) {
         post<FitGap>("analyze", { notes, source }),
       );
       await db.sources.put(source);
-      await db.suggestions.put({ pageId: page.id, sourceId: source.id, folderId: page.folderId, fitGap, status: "new" });
+      await db.suggestions.put({ pageId: page.id, sourceId: source.id, folderId: page.folderId, fitGap, status: "new", createdAt: Date.now() });
     }),
   );
   const failed = results.find((r) => r.status === "rejected");

@@ -28,13 +28,19 @@ export function SourceCard({
   children?: React.ReactNode;
 }) {
   const [open, setOpen] = useState(expanded);
+  const full = fitGap.basedOn === "full_text";
   return (
     <article className="rounded-card border border-hairline bg-surface p-4">
+      <span className={`mb-2 inline-block rounded-full px-2 py-0.5 text-[11px] font-medium ${full ? "bg-spark-wash text-spark-ink" : "bg-sand text-muted"}`}>
+        {full ? "Full text" : "Abstract only"}
+      </span>
       <h3 className="text-sm leading-snug font-medium">{source.title}</h3>
       <p className="mt-1 text-xs text-muted">
-        {[source.authors.slice(0, 3).join(", ") || "Unknown authors", source.year].filter(Boolean).join(" · ")}
+        {source.origin === "user"
+          ? "Your upload"
+          : [source.authors.slice(0, 3).join(", ") || "Unknown authors", source.year].filter(Boolean).join(" · ")}
       </p>
-      <p className="mt-3 text-xs font-medium text-muted">AI summary of the abstract</p>
+      <p className="mt-3 text-xs font-medium text-muted">AI summary of the {full ? "full text" : "abstract"}</p>
       <p className="mt-1 text-sm">{fitGap.summary}</p>
       <button
         onClick={() => setOpen(!open)}
@@ -49,12 +55,12 @@ export function SourceCard({
           <Points title="Why it helps" items={fitGap.whyItHelps} />
           <Points title="Weak points" items={fitGap.weakPoints} accent />
           <Points title="Key points" items={fitGap.keyPoints} />
-          <p className="mt-3 text-xs text-muted">Based on the abstract only.</p>
+          <p className="mt-3 text-xs text-muted">{full ? "Based on the full text of your PDF." : "Based on the abstract only."}</p>
         </>
       )}
       <div className="mt-3 flex items-center justify-between gap-2">
         <a href={source.url} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-xs text-muted underline hover:text-ink">
-          Original <ExternalLink size={12} strokeWidth={1.5} />
+          {source.origin === "user" ? "Open PDF" : "Original"} <ExternalLink size={12} strokeWidth={1.5} />
         </a>
         {children}
       </div>

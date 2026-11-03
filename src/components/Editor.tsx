@@ -33,7 +33,7 @@ import { useEffect, useRef } from "react";
 import type { SlashContext } from "@/lib/commands";
 import { db } from "@/lib/db";
 import type { Page, Source } from "@/lib/schemas";
-import { $isToggleNode, CalloutNode, SourceNode, ToggleNode } from "./nodes";
+import { $isToggleNode, CalloutNode, PythonNode, SourceNode, ToggleNode } from "./nodes";
 import { SlashMenu } from "./SlashMenu";
 
 const theme = {
@@ -66,6 +66,7 @@ const nodes = [
   CalloutNode,
   ToggleNode,
   SourceNode,
+  PythonNode,
 ];
 
 function SavePlugin({ pageId }: { pageId: string }) {
