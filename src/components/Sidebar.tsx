@@ -1,7 +1,8 @@
-import { FilePlus, FileText, FolderPlus, NotebookPen, SquareTerminal } from "lucide-react";
+import { FilePlus, FileText, FolderPlus, NotebookPen, PanelLeftClose, SquareTerminal } from "lucide-react";
 import { useState, type FormEvent, type ReactNode } from "react";
 import type { Folder, Page, PageType } from "@/lib/schemas";
 import { Logo } from "./Logo";
+import { ThemeSwitch } from "./ThemeSwitch";
 
 // What Relib v1 is on each kind of page.
 export const ROLE: Record<PageType, string> = { notes: "Tutor", research: "Research guide", programming: "Code agent" };
@@ -16,9 +17,10 @@ type Props = {
   onNewFolder(name: string): void;
   onNewPage(folderId: string, type: PageType): void;
   onRelib(): void;
+  onCollapse(): void;
 };
 
-export function Sidebar({ folders, pages, page: current, account, onSelect, onNewFolder, onNewPage, onRelib }: Props) {
+export function Sidebar({ folders, pages, page: current, account, onSelect, onNewFolder, onNewPage, onRelib, onCollapse }: Props) {
   const [adding, setAdding] = useState(false);
   const [picking, setPicking] = useState<string | null>(null);
 
@@ -33,9 +35,14 @@ export function Sidebar({ folders, pages, page: current, account, onSelect, onNe
     <nav aria-label="Folders and pages" className="flex w-[248px] shrink-0 flex-col border-r border-hairline">
       <div className="flex h-14 items-center justify-between px-4">
         <Logo />
-        <button onClick={() => setAdding(!adding)} aria-expanded={adding} aria-label="New folder" title="New folder" className="rounded-lg p-1 text-muted hover:bg-sand">
-          <FolderPlus size={18} strokeWidth={1.5} />
-        </button>
+        <span className="flex gap-1">
+          <button onClick={() => setAdding(!adding)} aria-expanded={adding} aria-label="New folder" title="New folder" className="rounded-lg p-1 text-muted hover:bg-sand">
+            <FolderPlus size={18} strokeWidth={1.5} />
+          </button>
+          <button onClick={onCollapse} aria-label="Hide sidebar" title="Hide sidebar" className="rounded-lg p-1 text-muted hover:bg-sand">
+            <PanelLeftClose size={18} strokeWidth={1.5} />
+          </button>
+        </span>
       </div>
       {adding && (
         <form onSubmit={submit} onKeyDown={(e) => e.key === "Escape" && setAdding(false)} className="mx-2 mb-3">
@@ -106,7 +113,10 @@ export function Sidebar({ folders, pages, page: current, account, onSelect, onNe
             </span>
           </button>
         )}
-        <div className="px-1">{account}</div>
+        <div className="flex items-center justify-between gap-2 px-1">
+          <div className="min-w-0">{account}</div>
+          <ThemeSwitch />
+        </div>
       </div>
     </nav>
   );

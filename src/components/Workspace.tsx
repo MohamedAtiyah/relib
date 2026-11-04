@@ -2,7 +2,7 @@
 
 import { UserButton } from "@clerk/nextjs";
 import { useLiveQuery } from "dexie-react-hooks";
-import { BookOpen, Network, NotebookPen } from "lucide-react";
+import { BookOpen, Network, NotebookPen, PanelLeftOpen } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { getMode } from "@/lib/api";
@@ -98,6 +98,7 @@ function WorkspaceView({ userId, storageKey, sync }: { userId?: string; storageK
   const [pageId, setPageId] = useState(() => remembered(storageKey));
   const [view, setView] = useState<"page" | "neurolib">("page");
   const [chatOpen, setChatOpen] = useState(false);
+  const [navOpen, setNavOpen] = useState(true);
   const [sourcesOpen, setSourcesOpen] = useState(true);
   const [presetOpen, setPresetOpen] = useState(false);
   const [mode, setMode] = useState<ModelMode>();
@@ -139,35 +140,53 @@ function WorkspaceView({ userId, storageKey, sync }: { userId?: string; storageK
 
   return (
     <div className="flex h-dvh overflow-hidden">
-      <Sidebar
-        folders={folders ?? []}
-        pages={pages ?? []}
-        page={page}
-        onSelect={select}
-        onNewFolder={newFolder}
-        onNewPage={newPage}
-        onRelib={() => setChatOpen(!chatOpen)}
-        account={
-          !userId ? (
-            <Link href="/" className="text-xs text-muted underline hover:text-ink">
-              Demo workspace · sign in to keep your own
-            </Link>
-          ) : (
-            <UserButton showName />
-          )
-        }
-      />
+      {navOpen && (
+        <Sidebar
+          onCollapse={() => setNavOpen(false)}
+          folders={folders ?? []}
+          pages={pages ?? []}
+          page={page}
+          onSelect={select}
+          onNewFolder={newFolder}
+          onNewPage={newPage}
+          onRelib={() => setChatOpen(!chatOpen)}
+          account={
+            !userId ? (
+              <Link href="/" className="text-xs text-muted underline hover:text-ink">
+                Demo workspace · sign in to keep your own
+              </Link>
+            ) : (
+              <UserButton showName />
+            )
+          }
+        />
+      )}
       {chatOpen && folder && page && (
-        <ChatPanel key={folder.id} folder={folder} role={ROLE[page.type ?? "notes"]} notes={page ? pageNotes(page) : ""} sources={acceptedSources.map((s) => s.title)} />
+        <ChatPanel
+          key={folder.id}
+          folder={folder}
+          role={ROLE[page.type ?? "notes"]}
+          notes={page ? pageNotes(page) : ""}
+          sources={acceptedSources.map((s) => s.title)}
+        />
       )}
       <main className="flex min-w-0 flex-1 flex-col">
         <header className="flex h-14 shrink-0 items-center gap-1 px-4">
+          {!navOpen && (
+            <button onClick={() => setNavOpen(true)} aria-label="Show sidebar" title="Show sidebar" className="mr-2 rounded-lg p-2 text-muted hover:bg-sand">
+              <PanelLeftOpen size={18} strokeWidth={1.5} />
+            </button>
+          )}
           <p className="mr-auto flex min-w-0 items-center gap-2 text-sm text-muted">
             <span className="truncate">{folder?.name}</span>
             <span aria-hidden="true">/</span>
             <span className="truncate text-ink">{view === "neurolib" ? "Neurolib" : page?.title || "Untitled"}</span>
             {mode && MODE_TAG[mode] && <span className="ml-2 shrink-0 rounded-full bg-sand px-3 py-1 text-xs">{MODE_TAG[mode]}</span>}
-            {sync && <span role="status" className="ml-2 shrink-0 text-xs">{SYNC_TAG[sync]}</span>}
+            {sync && (
+              <span role="status" className="ml-2 shrink-0 text-xs">
+                {SYNC_TAG[sync]}
+              </span>
+            )}
           </p>
           <button
             onClick={() => setView(view === "neurolib" ? "page" : "neurolib")}
@@ -178,7 +197,13 @@ function WorkspaceView({ userId, storageKey, sync }: { userId?: string; storageK
           >
             {view === "neurolib" ? <NotebookPen size={18} strokeWidth={1.5} /> : <Network size={18} strokeWidth={1.5} />}
           </button>
-          <button onClick={() => setSourcesOpen(!sourcesOpen)} aria-pressed={sourcesOpen} aria-label="Sources" title="Sources" className="rounded-lg p-2 text-muted hover:bg-sand">
+          <button
+            onClick={() => setSourcesOpen(!sourcesOpen)}
+            aria-pressed={sourcesOpen}
+            aria-label="Sources"
+            title="Sources"
+            className="rounded-lg p-2 text-muted hover:bg-sand"
+          >
             <BookOpen size={18} strokeWidth={1.5} />
           </button>
         </header>
