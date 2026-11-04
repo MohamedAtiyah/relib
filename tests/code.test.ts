@@ -44,3 +44,31 @@ test("parseSchema reads columns, keys and references", () => {
     ["course_id", "courses", true],
   ]);
 });
+
+test("notebooks survive a round trip through .ipynb", async () => {
+  const { fromIpynb, toIpynb } = await import("../src/lib/notebook");
+  const cells = [
+    { id: "a", kind: "text" as const, source: "# Title\nSome text" },
+    { id: "b", kind: "code" as const, source: "x = 1\nprint(x)", output: "1\n", images: ["iVBOR"] },
+  ];
+  const back = fromIpynb(JSON.parse(JSON.stringify(toIpynb(cells))));
+  assert.deepEqual(
+    back.map(({ kind, source, output, images }) => ({ kind, source, output, images })),
+    [
+      { kind: "text", source: "# Title\nSome text", output: undefined, images: [] },
+      { kind: "code", source: "x = 1\nprint(x)", output: "1\n", images: ["iVBOR"] },
+    ],
+  );
+});
+
+test("inlineWebProject puts local CSS and JS into the page", async () => {
+  const { inlineWebProject } = await import("../src/lib/notebook");
+  const html = inlineWebProject([
+    { path: "index.html", content: '<link rel="stylesheet" href="styles.css"><script src="app.js"></script><script src="https://cdn.x/y.js"></script>' },
+    { path: "styles.css", content: "body{color:red}" },
+    { path: "app.js", content: "console.log(1)" },
+  ]);
+  assert.match(html, /<style>body\{color:red\}<\/style>/);
+  assert.match(html, /<script>console\.log\(1\)<\/script>/);
+  assert.match(html, /https:\/\/cdn\.x\/y\.js/);
+});

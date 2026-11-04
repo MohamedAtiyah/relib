@@ -17,6 +17,7 @@ import { ChatPanel } from "./ChatPanel";
 import { Editor } from "./Editor";
 import { Neurolib } from "./Neurolib";
 import { CitePreview } from "./CitePreview";
+import { Programming } from "./Programming";
 import { ResearchPage } from "./ResearchPage";
 import { ROLE, Sidebar } from "./Sidebar";
 import { SourcePanel } from "./SourcePanel";
@@ -235,7 +236,19 @@ function WorkspaceView({ userId, storageKey, sync }: { userId?: string; storageK
                 editorRef={editorRef}
               />
             )}
-            {page && page.type !== "research" && (
+            {page?.type === "programming" && (
+              <div key={page.id} className="flex min-h-full flex-col">
+                <input
+                  value={page.title}
+                  onChange={(e) => db.pages.update(page.id, { title: e.target.value, updatedAt: Date.now() })}
+                  aria-label="Page title"
+                  placeholder="Untitled project"
+                  className="w-full bg-transparent px-8 pt-4 pb-2 font-display text-2xl font-semibold outline-none placeholder:text-muted"
+                />
+                <Programming page={page} />
+              </div>
+            )}
+            {page && (page.type ?? "notes") === "notes" && (
               <div key={page.id} className="mx-auto max-w-2xl px-8 py-6">
                 <input
                   autoFocus={!page.title}
@@ -256,7 +269,7 @@ function WorkspaceView({ userId, storageKey, sync }: { userId?: string; storageK
           <CitePreview key={preview.source.id} source={sources.get(preview.source.id) ?? preview.source} page={page} editorRef={editorRef} onDone={() => setPreview(null)} />
         </aside>
       )}
-      {sourcesOpen && page && view === "page" && preview?.pageId !== page.id && (
+      {sourcesOpen && page && page.type !== "programming" && view === "page" && preview?.pageId !== page.id && (
         <SourcePanel
           key={page.id}
           page={page}

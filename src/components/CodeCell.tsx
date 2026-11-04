@@ -5,11 +5,12 @@ import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { errorText, post } from "@/lib/api";
 import { CLOUD_RUN, runInCloud } from "@/lib/cloud";
 import { runJs } from "@/lib/jsrun";
-import { detectLanguage, highlightCode, LANGUAGES, RUNTIME, type Language } from "@/lib/lang";
+import { detectLanguage, LANGUAGES, RUNTIME, type Language } from "@/lib/lang";
 import { runPython, type RunResult } from "@/lib/python";
 import { checkSchema, parseSchema, runSql, type SqlTable } from "@/lib/sqlrun";
 import { PageIdContext } from "./Editor";
 import type { CodeCellNode } from "./nodes";
+import { CodeEditor } from "./CodeEditor";
 import { SchemaDiagram } from "./SchemaDiagram";
 
 export type CellData = {
@@ -25,7 +26,7 @@ export type CellData = {
 };
 
 // Line-level diff for "Show a fix", so the student sees exactly what would change.
-function diffLines(before: string[], after: string[]) {
+export function diffLines(before: string[], after: string[]) {
   const n = before.length;
   const m = after.length;
   const lcs = Array.from({ length: n + 1 }, () => new Array<number>(m + 1).fill(0));
@@ -126,8 +127,6 @@ export function CodeCell({ nodeKey, data }: { nodeKey: NodeKey; data: CellData }
     setAsking(false);
   };
 
-  const lines = data.code.split("\n");
-  const highlighted = useMemo(() => (language === "html" ? highlightCode(data.code, "html") : highlightCode(data.code, language)), [data.code, language]);
   const schema = useMemo(() => (language === "sql" ? parseSchema(data.code) : []), [data.code, language]);
   const preview = runtime === "preview" && data.code.trim();
 
@@ -179,43 +178,7 @@ export function CodeCell({ nodeKey, data }: { nodeKey: NodeKey; data: CellData }
           </button>
         )}
       </div>
-      <div className="flex max-h-[28rem] overflow-auto text-sm leading-6">
-        <div aria-hidden="true" className="shrink-0 py-2 pr-2 pl-3 text-right text-[var(--code-muted)] select-none">
-          {lines.map((_, i) => (
-            <div key={i}>{i + 1}</div>
-          ))}
-        </div>
-        <div className="relative min-w-0 flex-1">
-          {/* highlighted copy underneath; the textarea on top takes the typing */}
-          <pre
-            aria-hidden="true"
-            className="hljs pointer-events-none m-0 bg-transparent py-2 pr-3 whitespace-pre"
-            dangerouslySetInnerHTML={{ __html: `${highlighted}\n` }}
-          />
-          <textarea
-            value={data.code}
-            onChange={(e) => edit(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" && (e.metaKey || e.ctrlKey || e.shiftKey) && runtime !== "preview") {
-                e.preventDefault();
-                run();
-              }
-              if (e.key === "Tab") {
-                e.preventDefault();
-                const t = e.currentTarget;
-                const at = t.selectionStart;
-                edit(`${data.code.slice(0, at)}  ${data.code.slice(t.selectionEnd)}`);
-                requestAnimationFrame(() => t.setSelectionRange(at + 2, at + 2));
-              }
-            }}
-            aria-label={`${LANGUAGES[language]} code`}
-            placeholder="Paste or type code. ⇧↵ runs it."
-            spellCheck={false}
-            wrap="off"
-            className="absolute inset-0 resize-none overflow-hidden bg-transparent py-2 pr-3 whitespace-pre text-transparent caret-[var(--code-fg)] outline-none placeholder:text-[var(--code-muted)]"
-          />
-        </div>
-      </div>
+      <CodeEditor value={data.code} language={language} onChange={edit} onRun={runtime === "preview" ? undefined : run} />
       {data.log && data.log.length > 0 && (
         <details className="border-t border-[var(--code-line)] px-3 py-1.5 font-sans text-xs text-[var(--code-muted)]">
           <summary className="cursor-pointer">Install log ({data.log.length})</summary>

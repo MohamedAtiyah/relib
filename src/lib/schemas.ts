@@ -1,4 +1,5 @@
 import { z } from "zod";
+import type { Program } from "./notebook";
 
 export type Folder = {
   id: string;
@@ -24,6 +25,7 @@ export type Page = {
   lastOpenedAt?: number;
   sourcesOn?: boolean; // off by default: each suggestion run spends model calls
   research?: Research;
+  program?: Program; // a /programming page's notebook cells or project files
 };
 
 export type CoverField = { label: string; value: string };

@@ -138,3 +138,4 @@ create table if not exists sandboxes (
   updated_at double precision not null,
   primary key (owner_id, project_id)
 );
+alter table pages add column if not exists program jsonb;
