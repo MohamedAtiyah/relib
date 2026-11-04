@@ -1,1 +1,1 @@
-export const MAX_PDF = 20 * 1024 * 1024;
+export const MAX_FILE = 20 * 1024 * 1024;

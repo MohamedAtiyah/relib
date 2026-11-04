@@ -86,3 +86,11 @@ test("chatJson sends json_schema, then retries once with the error", async () =>
   assert.equal(bodies[0].response_format.type, "json_schema");
   assert.equal(bodies[1].messages.length, 3);
 });
+
+test("parseRef reads DOIs and arXiv ids, nothing else", async () => {
+  const { parseRef } = await import("../src/lib/sources");
+  assert.deepEqual(parseRef("https://doi.org/10.1257/aer.91.4.1"), { doi: "10.1257/aer.91.4.1" });
+  assert.deepEqual(parseRef("see 10.1000/xyz123."), { doi: "10.1000/xyz123" });
+  assert.deepEqual(parseRef("https://arxiv.org/abs/2301.01234v2"), { arxiv: "2301.01234v2" });
+  assert.equal(parseRef("https://example.com/blog"), null);
+});

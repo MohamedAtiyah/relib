@@ -105,3 +105,16 @@ alter table pages add column if not exists type text not null default 'notes';
 alter table pages add column if not exists last_opened_at double precision;
 alter table folders drop column if exists kind;
 alter table folders drop column if exists agent_role;
+
+-- materials: uploaded files keep their extracted text in chunks, each with its slide, page or sheet
+alter table files add column if not exists kind text;
+alter table files add column if not exists concepts jsonb;
+create table if not exists chunks (
+  owner_id text not null,
+  file_id text not null,
+  idx integer not null,
+  location text not null,
+  text text not null,
+  primary key (owner_id, file_id, idx)
+);
+alter table pages add column if not exists sources_on boolean;

@@ -41,6 +41,7 @@ export type SlashContext = {
   openNeurolib(): void;
   openPreset(): void;
   newPage(type: PageType): void;
+  explain(text: string): void;
 };
 
 export type SlashCommand = {

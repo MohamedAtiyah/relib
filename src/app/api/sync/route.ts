@@ -26,6 +26,7 @@ const ROWS = {
     plainText: text(200_000),
     analysedText: text(200_000).optional(),
     lastOpenedAt: time.optional(),
+    sourcesOn: z.boolean().optional(),
     createdAt: time,
     updatedAt: time,
   }),
@@ -66,7 +67,7 @@ export const GET = userRoute(60, async (_req, userId) => {
   await db`insert into users (id, created_at) values (${userId}, ${Date.now()}) on conflict do nothing`;
   const [folders, pages, presets, sources, suggestions] = await Promise.all([
     db`select id, name, last_opened_at, created_at, updated_at from folders where owner_id = ${userId}`,
-    db`select id, folder_id, type, title, editor_state, plain_text, analysed_text, last_opened_at, created_at, updated_at from pages where owner_id = ${userId}`,
+    db`select id, folder_id, type, title, editor_state, plain_text, analysed_text, last_opened_at, sources_on, created_at, updated_at from pages where owner_id = ${userId}`,
     db`select id, name, fields, citation_style, sections, updated_at from presets where owner_id = ${userId}`,
     db`select id, origin, title, authors, year, url, doi, abstract, updated_at from sources where owner_id = ${userId}`,
     db`select page_id, source_id, folder_id, fit_gap, status, created_at, updated_at from suggestions where owner_id = ${userId}`,

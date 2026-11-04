@@ -22,6 +22,7 @@ export type Page = {
   updatedAt: number;
   analysedText?: string; // the notes the agent last ran on
   lastOpenedAt?: number;
+  sourcesOn?: boolean; // off by default: each suggestion run spends model calls
 };
 
 export const SourceSchema = z.object({
@@ -99,11 +100,17 @@ export const ChatInput = z.object({
   notes: z.string().max(50000),
   sources: z.array(z.string().max(1000)).max(100),
   role: z.string().max(200).optional(),
+  folderId: z.string().max(200).optional(),
   // no "system" role: a client must not be able to replace the tutor's rules
   messages: z
     .array(z.object({ role: z.enum(["user", "assistant"]), content: z.string().min(1).max(4000) }))
     .min(1)
     .max(20),
+});
+export const TopicInput = z.object({
+  notes: z.string().min(1).max(50000),
+  sources: z.array(z.string().max(1000)).max(100),
+  folderId: z.string().max(200).optional(),
 });
 export const NeurolibInput = z.object({
   pages: z.array(z.object({ title: z.string().max(500), text: z.string().max(50000) })).max(100),

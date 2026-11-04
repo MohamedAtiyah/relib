@@ -99,6 +99,7 @@ function WorkspaceView({ userId, storageKey, sync }: { userId?: string; storageK
   const [view, setView] = useState<"page" | "neurolib">("page");
   const [chatOpen, setChatOpen] = useState(false);
   const [navOpen, setNavOpen] = useState(true);
+  const [ask, setAsk] = useState<{ text: string; at: number }>();
   const [sourcesOpen, setSourcesOpen] = useState(true);
   const [presetOpen, setPresetOpen] = useState(false);
   const [mode, setMode] = useState<ModelMode>();
@@ -133,6 +134,11 @@ function WorkspaceView({ userId, storageKey, sync }: { userId?: string; storageK
     openNeurolib: () => setView("neurolib"),
     openPreset: () => setPresetOpen(true),
     newPage: (type) => folder && newPage(folder.id, type),
+    explain: (text) => {
+      setNavOpen(true);
+      setChatOpen(true);
+      setAsk({ text, at: Date.now() });
+    },
   };
 
   const newFolder = async (name: string) => select(await createPage(await createFolder(name)));
@@ -140,35 +146,39 @@ function WorkspaceView({ userId, storageKey, sync }: { userId?: string; storageK
 
   return (
     <div className="flex h-dvh overflow-hidden">
-      {navOpen && (
-        <Sidebar
-          onCollapse={() => setNavOpen(false)}
-          folders={folders ?? []}
-          pages={pages ?? []}
-          page={page}
-          onSelect={select}
-          onNewFolder={newFolder}
-          onNewPage={newPage}
-          onRelib={() => setChatOpen(!chatOpen)}
-          account={
-            !userId ? (
-              <Link href="/" className="text-xs text-muted underline hover:text-ink">
-                Demo workspace · sign in to keep your own
-              </Link>
-            ) : (
-              <UserButton showName />
-            )
-          }
-        />
-      )}
-      {chatOpen && folder && page && (
+      {/* the left column holds either the folder tree or Relib v1, as in the design */}
+      {navOpen && chatOpen && folder && page ? (
         <ChatPanel
           key={folder.id}
           folder={folder}
           role={ROLE[page.type ?? "notes"]}
-          notes={page ? pageNotes(page) : ""}
-          sources={acceptedSources.map((s) => s.title)}
+          notes={pageNotes(page)}
+          ask={ask}
+          sources={acceptedSources.map((s) => `${s.title}${s.year ? ` (${s.year})` : ""}: ${s.abstract.slice(0, 500)}`)}
+          onClose={() => setChatOpen(false)}
         />
+      ) : (
+        navOpen && (
+          <Sidebar
+            onCollapse={() => setNavOpen(false)}
+            folders={folders ?? []}
+            pages={pages ?? []}
+            page={page}
+            onSelect={select}
+            onNewFolder={newFolder}
+            onNewPage={newPage}
+            onRelib={() => setChatOpen(true)}
+            account={
+              !userId ? (
+                <Link href="/" className="text-xs text-muted underline hover:text-ink">
+                  Demo workspace · sign in to keep your own
+                </Link>
+              ) : (
+                <UserButton showName />
+              )
+            }
+          />
+        )
       )}
       <main className="flex min-w-0 flex-1 flex-col">
         <header className="flex h-14 shrink-0 items-center gap-1 px-4">
@@ -227,7 +237,7 @@ function WorkspaceView({ userId, storageKey, sync }: { userId?: string; storageK
           </div>
         )}
       </main>
-      {sourcesOpen && page && view === "page" && <SourcePanel key={page.id} page={page} sources={sources} />}
+      {sourcesOpen && page && view === "page" && <SourcePanel key={page.id} page={page} sources={sources} userId={userId} />}
       {presetOpen && <PresetDialog preset={preset ?? DEFAULT_PRESET} onClose={() => setPresetOpen(false)} />}
     </div>
   );

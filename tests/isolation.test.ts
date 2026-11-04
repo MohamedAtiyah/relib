@@ -39,7 +39,7 @@ before(async () => {
 
 after(async () => {
   if (skip) return;
-  for (const t of ["folders", "pages", "users"]) {
+  for (const t of ["folders", "pages", "files", "users"]) {
     await sql()`delete from ${sql()(t)} where ${sql()(t === "users" ? "id" : "owner_id")} in (${A}, ${B})`;
   }
   await sql().end();
@@ -76,4 +76,14 @@ test("an older write does not replace a newer one", { skip }, async () => {
 test("bad rows are refused", { skip }, async () => {
   as(A);
   assert.equal((await push({ folders: [{ id: "x", name: "n", kind: "admin" }] })).status, 400);
+});
+
+test("another user's file id is not found", { skip }, async () => {
+  const files = await import("../src/app/api/files/[id]/route");
+  await sql()`insert into files ${sql()({ ownerId: A, id: "file-1", folderId: "f1", storageKey: `${A}/x.pdf`, filename: "x.pdf", mime: "application/pdf", size: 1, createdAt: 1 })}`;
+  as(B);
+  const req = new Request("http://localhost/api/files/file-1");
+  const ctx = { params: Promise.resolve({ id: "file-1" }) };
+  assert.equal((await files.GET(req, ctx)).status, 404);
+  assert.equal((await files.DELETE(new Request(req, { method: "DELETE" }), ctx)).status, 404);
 });

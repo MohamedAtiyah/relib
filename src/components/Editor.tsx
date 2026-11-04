@@ -34,6 +34,7 @@ import type { SlashContext } from "@/lib/commands";
 import { db } from "@/lib/db";
 import type { Page, Source } from "@/lib/schemas";
 import { $isToggleNode, CalloutNode, PythonNode, SourceNode, ToggleNode } from "./nodes";
+import { SelectionMenu } from "./SelectionMenu";
 import { SlashMenu } from "./SlashMenu";
 
 const theme = {
@@ -167,6 +168,7 @@ export function Editor({ page, ctx, sources }: { page: Page; ctx: SlashContext; 
       <HorizontalRulePlugin />
       <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
       <SlashMenu ctx={ctx} sources={sources} />
+      <SelectionMenu onExplain={ctx.explain} />
       <ToggleKeyPlugin />
       <SavePlugin pageId={page.id} />
     </LexicalComposer>
