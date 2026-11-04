@@ -28,6 +28,7 @@ import {
   $isRangeSelection,
   COMMAND_PRIORITY_LOW,
   KEY_ENTER_COMMAND,
+  TextNode,
   type EditorState,
   type LexicalEditor,
 } from "lexical";
@@ -35,7 +36,8 @@ import { useEffect, useRef, type RefObject } from "react";
 import type { SlashContext } from "@/lib/commands";
 import { db } from "@/lib/db";
 import type { Page, Source } from "@/lib/schemas";
-import { $isToggleNode, CalloutNode, CitationNode, CodeCellNode, SourceNode, ToggleNode } from "./nodes";
+import { OPEN_ON_MOUNT } from "./MathBlock";
+import { $createMathNode, $isToggleNode, CalloutNode, CitationNode, CodeCellNode, MathNode, SourceNode, ToggleNode } from "./nodes";
 import { SelectionMenu } from "./SelectionMenu";
 import { SlashMenu } from "./SlashMenu";
 
@@ -71,6 +73,7 @@ const nodes = [
   SourceNode,
   CodeCellNode,
   CitationNode,
+  MathNode,
 ];
 
 function SavePlugin({ pageId }: { pageId: string }) {
@@ -104,6 +107,29 @@ function SavePlugin({ pageId }: { pageId: string }) {
       }}
     />
   );
+}
+
+// Typing $ at the start of a line or after a space starts an inline equation ($ again inside it makes it display).
+function MathTriggerPlugin() {
+  const [editor] = useLexicalComposerContext();
+  useEffect(
+    () =>
+      editor.registerNodeTransform(TextNode, (node) => {
+        const text = node.getTextContent();
+        const selection = $getSelection();
+        if (!text.endsWith("$") || !$isRangeSelection(selection) || !selection.isCollapsed()) return;
+        if (selection.anchor.key !== node.getKey() || selection.anchor.offset !== text.length) return;
+        const before = text.slice(0, -1);
+        if (before && !/\s$/.test(before)) return; // "5$" or "US$" stays text
+        const math = $createMathNode({ latex: "", display: false });
+        OPEN_ON_MOUNT.add(math.getKey());
+        node.setTextContent(before);
+        node.insertAfter(math);
+        math.selectNext(0, 0);
+      }),
+    [editor],
+  );
+  return null;
 }
 
 // Cmd/Ctrl+Enter opens and closes a toggle, so it works without a mouse.
@@ -183,6 +209,7 @@ export function Editor({
       <SlashMenu ctx={ctx} sources={sources} />
       <SelectionMenu onExplain={ctx.explain} />
       <ToggleKeyPlugin />
+      <MathTriggerPlugin />
       <SavePlugin pageId={page.id} />
       {editorRef && <EditorRefPlugin editorRef={editorRef} />}
     </LexicalComposer>

@@ -16,7 +16,9 @@ import type { ReactNode } from "react";
 import type { Source } from "@/lib/schemas";
 import type { CiteRef } from "@/lib/cite";
 import { CitationChip } from "./Citations";
+import type { Operation } from "@/lib/sympy";
 import { CodeCell, type CellData } from "./CodeCell";
+import { MathBlock } from "./MathBlock";
 
 export class CalloutNode extends ParagraphNode {
   static getType() {
@@ -243,3 +245,54 @@ export class CitationNode extends DecoratorNode<ReactNode> {
 
 export const $createCitationNode = (refs: CiteRef[]) => new CitationNode(refs);
 export const $isCitationNode = (node: LexicalNode | null | undefined): node is CitationNode => node instanceof CitationNode;
+
+export type MathData = {
+  latex: string;
+  display: boolean;
+  solved?: { op: Operation; result: string }; // SymPy's answer, saved with the page
+};
+type SerializedMath = SerializedLexicalNode & MathData;
+
+// An equation stored as LaTeX: inline inside a line, or display on its own.
+export class MathNode extends DecoratorNode<ReactNode> {
+  __data: MathData;
+
+  constructor(data: MathData, key?: NodeKey) {
+    super(key);
+    this.__data = data;
+  }
+  static getType() {
+    return "math";
+  }
+  static clone(node: MathNode) {
+    return new MathNode(node.__data, node.__key);
+  }
+  static importJSON(json: SerializedMath) {
+    return new MathNode({ latex: json.latex ?? "", display: Boolean(json.display), solved: json.solved });
+  }
+  exportJSON(): SerializedMath {
+    return { ...super.exportJSON(), ...this.__data };
+  }
+  createDOM() {
+    return document.createElement(this.__data.display ? "div" : "span");
+  }
+  updateDOM() {
+    return false;
+  }
+  isInline() {
+    return !this.__data.display;
+  }
+  getTextContent() {
+    const tex = this.__data.latex;
+    return this.__data.display ? `\n${tex}\n` : tex;
+  }
+  patch(patch: Partial<MathData>) {
+    const self = this.getWritable();
+    self.__data = { ...self.__data, ...patch };
+  }
+  decorate() {
+    return <MathBlock nodeKey={this.__key} data={this.__data} />;
+  }
+}
+
+export const $createMathNode = (data: MathData) => new MathNode(data);

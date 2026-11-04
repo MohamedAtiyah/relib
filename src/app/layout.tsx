@@ -1,7 +1,9 @@
 import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Fraunces, Inter, JetBrains_Mono } from "next/font/google";
 import { clerkEnabled } from "@/lib/clerk";
+import "katex/dist/katex.min.css";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -19,10 +21,12 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const page = (
     <html lang="en" className={`${inter.variable} ${fraunces.variable} ${mono.variable}`} suppressHydrationWarning>
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: THEME }} />
-      </head>
-      <body>{children}</body>
+      <body>
+        <Script id="theme" strategy="beforeInteractive">
+          {THEME}
+        </Script>
+        {children}
+      </body>
     </html>
   );
   return clerkEnabled ? <ClerkProvider>{page}</ClerkProvider> : page;

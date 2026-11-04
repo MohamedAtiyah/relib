@@ -28,11 +28,13 @@ import {
   Network,
   NotebookPen,
   Quote,
+  Sigma,
   SquareTerminal,
   Table,
   type LucideIcon,
 } from "lucide-react";
-import { $createCalloutNode, $createCodeCellNode, $createToggleNode } from "@/components/nodes";
+import { OPEN_ON_MOUNT } from "@/components/MathBlock";
+import { $createCalloutNode, $createCodeCellNode, $createMathNode, $createToggleNode } from "@/components/nodes";
 import type { PageType } from "./schemas";
 
 export type SlashContext = {
@@ -69,6 +71,16 @@ export const COMMANDS: SlashCommand[] = [
     keywords: "python javascript typescript sql html run",
     icon: Code,
     run: () => $insertNodes([$createCodeCellNode(), $createParagraphNode()]),
+  },
+  {
+    name: "math",
+    keywords: "equation formula latex",
+    icon: Sigma,
+    run() {
+      const math = $createMathNode({ latex: "", display: true });
+      OPEN_ON_MOUNT.add(math.getKey());
+      $insertNodes([math, $createParagraphNode()]);
+    },
   },
   { name: "divider", keywords: "rule line", icon: Minus, run: (e) => e.dispatchCommand(INSERT_HORIZONTAL_RULE_COMMAND, undefined) },
   { name: "callout", keywords: "note highlight", icon: Info, run: block($createCalloutNode) },
