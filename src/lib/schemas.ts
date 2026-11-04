@@ -1,26 +1,27 @@
 import { z } from "zod";
 
-export const FOLDER_KINDS = ["study", "research", "work", "personal"] as const;
-
 export type Folder = {
   id: string;
   name: string;
-  kind: (typeof FOLDER_KINDS)[number];
-  agentRole: string; // what Relib v1 is for in this folder, e.g. "Analyst"
   lastOpenedAt?: number;
   createdAt: number;
   updatedAt?: number;
 };
 
+export const PAGE_TYPES = ["notes", "research", "programming"] as const;
+export type PageType = (typeof PAGE_TYPES)[number];
+
 export type Page = {
   id: string;
   folderId: string;
+  type: PageType;
   title: string;
   editorState: string; // Lexical JSON
   plainText: string;
   createdAt: number;
   updatedAt: number;
   analysedText?: string; // the notes the agent last ran on
+  lastOpenedAt?: number;
 };
 
 export const SourceSchema = z.object({

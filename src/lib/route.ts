@@ -1,7 +1,8 @@
 import { auth } from "@clerk/nextjs/server";
 import type { z } from "zod";
 import { clerkEnabled } from "./clerk";
-import { DemoMiss, liveMode, requestMode, type ModelMode } from "./model";
+import { AiOff, liveMode, type ModelMode } from "./model";
+import { spend } from "./usage";
 
 const hits = new Map<string, { count: number; resetAt: number }>();
 
@@ -16,21 +17,26 @@ export function allow(key: string, perMinute: number) {
   return ++hit.count <= perMinute;
 }
 
-// Signed-out visitors (the demo) only ever get saved results.
 const currentUser = async () => (clerkEnabled ? (await auth()).userId : null);
 
 export async function caller(): Promise<{ userId: string | null; mode: ModelMode }> {
-  const userId = await currentUser();
-  return { userId, mode: userId ? liveMode() : "demo" };
+  return { userId: await currentUser(), mode: liveMode() };
 }
 
 const clientKey = (req: Request, userId: string | null) =>
   userId ?? req.headers.get("x-forwarded-for")?.split(",")[0].trim() ?? "local";
 
-export function route<T>(schema: z.ZodType<T>, perMinute: number, run: (input: T, userId: string | null) => Promise<unknown>) {
+// metered: the route spends model calls, so it counts against the daily caps
+export function route<T>(
+  schema: z.ZodType<T>,
+  perMinute: number,
+  run: (input: T, userId: string | null) => Promise<unknown>,
+  metered = true,
+) {
   return async (req: Request) => {
-    const { userId, mode } = await caller();
-    if (!allow(`${new URL(req.url).pathname}:${clientKey(req, userId)}`, perMinute)) {
+    const userId = await currentUser();
+    const visitor = clientKey(req, userId);
+    if (!allow(`${new URL(req.url).pathname}:${visitor}`, perMinute)) {
       return Response.json({ error: "rate_limited" }, { status: 429 });
     }
     let input: T;
@@ -40,9 +46,11 @@ export function route<T>(schema: z.ZodType<T>, perMinute: number, run: (input: T
       return Response.json({ error: "invalid_input" }, { status: 400 });
     }
     try {
-      return Response.json(await requestMode.run(mode, () => run(input, userId)));
+      const over = metered && liveMode() === "meta" ? await spend({ userId, visitor }) : null;
+      if (over) return Response.json({ error: over === "global" ? "global_cap" : "daily_cap" }, { status: 429 });
+      return Response.json(await run(input, userId));
     } catch (err) {
-      if (err instanceof DemoMiss) return Response.json({ error: "demo_miss" }, { status: 503 });
+      if (err instanceof AiOff) return Response.json({ error: "ai_off" }, { status: 503 });
       console.error(req.url, err);
       return Response.json({ error: "upstream_failed" }, { status: 502 });
     }

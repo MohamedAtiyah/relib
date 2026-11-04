@@ -11,7 +11,6 @@
     "spike": "node --env-file-if-exists=.env --env-file-if-exists=.env.local --import tsx scripts/spike.ts",
     "try:sources": "node --env-file-if-exists=.env --env-file-if-exists=.env.local --import tsx scripts/try-sources.ts",
     "try:agent": "node --env-file-if-exists=.env --env-file-if-exists=.env.local --import tsx scripts/try-agent.ts",
-    "seed": "node --env-file-if-exists=.env --env-file-if-exists=.env.local --import tsx scripts/build-seed.ts",
     "db:migrate": "node --env-file-if-exists=.env --env-file-if-exists=.env.local --import tsx scripts/migrate.ts"
   },
   "dependencies": {
@@ -25,7 +24,6 @@
     "@lexical/selection": "^0.53.0",
     "@lexical/table": "^0.53.0",
     "@lexical/utils": "^0.53.0",
-    "@vercel/blob": "^2.8.2",
     "dexie": "^4.4.7",
     "dexie-react-hooks": "^4.4.0",
     "lexical": "^0.53.0",

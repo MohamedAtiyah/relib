@@ -1,6 +1,6 @@
 import { useLiveQuery } from "dexie-react-hooks";
 import { useEffect, useRef, useState } from "react";
-import { deleteFile, errorText } from "@/lib/api";
+import { errorText } from "@/lib/api";
 import { db } from "@/lib/db";
 import type { Page, Source, Suggestion } from "@/lib/schemas";
 import { MIN_NOTES, needsRun, pageNotes, runAgent, type Stage } from "@/lib/suggest";
@@ -82,7 +82,6 @@ export function SourcePanel({ page, sources }: { page: Page; sources: Map<string
             source && (
               <SourceCard key={s.sourceId} source={source} fitGap={s.fitGap}>
                 <div className="flex gap-2">
-                  {source.origin === "user" && <DeleteFile id={source.id} onError={setError} />}
                   <button onClick={() => setStatus(s, "declined")} className="rounded-full border border-hairline px-3 py-1 text-xs hover:bg-sand">
                     Decline
                   </button>
@@ -107,8 +106,7 @@ export function SourcePanel({ page, sources }: { page: Page; sources: Map<string
               return (
                 source && (
                   <SourceCard key={s.sourceId} source={source} fitGap={s.fitGap}>
-                    {source.origin === "user" && <DeleteFile id={source.id} onError={setError} />}
-                  </SourceCard>
+                    </SourceCard>
                 )
               );
             })}
@@ -119,13 +117,3 @@ export function SourcePanel({ page, sources }: { page: Page; sources: Map<string
   );
 }
 
-function DeleteFile({ id, onError }: { id: string; onError(text: string): void }) {
-  const remove = () => {
-    if (window.confirm("Delete this PDF from your account? This cannot be undone.")) deleteFile(id).catch((err) => onError(errorText(err)));
-  };
-  return (
-    <button onClick={remove} className="rounded-full px-2 py-1 text-xs text-muted underline hover:text-ink">
-      Delete file
-    </button>
-  );
-}

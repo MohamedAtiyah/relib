@@ -92,3 +92,16 @@ create table if not exists cache (
 
 create index if not exists pages_folder on pages (owner_id, folder_id);
 create index if not exists suggestions_folder on suggestions (owner_id, folder_id);
+
+create table if not exists usage (
+  key text not null,
+  day text not null,
+  count integer not null default 0,
+  primary key (key, day)
+);
+
+-- academic rebuild: pages have a type; folders no longer have kinds or roles
+alter table pages add column if not exists type text not null default 'notes';
+alter table pages add column if not exists last_opened_at double precision;
+alter table folders drop column if exists kind;
+alter table folders drop column if exists agent_role;

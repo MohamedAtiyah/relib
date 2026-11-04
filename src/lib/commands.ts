@@ -5,15 +5,12 @@ import { $createHeadingNode, $createQuoteNode } from "@lexical/rich-text";
 import { $setBlocksType } from "@lexical/selection";
 import { INSERT_TABLE_COMMAND } from "@lexical/table";
 import {
-  $createLineBreakNode,
   $createParagraphNode,
-  $createTextNode,
   $getSelection,
   $insertNodes,
   $isRangeSelection,
   type ElementNode,
   type LexicalEditor,
-  type LexicalNode,
 } from "lexical";
 import {
   Braces,
@@ -29,21 +26,21 @@ import {
   ListTree,
   Minus,
   Network,
+  NotebookPen,
   Quote,
   Settings2,
+  SquareTerminal,
   Table,
   type LucideIcon,
 } from "lucide-react";
 import { $createCalloutNode, $createPythonNode, $createToggleNode } from "@/components/nodes";
-import { DEFAULT_PRESET } from "./db";
-import type { Preset } from "./schemas";
+import type { PageType } from "./schemas";
 
 export type SlashContext = {
   openPanels(): void;
   openNeurolib(): void;
   openPreset(): void;
-  preset(): Preset | undefined;
-  pageTitle(): string;
+  newPage(type: PageType): void;
 };
 
 export type SlashCommand = {
@@ -57,16 +54,6 @@ const block = (create: () => ElementNode) => () => {
   const selection = $getSelection();
   if ($isRangeSelection(selection)) $setBlocksType(selection, create);
 };
-
-// The title block from the saved preset: the page title and today's date fill in when the preset leaves them blank.
-function $titleBlock(preset: Preset, title: string) {
-  const fill: Record<string, string> = { title, date: new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }) };
-  const lines = [
-    ...preset.fields.map((f) => `${f.label}: ${f.value || fill[f.label.toLowerCase()] || ""}`),
-    `Citation style: ${preset.citationStyle}`,
-  ];
-  return $createCalloutNode().append(...lines.flatMap((line, i): LexicalNode[] => (i ? [$createLineBreakNode(), $createTextNode(line)] : [$createTextNode(line)])));
-}
 
 export const COMMANDS: SlashCommand[] = [
   { name: "h1", keywords: "heading title", icon: Heading1, run: block(() => $createHeadingNode("h1")) },
@@ -96,19 +83,10 @@ export const COMMANDS: SlashCommand[] = [
     },
   },
   { name: "table", keywords: "grid", icon: Table, run: (e) => e.dispatchCommand(INSERT_TABLE_COMMAND, { rows: "3", columns: "3" }) },
-  {
-    name: "research",
-    keywords: "paper template report preset",
-    icon: FileText,
-    run(_, ctx) {
-      const preset = ctx.preset() ?? DEFAULT_PRESET;
-      $insertNodes([
-        $titleBlock(preset, ctx.pageTitle()),
-        ...preset.sections.flatMap((title) => [$createHeadingNode("h2").append($createTextNode(title)), $createParagraphNode()]),
-      ]);
-      ctx.openPanels();
-    },
-  },
+  // these make a new page of that type in the folder, so they work from any line
+  { name: "notes", keywords: "page lecture new", icon: NotebookPen, run: (_, ctx) => ctx.newPage("notes") },
+  { name: "research", keywords: "page paper essay new", icon: FileText, run: (_, ctx) => ctx.newPage("research") },
+  { name: "programming", keywords: "page project notebook new", icon: SquareTerminal, run: (_, ctx) => ctx.newPage("programming") },
   { name: "preset", keywords: "template title block sections citation", icon: Settings2, run: (_, ctx) => ctx.openPreset() },
   { name: "neurolib", keywords: "graph map bubbles", icon: Network, run: (_, ctx) => ctx.openNeurolib() },
 ];

@@ -1,5 +1,6 @@
 import Dexie, { type DBCore, type Table } from "dexie";
-import type { Folder, Page, Preset, Source, Suggestion } from "./schemas";
+import type { Folder, Page, PageType, Preset, Source, Suggestion } from "./schemas";
+import { START_HERE } from "./starthere";
 
 export const SYNCED = ["folders", "pages", "presets", "sources", "suggestions"] as const;
 export type SyncedTable = (typeof SYNCED)[number];
@@ -82,44 +83,25 @@ export async function cached<T>(input: unknown, run: () => Promise<T>): Promise<
   return value;
 }
 
-export async function ensureSeed() {
-  if (await db.folders.count()) return;
-  const seed = (await import("../../seed/economics.json")).default as unknown as {
-    folders: Folder[];
-    pages: Page[];
-    presets: Preset[];
-    sources: Source[];
-    suggestions: Suggestion[];
-    trees: Record<string, unknown>;
-  };
-  // the seed is a fixed past; shift it so "since your last visit" always has something to say
-  const shift = Date.now() - Math.max(...seed.suggestions.map((s) => s.createdAt ?? 0));
-  const move = <T extends { createdAt?: number; updatedAt?: number; lastOpenedAt?: number }>(row: T): T => ({
-    ...row,
-    ...(row.createdAt && { createdAt: row.createdAt + shift }),
-    ...(row.updatedAt && { updatedAt: row.updatedAt + shift }),
-    ...(row.lastOpenedAt && { lastOpenedAt: row.lastOpenedAt + shift }),
-  });
-  await db.transaction("rw", [db.folders, db.pages, db.presets, db.sources, db.suggestions, db.cache], async () => {
-    await db.folders.bulkPut(seed.folders.map(move));
-    await db.pages.bulkPut(seed.pages.map(move));
-    await db.presets.bulkPut(seed.presets);
-    await db.sources.bulkPut(seed.sources);
-    await db.suggestions.bulkPut(seed.suggestions.map(move));
-    await db.cache.bulkPut(Object.entries(seed.trees).map(([folderId, value]) => ({ key: treeKey(folderId), value })));
-  });
-}
-
-export async function createPage(folderId: string) {
+export async function createPage(folderId: string, type: PageType = "notes", title = "", editorState = "", plainText = "") {
   const id = crypto.randomUUID();
-  await db.pages.add({ id, folderId, title: "", editorState: "", plainText: "", createdAt: Date.now(), updatedAt: Date.now() });
+  await db.pages.add({ id, folderId, type, title, editorState, plainText, createdAt: Date.now(), updatedAt: Date.now() });
   return id;
 }
 
-export async function createFolder(name: string, kind: Folder["kind"] = "study", agentRole = "Tutor") {
+export async function createFolder(name: string) {
   const id = crypto.randomUUID();
-  await db.folders.add({ id, name, kind, agentRole, lastOpenedAt: Date.now(), createdAt: Date.now() });
-  return createPage(id);
+  await db.folders.add({ id, name, lastOpenedAt: Date.now(), createdAt: Date.now() });
+  return id;
+}
+
+// A new workspace (account or demo) starts with one folder holding the Start here page.
+export async function createStarter() {
+  const folderId = await createFolder("Getting started");
+  const id = await createPage(folderId, "notes", START_HERE.title, START_HERE.editorState, START_HERE.plainText);
+  // marked as read, so opening the guide never spends a visitor's AI calls
+  await db.pages.update(id, { analysedText: `${START_HERE.title}\n${START_HERE.plainText}` });
+  return id;
 }
 
 export const DEFAULT_PRESET: Preset = {

@@ -7,23 +7,21 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { getMode } from "@/lib/api";
 import type { SlashContext } from "@/lib/commands";
-import { createFolder, createPage, db, DEFAULT_PRESET, ensureSeed, openWorkspace } from "@/lib/db";
+import { createFolder, createPage, createStarter, db, DEFAULT_PRESET, openWorkspace } from "@/lib/db";
 import type { ModelMode } from "@/lib/model";
-import type { Folder } from "@/lib/schemas";
+import type { PageType } from "@/lib/schemas";
 import { pageNotes } from "@/lib/suggest";
 import { onSyncStatus, pull, queueRows, type SyncStatus } from "@/lib/sync";
-import { CatchUp } from "./CatchUp";
 import { ChatPanel } from "./ChatPanel";
 import { Editor } from "./Editor";
 import { Neurolib } from "./Neurolib";
 import { PresetDialog } from "./PresetDialog";
-import { Sidebar } from "./Sidebar";
+import { ROLE, Sidebar } from "./Sidebar";
 import { SourcePanel } from "./SourcePanel";
-import { UploadButton } from "./UploadButton";
 
 const MODE_TAG: Partial<Record<ModelMode, string>> = {
   standin: "Stand-in model: keyword heuristics, not AI",
-  demo: "Demo: saved results only",
+  off: "Live AI is switched off",
 };
 
 const SYNC_TAG: Record<SyncStatus, string> = { saved: "Saved", saving: "Saving…", offline: "Not saved yet: retrying" };
@@ -33,7 +31,10 @@ const booted = new Map<string, Promise<void>>();
 
 function boot(userId?: string) {
   return async () => {
-    if (!userId) return ensureSeed();
+    if (!userId) {
+      if (!(await db.folders.count())) await createStarter();
+      return;
+    }
     try {
       await pull();
     } catch (err) {
@@ -41,7 +42,7 @@ function boot(userId?: string) {
       if (!(await db.folders.count())) throw err;
       return;
     }
-    if (!(await db.folders.count())) await createFolder("My first folder", "study", "Tutor");
+    if (!(await db.folders.count())) await createStarter();
     if (!(await db.presets.count())) await db.presets.put(DEFAULT_PRESET);
   };
 }
@@ -130,21 +131,18 @@ function WorkspaceView({ userId, storageKey, sync }: { userId?: string; storageK
     },
     openNeurolib: () => setView("neurolib"),
     openPreset: () => setPresetOpen(true),
-    preset: () => preset,
-    pageTitle: () => page?.title ?? "",
+    newPage: (type) => folder && newPage(folder.id, type),
   };
 
-  const newFolder = async (name: string, kind: Folder["kind"], role: string) => select(await createFolder(name, kind, role));
-  const newPage = async (folderId: string) => select(await createPage(folderId));
+  const newFolder = async (name: string) => select(await createPage(await createFolder(name)));
+  const newPage = async (folderId: string, type: PageType) => select(await createPage(folderId, type));
 
   return (
     <div className="flex h-dvh overflow-hidden">
       <Sidebar
         folders={folders ?? []}
         pages={pages ?? []}
-        suggestions={suggestions ?? []}
-        pageId={page?.id}
-        folder={folder}
+        page={page}
         onSelect={select}
         onNewFolder={newFolder}
         onNewPage={newPage}
@@ -159,8 +157,8 @@ function WorkspaceView({ userId, storageKey, sync }: { userId?: string; storageK
           )
         }
       />
-      {chatOpen && folder && (
-        <ChatPanel key={folder.id} folder={folder} notes={page ? pageNotes(page) : ""} sources={acceptedSources.map((s) => s.title)} />
+      {chatOpen && folder && page && (
+        <ChatPanel key={folder.id} folder={folder} role={ROLE[page.type ?? "notes"]} notes={page ? pageNotes(page) : ""} sources={acceptedSources.map((s) => s.title)} />
       )}
       <main className="flex min-w-0 flex-1 flex-col">
         <header className="flex h-14 shrink-0 items-center gap-1 px-4">
@@ -171,7 +169,6 @@ function WorkspaceView({ userId, storageKey, sync }: { userId?: string; storageK
             {mode && MODE_TAG[mode] && <span className="ml-2 shrink-0 rounded-full bg-sand px-3 py-1 text-xs">{MODE_TAG[mode]}</span>}
             {sync && <span role="status" className="ml-2 shrink-0 text-xs">{SYNC_TAG[sync]}</span>}
           </p>
-          {userId && folder && <UploadButton userId={userId} folderId={folder.id} pageId={page?.id} />}
           <button
             onClick={() => setView(view === "neurolib" ? "page" : "neurolib")}
             aria-pressed={view === "neurolib"}
@@ -189,7 +186,6 @@ function WorkspaceView({ userId, storageKey, sync }: { userId?: string; storageK
           <Neurolib key={folder.id} folder={folder} />
         ) : (
           <div className="flex-1 overflow-y-auto">
-            {folder && <CatchUp key={folder.id} folder={folder} sources={sources} />}
             {page && (
               <div key={page.id} className="mx-auto max-w-2xl px-8 py-6">
                 <input

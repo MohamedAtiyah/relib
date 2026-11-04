@@ -6,11 +6,8 @@ const SYSTEM =
 export function tutorReply(input: { notes: string; sources: string[]; role?: string; messages: Msg[] }) {
   const role = input.role ? `Your role in this folder: ${input.role}. The rules above still apply.\n\n` : "";
   const context = `${role}Current page:\n${input.notes.slice(0, 6000)}\n\nAccepted sources:\n${input.sources.join("\n") || "none"}`;
-  const last = input.messages.at(-1)!.content.toLowerCase().trim();
   return chat({
     tag: "tutor",
-    // page context changes as the user types, so demo mode looks up the question alone
-    cacheKey: `tutor:${last}`,
     messages: [{ role: "system", content: `${SYSTEM}\n\n${context}` }, ...input.messages],
   });
 }

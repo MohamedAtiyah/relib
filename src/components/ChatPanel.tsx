@@ -1,14 +1,13 @@
-import { Pencil, Send } from "lucide-react";
+import { Send } from "lucide-react";
 import { useState, type FormEvent } from "react";
 import { errorText, post } from "@/lib/api";
-import { db } from "@/lib/db";
 import type { Folder } from "@/lib/schemas";
 
 type Msg = { role: "user" | "assistant"; content: string };
 
-const STARTERS = ["Explain price elasticity of demand", "Write my notes on supply and demand for me"];
+const STARTERS = ["Explain the main idea on this page", "Write my notes for me"];
 
-export function ChatPanel({ folder, notes, sources }: { folder: Folder; notes: string; sources: string[] }) {
+export function ChatPanel({ folder, role, notes, sources }: { folder: Folder; role: string; notes: string; sources: string[] }) {
   const [messages, setMessages] = useState<Msg[]>([]);
   const [draft, setDraft] = useState("");
   const [busy, setBusy] = useState(false);
@@ -22,7 +21,7 @@ export function ChatPanel({ folder, notes, sources }: { folder: Folder; notes: s
     setBusy(true);
     setError(null);
     try {
-      const { reply } = await post<{ reply: string }>("chat", { notes, sources: sources.slice(0, 100), role: folder.agentRole, messages: next });
+      const { reply } = await post<{ reply: string }>("chat", { notes, sources: sources.slice(0, 100), role, messages: next });
       setMessages([...next, { role: "assistant", content: reply }]);
     } catch (err) {
       setError(errorText(err));
@@ -35,11 +34,6 @@ export function ChatPanel({ folder, notes, sources }: { folder: Folder; notes: s
     send(draft);
   };
 
-  const editRole = () => {
-    const role = window.prompt(`Relib v1's role in ${folder.name}`, folder.agentRole)?.trim().slice(0, 200);
-    if (role) db.folders.update(folder.id, { agentRole: role });
-  };
-
   return (
     <aside aria-label="Relib v1" className="flex w-72 shrink-0 flex-col border-r border-hairline">
       <div className="flex h-14 items-center justify-between gap-2 px-4">
@@ -47,16 +41,13 @@ export function ChatPanel({ folder, notes, sources }: { folder: Folder; notes: s
           <span className="h-2 w-2 rounded-full bg-spark" aria-hidden="true" />
           Relib v1
         </h2>
-        <button onClick={editRole} title="Change role" className="flex min-w-0 items-center gap-1 rounded-lg px-2 py-1 text-xs text-muted hover:bg-sand">
-          <span className="truncate">{folder.agentRole}</span>
-          <Pencil size={12} strokeWidth={1.5} className="shrink-0" />
-        </button>
+        <span className="chip">{role}</span>
       </div>
       <div className="flex-1 space-y-2 overflow-y-auto px-4 text-sm" aria-live="polite">
         {!messages.length && (
           <>
             <p className="text-muted">
-              Your {folder.agentRole.toLowerCase()} for {folder.name}. Explains, questions and finds. It will not write your notes.
+              Your {role.toLowerCase()} for {folder.name}. Explains, questions and finds. It will not write your notes.
             </p>
             {STARTERS.map((s) => (
               <button key={s} onClick={() => send(s)} className="block w-full rounded-card border border-hairline px-3 py-2 text-left text-xs hover:bg-sand">
