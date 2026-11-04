@@ -56,17 +56,27 @@ export function NeurolibGraph({ nodes, onClick }: { nodes: GraphNode[]; onClick(
 
   const css = (name: string) => getComputedStyle(document.documentElement).getPropertyValue(name);
 
+  // Brain style: topics are solid (ink at the top level, muted below), the open path glows spark, sources are pale cells.
+  const fill = (node: Drawn) => {
+    if (node.kind === "source") return css("--surface");
+    if (node.kind === "folder") return css("--spark-wash");
+    if (node.selected) return css("--spark");
+    return css(node.parentId === "centre" ? "--ink" : "--muted");
+  };
+
   const draw = (node: Drawn, ctx: CanvasRenderingContext2D) => {
     const { x = 0, y = 0, radius, kind, label, selected } = node;
     ctx.beginPath();
     ctx.arc(x, y, radius, 0, 2 * Math.PI);
-    ctx.fillStyle = css(kind === "source" ? "--sand" : "--surface");
+    ctx.fillStyle = fill(node);
     ctx.fill();
-    ctx.lineWidth = 1;
-    ctx.strokeStyle = css(selected ? "--spark" : "--hairline");
-    ctx.stroke();
+    if (kind !== "topic") {
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = css(kind === "folder" || selected ? "--spark" : "--hairline");
+      ctx.stroke();
+    }
 
-    ctx.fillStyle = css("--ink");
+    ctx.fillStyle = css(kind === "topic" && !selected ? "--paper" : "--ink");
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     const family = getComputedStyle(document.body).fontFamily;
@@ -94,7 +104,8 @@ export function NeurolibGraph({ nodes, onClick }: { nodes: GraphNode[]; onClick(
           height={size.height}
           graphData={data}
           backgroundColor="rgba(0,0,0,0)"
-          linkColor={() => css("--hairline")}
+          linkColor={(l) => css((l.target as Drawn).selected ? "--spark-wash" : "--hairline")}
+          linkWidth={(l) => ((l.target as Drawn).selected ? 4 : 1)}
           nodeLabel={(n) => n.label}
           nodeCanvasObject={draw}
           nodePointerAreaPaint={(n, color, ctx) => {

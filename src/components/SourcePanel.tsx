@@ -1,6 +1,6 @@
 import { useLiveQuery } from "dexie-react-hooks";
 import { useEffect, useRef, useState } from "react";
-import { errorText } from "@/lib/api";
+import { deleteFile, errorText } from "@/lib/api";
 import { db } from "@/lib/db";
 import type { Page, Source, Suggestion } from "@/lib/schemas";
 import { MIN_NOTES, needsRun, pageNotes, runAgent, type Stage } from "@/lib/suggest";
@@ -11,6 +11,8 @@ const STAGE_TEXT: Record<Stage, string> = {
   searching: "Searching OpenAlex and arXiv",
   checking: "Checking fit and gaps against your notes",
 };
+
+const WEAK_FIT = 25; // below this a match is mostly noise, so it waits behind a button
 
 export function SourcePanel({ page, sources }: { page: Page; sources: Map<string, Source> }) {
   const suggestions = useLiveQuery(() => db.suggestions.where({ folderId: page.folderId }).toArray(), [page.folderId]) ?? [];
@@ -39,15 +41,18 @@ export function SourcePanel({ page, sources }: { page: Page; sources: Map<string
   const setStatus = (s: Suggestion, status: Suggestion["status"]) =>
     db.suggestions.update([s.pageId, s.sourceId], { status });
 
-  const fresh = suggestions
+  const [showWeak, setShowWeak] = useState(false);
+  const ranked = suggestions
     .filter((s) => s.status === "new" && s.pageId === page.id)
     .sort((a, b) => b.fitGap.relevance - a.fitGap.relevance);
+  const weak = ranked.filter((s) => s.fitGap.relevance < WEAK_FIT).length;
+  const fresh = showWeak ? ranked : ranked.filter((s) => s.fitGap.relevance >= WEAK_FIT);
   const saved = suggestions.filter((s) => s.status === "accepted");
 
   return (
-    <aside aria-label="Sources" className="flex w-96 shrink-0 flex-col border-l border-hairline">
+    <aside aria-label="Sources" className="flex w-96 shrink-0 flex-col bg-sand">
       <div className="flex h-14 items-center justify-between px-4">
-        <h2 className="font-display text-lg font-semibold">Sources</h2>
+        <h2 className="font-display text-xl font-semibold">Sources</h2>
         {stage && (
           <span role="status" className="flex items-center gap-2 text-xs text-muted">
             <span className="h-2 w-2 animate-pulse rounded-full bg-spark" aria-hidden="true" />
@@ -64,7 +69,7 @@ export function SourcePanel({ page, sources }: { page: Page; sources: Map<string
             </button>
           </div>
         )}
-        {!fresh.length && !saved.length && !stage && !error && (
+        {!ranked.length && !saved.length && !stage && !error && (
           <p className="text-sm text-muted">
             {pageNotes(page).length < MIN_NOTES
               ? "Keep writing. Sources appear once there is enough to go on."
@@ -77,6 +82,7 @@ export function SourcePanel({ page, sources }: { page: Page; sources: Map<string
             source && (
               <SourceCard key={s.sourceId} source={source} fitGap={s.fitGap}>
                 <div className="flex gap-2">
+                  {source.origin === "user" && <DeleteFile id={source.id} onError={setError} />}
                   <button onClick={() => setStatus(s, "declined")} className="rounded-full border border-hairline px-3 py-1 text-xs hover:bg-sand">
                     Decline
                   </button>
@@ -88,16 +94,38 @@ export function SourcePanel({ page, sources }: { page: Page; sources: Map<string
             )
           );
         })}
+        {weak > 0 && (
+          <button onClick={() => setShowWeak(!showWeak)} className="text-xs text-muted underline hover:text-ink">
+            {showWeak ? "Hide weaker matches" : `Show ${weak} weaker ${weak === 1 ? "match" : "matches"} (fit under ${WEAK_FIT})`}
+          </button>
+        )}
         {saved.length > 0 && (
           <>
             <h3 className="pt-3 text-xs font-medium text-muted">Saved to this folder ({saved.length})</h3>
             {saved.map((s) => {
               const source = sources.get(s.sourceId);
-              return source && <SourceCard key={s.sourceId} source={source} fitGap={s.fitGap} />;
+              return (
+                source && (
+                  <SourceCard key={s.sourceId} source={source} fitGap={s.fitGap}>
+                    {source.origin === "user" && <DeleteFile id={source.id} onError={setError} />}
+                  </SourceCard>
+                )
+              );
             })}
           </>
         )}
       </div>
     </aside>
+  );
+}
+
+function DeleteFile({ id, onError }: { id: string; onError(text: string): void }) {
+  const remove = () => {
+    if (window.confirm("Delete this PDF from your account? This cannot be undone.")) deleteFile(id).catch((err) => onError(errorText(err)));
+  };
+  return (
+    <button onClick={remove} className="rounded-full px-2 py-1 text-xs text-muted underline hover:text-ink">
+      Delete file
+    </button>
   );
 }

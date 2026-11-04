@@ -1,3 +1,4 @@
+import { AsyncLocalStorage } from "node:async_hooks";
 import { createHash } from "node:crypto";
 import { z } from "zod";
 import demoCache from "../../seed/demo-cache.json";
@@ -18,10 +19,15 @@ export class DemoMiss extends Error {}
 
 export type ModelMode = "demo" | "standin" | "meta";
 
-export function modelMode(): ModelMode {
+export function liveMode(): ModelMode {
   if (process.env.DEMO_MODE === "true") return "demo";
   return process.env.META_API_KEY ? "meta" : "standin";
 }
+
+// Routes run each request inside a mode, so a signed-out visitor never spends credit.
+export const requestMode = new AsyncLocalStorage<ModelMode>();
+
+export const modelMode = (): ModelMode => requestMode.getStore() ?? liveMode();
 
 // Every result this process produced, so scripts/build-seed.ts can write the demo cache.
 export const recorded = new Map<string, string>();
@@ -53,15 +59,21 @@ async function callMeta(opts: ChatOpts): Promise<string> {
     response_format: opts.schema && { type: "json_schema", json_schema: opts.schema },
   };
   for (let attempt = 0; ; attempt++) {
-    const res = await fetch(`${base}/chat/completions`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${process.env.META_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-      signal: AbortSignal.timeout(60_000),
-    });
+    let res: Response;
+    try {
+      res = await fetch(`${base}/chat/completions`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${process.env.META_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+        signal: AbortSignal.timeout(60_000),
+      });
+    } catch (err) {
+      if (attempt < 2 && err instanceof DOMException && err.name === "TimeoutError") continue;
+      throw err;
+    }
     if (res.ok) {
       const data = await res.json();
       if (process.env.NODE_ENV !== "production") console.log("[model]", opts.tag, data.usage);

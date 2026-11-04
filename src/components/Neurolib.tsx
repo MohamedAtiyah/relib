@@ -1,15 +1,13 @@
 "use client";
 
 import { useLiveQuery } from "dexie-react-hooks";
-import { ArrowLeft, X } from "lucide-react";
+import { X } from "lucide-react";
 import dynamic from "next/dynamic";
-import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { errorText, getMode, post } from "@/lib/api";
-import { cached, db, ensureSeed, treeKey } from "@/lib/db";
-import type { TreeNode } from "@/lib/schemas";
+import { cached, db, treeKey } from "@/lib/db";
+import type { Folder, TreeNode } from "@/lib/schemas";
 import { nodeWeight } from "@/lib/weight";
-import { Logo } from "./Logo";
 import type { GraphNode } from "./NeurolibGraph";
 import { SourceCard } from "./SourceCard";
 
@@ -18,17 +16,10 @@ const NeurolibGraph = dynamic(() => import("./NeurolibGraph").then((m) => m.Neur
 const OTHER = "unsorted";
 const CENTRE = "centre"; // ties top-level topics together, or the force layout drifts them apart
 
-export function Neurolib({ folderId }: { folderId?: string }) {
-  useEffect(() => {
-    ensureSeed();
-  }, []);
-
-  const folder = useLiveQuery(
-    async () => (folderId ? db.folders.get(folderId) : (await db.folders.toCollection().sortBy("createdAt"))[0]),
-    [folderId],
-  );
-  const pages = useLiveQuery(() => (folder ? db.pages.where({ folderId: folder.id }).toArray() : []), [folder?.id]);
-  const suggestions = useLiveQuery(() => (folder ? db.suggestions.where({ folderId: folder.id }).toArray() : []), [folder?.id]);
+// Each folder has its own map; Workspace keys this by folder id.
+export function Neurolib({ folder }: { folder: Folder }) {
+  const pages = useLiveQuery(() => db.pages.where({ folderId: folder.id }).toArray(), [folder.id]);
+  const suggestions = useLiveQuery(() => db.suggestions.where({ folderId: folder.id }).toArray(), [folder.id]);
   const sourceList = useLiveQuery(() => db.sources.toArray());
   const [tree, setTree] = useState<TreeNode[]>();
   const [notice, setNotice] = useState<string | null>(null);
@@ -52,7 +43,7 @@ export function Neurolib({ folderId }: { folderId?: string }) {
 
   useEffect(() => {
     const body = JSON.parse(input);
-    if (!folder || !sourceList || !pages || !body.pages.length) return;
+    if (!sourceList || !pages || !body.pages.length) return;
     let live = true;
     (async () => {
       try {
@@ -71,7 +62,7 @@ export function Neurolib({ folderId }: { folderId?: string }) {
     return () => {
       live = false;
     };
-  }, [input, folder, sourceList, pages]);
+  }, [input, folder.id, sourceList, pages]);
 
   const nodes = useMemo(() => {
     if (!tree) return [];
@@ -85,7 +76,7 @@ export function Neurolib({ folderId }: { folderId?: string }) {
 
   const visible = useMemo(() => {
     if (!nodes.length) return [];
-    const show: GraphNode[] = [{ id: CENTRE, label: folder?.name ?? "", kind: "folder", radius: 16 }];
+    const show: GraphNode[] = [{ id: CENTRE, label: folder.name, kind: "folder", radius: 16 }];
     const add = (n: TreeNode) => {
       show.push({ id: n.id, label: n.label, kind: "topic", radius: radius(n), parentId: n.parentId ?? CENTRE, selected: expanded.has(n.id) });
       if (!expanded.has(n.id)) return;
@@ -97,7 +88,7 @@ export function Neurolib({ folderId }: { folderId?: string }) {
     nodes.filter((n) => !n.parentId).forEach(add);
     return show;
     // eslint-disable-next-line react-hooks/exhaustive-deps -- radius derives from these
-  }, [nodes, expanded, accepted, sources, openSource, weighed, folder?.name]);
+  }, [nodes, expanded, accepted, sources, openSource, weighed, folder.name]);
 
   const activate = (id: string) => {
     if (id === CENTRE) return;
@@ -114,15 +105,8 @@ export function Neurolib({ folderId }: { folderId?: string }) {
   const ready = tree !== undefined;
 
   return (
-    <div className="flex h-dvh flex-col overflow-hidden">
-      <header className="flex h-14 shrink-0 items-center gap-4 border-b border-hairline px-4">
-        <Logo />
-        <Link href="/" className="flex items-center gap-1 text-sm text-muted hover:text-ink">
-          <ArrowLeft size={16} strokeWidth={1.5} /> Notes
-        </Link>
-        <h1 className="font-display text-lg font-semibold">Neurolib{folder ? `: ${folder.name}` : ""}</h1>
-        {notice && <p role="status" className="ml-auto text-xs text-muted">{notice}</p>}
-      </header>
+    <div className="flex min-h-0 flex-1 flex-col border-t border-hairline">
+      {notice && <p role="status" className="px-4 py-2 text-xs text-muted">{notice}</p>}
       {!ready || !nodes.length ? (
         <p className="p-8 text-sm text-muted">{ready || !JSON.parse(input).pages.length ? "Write a page first, then Neurolib can map it." : "Mapping this folder…"}</p>
       ) : (

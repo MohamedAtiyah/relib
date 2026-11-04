@@ -1,6 +1,16 @@
 import { z } from "zod";
 
-export type Folder = { id: string; name: string; createdAt: number };
+export const FOLDER_KINDS = ["study", "research", "work", "personal"] as const;
+
+export type Folder = {
+  id: string;
+  name: string;
+  kind: (typeof FOLDER_KINDS)[number];
+  agentRole: string; // what Relib v1 is for in this folder, e.g. "Analyst"
+  lastOpenedAt?: number;
+  createdAt: number;
+  updatedAt?: number;
+};
 
 export type Page = {
   id: string;
@@ -44,7 +54,8 @@ export const FitGapDraftSchema = z.object({
   keyPoints: z.array(z.string()),
   relevance: z.number(),
 });
-export type FitGap = z.infer<typeof FitGapDraftSchema> & { basedOn: "abstract" };
+export const FitGapSchema = FitGapDraftSchema.extend({ basedOn: z.enum(["abstract", "full_text"]) });
+export type FitGap = z.infer<typeof FitGapSchema>;
 
 export type Suggestion = {
   pageId: string;
@@ -52,6 +63,17 @@ export type Suggestion = {
   folderId: string;
   fitGap: FitGap;
   status: "new" | "accepted" | "declined";
+  createdAt?: number;
+  updatedAt?: number;
+};
+
+export type Preset = {
+  id: string;
+  name: string;
+  fields: { label: string; value: string }[]; // the title block
+  citationStyle: string;
+  sections: string[]; // required headings, in order
+  updatedAt?: number;
 };
 
 export const TreeSchema = z.object({
@@ -71,10 +93,11 @@ const notes = z.string().min(1).max(50000);
 
 export const TopicsInput = z.object({ notes });
 export const SourcesInput = z.object({ topics: z.array(z.string().min(1).max(200)).min(1).max(8) });
-export const AnalyzeInput = z.object({ notes, source: SourceSchema });
+export const AnalyzeInput = z.object({ notes, source: SourceSchema, useFullText: z.boolean().optional() });
 export const ChatInput = z.object({
   notes: z.string().max(50000),
   sources: z.array(z.string().max(1000)).max(100),
+  role: z.string().max(200).optional(),
   // no "system" role: a client must not be able to replace the tutor's rules
   messages: z
     .array(z.object({ role: z.enum(["user", "assistant"]), content: z.string().min(1).max(4000) }))
