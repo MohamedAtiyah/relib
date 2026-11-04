@@ -1,28 +1,35 @@
-let worker: Worker | undefined;
+export type RunResult = { output: string; images?: string[]; log?: string[]; error?: boolean };
+
+// One Python session per page: blocks on the same page share variables, like notebook cells.
+const sessions = new Map<string, Worker>();
 let nextId = 0;
 
-export function runPython(code: string): Promise<string> {
-  const cold = !worker;
-  worker ??= new Worker("/python-worker.js", { type: "module" });
-  const running = worker;
+export function restartPython(session: string) {
+  sessions.get(session)?.terminate();
+  sessions.delete(session);
+}
+
+export function runPython(code: string, session = "default"): Promise<RunResult> {
+  const cold = !sessions.has(session);
+  if (cold) sessions.set(session, new Worker("/python-worker.js", { type: "module" }));
+  const running = sessions.get(session)!;
   const id = nextId++;
   return new Promise((resolve) => {
-    const stop = (output: string) => {
+    const stop = (result: RunResult) => {
       clearTimeout(timer);
       running.removeEventListener("message", done);
       running.removeEventListener("error", failed);
-      resolve(output);
+      resolve(result);
     };
-    // a loop that never ends would hold the worker forever; the first run also downloads Python
+    // a loop that never ends would hold the session forever; the first run also downloads Python
     const timer = setTimeout(() => {
-      running.terminate();
-      if (worker === running) worker = undefined;
-      stop("Stopped: it ran too long.");
-    }, cold ? 90_000 : 30_000);
-    const done = ({ data }: MessageEvent<{ id: number; output: string }>) => data.id === id && stop(data.output);
+      restartPython(session);
+      stop({ output: "Stopped: it ran too long. The session was restarted, so variables are cleared.", error: true });
+    }, cold ? 120_000 : 60_000);
+    const done = ({ data }: MessageEvent<RunResult & { id: number }>) => data.id === id && stop(data);
     const failed = () => {
-      if (worker === running) worker = undefined;
-      stop("Python could not load. Check your connection and run again.");
+      restartPython(session);
+      stop({ output: "Python could not load. Check your connection and run again.", error: true });
     };
     running.addEventListener("message", done);
     running.addEventListener("error", failed);

@@ -16,7 +16,7 @@ import type { ReactNode } from "react";
 import type { Source } from "@/lib/schemas";
 import type { CiteRef } from "@/lib/cite";
 import { CitationChip } from "./Citations";
-import { PythonCell } from "./PythonCell";
+import { CodeCell, type CellData } from "./CodeCell";
 
 export class CalloutNode extends ParagraphNode {
   static getType() {
@@ -151,29 +151,30 @@ export class SourceNode extends DecoratorNode<ReactNode> {
 
 export const $createSourceNode = (source: SourceData) => new SourceNode(source);
 
-type SerializedPython = SerializedLexicalNode & { code: string; output: string };
+type SerializedCell = SerializedLexicalNode & CellData;
 
-// A Python cell: the code and its last output are saved with the note.
-export class PythonNode extends DecoratorNode<ReactNode> {
-  __code: string;
-  __output: string;
+// A code cell. Its JSON type stays "python" from before it ran other languages, so saved pages still open.
+export class CodeCellNode extends DecoratorNode<ReactNode> {
+  __data: CellData;
 
-  constructor(code = "", output = "", key?: NodeKey) {
+  constructor(data: CellData = { code: "", output: "" }, key?: NodeKey) {
     super(key);
-    this.__code = code;
-    this.__output = output;
+    this.__data = data;
   }
   static getType() {
     return "python";
   }
-  static clone(node: PythonNode) {
-    return new PythonNode(node.__code, node.__output, node.__key);
+  static clone(node: CodeCellNode) {
+    return new CodeCellNode(node.__data, node.__key);
   }
-  static importJSON(json: SerializedPython) {
-    return new PythonNode(json.code, json.output);
+  static importJSON(json: SerializedCell) {
+    const data: Partial<SerializedCell> = { ...json };
+    delete data.type;
+    delete data.version;
+    return new CodeCellNode({ ...data, code: data.code ?? "", output: data.output ?? "" });
   }
-  exportJSON(): SerializedPython {
-    return { ...super.exportJSON(), code: this.__code, output: this.__output };
+  exportJSON(): SerializedCell {
+    return { ...super.exportJSON(), ...this.__data };
   }
   createDOM() {
     return document.createElement("div");
@@ -185,19 +186,18 @@ export class PythonNode extends DecoratorNode<ReactNode> {
     return false;
   }
   getTextContent() {
-    return `${this.__code}\n${this.__output}`;
+    return `${this.__data.code}\n${this.__data.output}`;
   }
-  set(code: string, output: string) {
+  patch(patch: Partial<CellData>) {
     const self = this.getWritable();
-    self.__code = code;
-    self.__output = output;
+    self.__data = { ...self.__data, ...patch };
   }
   decorate() {
-    return <PythonCell nodeKey={this.__key} code={this.__code} output={this.__output} />;
+    return <CodeCell nodeKey={this.__key} data={this.__data} />;
   }
 }
 
-export const $createPythonNode = () => new PythonNode();
+export const $createCodeCellNode = () => new CodeCellNode();
 
 type SerializedCitation = SerializedLexicalNode & { refs: CiteRef[] };
 

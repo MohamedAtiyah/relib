@@ -269,3 +269,19 @@ body {
   margin-bottom: 0.5em;
 }
 
+
+/* Syntax colours for code cells (dark surface in both themes) */
+.code-surface .hljs-keyword,
+.code-surface .hljs-built_in,
+.code-surface .hljs-selector-tag { color: #f29a5a; }
+.code-surface .hljs-string,
+.code-surface .hljs-attr,
+.code-surface .hljs-regexp { color: #a8d5a2; }
+.code-surface .hljs-number,
+.code-surface .hljs-literal { color: #e6c07b; }
+.code-surface .hljs-comment { color: #7d8191; font-style: italic; }
+.code-surface .hljs-title,
+.code-surface .hljs-title\.function_,
+.code-surface .hljs-name { color: #8fbcff; }
+.code-surface .hljs-meta,
+.code-surface .hljs-type { color: #c7a6ff; }

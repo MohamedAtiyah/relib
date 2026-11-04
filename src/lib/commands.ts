@@ -32,7 +32,7 @@ import {
   Table,
   type LucideIcon,
 } from "lucide-react";
-import { $createCalloutNode, $createPythonNode, $createToggleNode } from "@/components/nodes";
+import { $createCalloutNode, $createCodeCellNode, $createToggleNode } from "@/components/nodes";
 import type { PageType } from "./schemas";
 
 export type SlashContext = {
@@ -66,9 +66,9 @@ export const COMMANDS: SlashCommand[] = [
   { name: "snippet", keywords: "code block monospace", icon: Braces, run: block($createCodeNode) },
   {
     name: "code",
-    keywords: "python run",
+    keywords: "python javascript typescript sql html run",
     icon: Code,
-    run: () => $insertNodes([$createPythonNode(), $createParagraphNode()]),
+    run: () => $insertNodes([$createCodeCellNode(), $createParagraphNode()]),
   },
   { name: "divider", keywords: "rule line", icon: Minus, run: (e) => e.dispatchCommand(INSERT_HORIZONTAL_RULE_COMMAND, undefined) },
   { name: "callout", keywords: "note highlight", icon: Info, run: block($createCalloutNode) },

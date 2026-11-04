@@ -35,7 +35,7 @@ import { useEffect, useRef, type RefObject } from "react";
 import type { SlashContext } from "@/lib/commands";
 import { db } from "@/lib/db";
 import type { Page, Source } from "@/lib/schemas";
-import { $isToggleNode, CalloutNode, CitationNode, PythonNode, SourceNode, ToggleNode } from "./nodes";
+import { $isToggleNode, CalloutNode, CitationNode, CodeCellNode, SourceNode, ToggleNode } from "./nodes";
 import { SelectionMenu } from "./SelectionMenu";
 import { SlashMenu } from "./SlashMenu";
 
@@ -69,7 +69,7 @@ const nodes = [
   CalloutNode,
   ToggleNode,
   SourceNode,
-  PythonNode,
+  CodeCellNode,
   CitationNode,
 ];
 
