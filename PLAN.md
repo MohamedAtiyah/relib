@@ -33,5 +33,9 @@ Spec: `RELIB_CLAUDE_CODE_PROMPT.md` (outside the repo). Started 4 Nov, 22:09 Dub
 10. Workspace home
 — cut line —
 
-## Status
-(updated as steps land)
+## Status (4 Nov, about 23:10 Dubai)
+Done and checked in the browser or by tests: steps 1 to 8, and most of step 9.
+- 9 Neurolib: neuron drawing, tapered links, signal dots, "needs material", and material concepts feeding the map all render. The end-point explanation panel is written but was not clicked through.
+- Not started: 10 Workspace home (Pick up where you left off, time and weather widgets) and everything below the cut line.
+- Not done inside earlier steps: the research editor's toolbar (fonts, alignment, footnotes, table of contents, page breaks), copying an equation as an image, and linking formulas into Neurolib.
+- Never tested end to end: Clerk sign-in, Neon sync and R2 uploads (no keys locally; R2 also needs a CORS rule allowing PUT from the site). The sandbox was tested with the key from `.env`, which is named `E2B_AP_KEY` there; the code reads `E2B_API_KEY`.

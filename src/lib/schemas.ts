@@ -130,4 +130,5 @@ export const TopicInput = z.object({
 export const NeurolibInput = z.object({
   pages: z.array(z.object({ title: z.string().max(500), text: z.string().max(50000) })).max(100),
   sources: z.array(z.object({ id: z.string().max(100), title: z.string().max(1000) })).max(300),
+  folderId: z.string().max(200).optional(),
 });
