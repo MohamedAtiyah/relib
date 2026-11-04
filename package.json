@@ -14,6 +14,8 @@
     "db:migrate": "node --env-file-if-exists=.env --env-file-if-exists=.env.local --import tsx scripts/migrate.ts"
   },
   "dependencies": {
+    "@citation-js/core": "^0.9.0",
+    "@citation-js/plugin-csl": "^0.9.0",
     "@clerk/nextjs": "^7.9.23",
     "@lexical/code": "^0.53.0",
     "@lexical/link": "^0.53.0",

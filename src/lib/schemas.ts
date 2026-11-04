@@ -23,7 +23,13 @@ export type Page = {
   analysedText?: string; // the notes the agent last ran on
   lastOpenedAt?: number;
   sourcesOn?: boolean; // off by default: each suggestion run spends model calls
+  research?: Research;
 };
+
+export type CoverField = { label: string; value: string };
+
+// A research page's citation style and cover page. presetId marks a cover still exactly as the preset filled it.
+export type Research = { style: string; cover: CoverField[]; presetId?: string };
 
 export const SourceSchema = z.object({
   id: z.string().max(100),
@@ -34,6 +40,11 @@ export const SourceSchema = z.object({
   url: z.url({ protocol: /^https?$/ }).max(2000),
   doi: z.string().max(300).optional(),
   origin: z.enum(["openalex", "arxiv", "user"]),
+  venue: z.string().max(500).optional(),
+  volume: z.string().max(50).optional(),
+  issue: z.string().max(50).optional(),
+  pages: z.string().max(50).optional(),
+  entered: z.array(z.string().max(20)).max(10).optional(), // fields the student typed rather than fetched
 });
 export type Source = z.infer<typeof SourceSchema>;
 
@@ -65,12 +76,14 @@ export type Suggestion = {
   folderId: string;
   fitGap: FitGap;
   status: "new" | "accepted" | "declined";
+  addedBy?: "you"; // a DOI or link the student added, listed apart from suggestions
   createdAt?: number;
   updatedAt?: number;
 };
 
 export type Preset = {
   id: string;
+  folderId?: string;
   name: string;
   fields: { label: string; value: string }[]; // the title block
   citationStyle: string;

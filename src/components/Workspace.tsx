@@ -4,18 +4,20 @@ import { UserButton } from "@clerk/nextjs";
 import { useLiveQuery } from "dexie-react-hooks";
 import { BookOpen, Network, NotebookPen, PanelLeftOpen } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import type { LexicalEditor } from "lexical";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { getMode } from "@/lib/api";
 import type { SlashContext } from "@/lib/commands";
-import { createFolder, createPage, createStarter, db, DEFAULT_PRESET, openWorkspace } from "@/lib/db";
+import { createFolder, createPage, createStarter, db, openWorkspace } from "@/lib/db";
 import type { ModelMode } from "@/lib/model";
-import type { PageType } from "@/lib/schemas";
+import type { PageType, Source } from "@/lib/schemas";
 import { pageNotes } from "@/lib/suggest";
 import { onSyncStatus, pull, queueRows, type SyncStatus } from "@/lib/sync";
 import { ChatPanel } from "./ChatPanel";
 import { Editor } from "./Editor";
 import { Neurolib } from "./Neurolib";
-import { PresetDialog } from "./PresetDialog";
+import { CitePreview } from "./CitePreview";
+import { ResearchPage } from "./ResearchPage";
 import { ROLE, Sidebar } from "./Sidebar";
 import { SourcePanel } from "./SourcePanel";
 
@@ -43,7 +45,6 @@ function boot(userId?: string) {
       return;
     }
     if (!(await db.folders.count())) await createStarter();
-    if (!(await db.presets.count())) await db.presets.put(DEFAULT_PRESET);
   };
 }
 
@@ -94,14 +95,15 @@ function WorkspaceView({ userId, storageKey, sync }: { userId?: string; storageK
   const pages = useLiveQuery(() => db.pages.toCollection().sortBy("createdAt"));
   const sourceList = useLiveQuery(() => db.sources.toArray());
   const suggestions = useLiveQuery(() => db.suggestions.toArray());
-  const preset = useLiveQuery(() => db.presets.toCollection().first());
+  const presets = useLiveQuery(() => db.presets.toArray());
   const [pageId, setPageId] = useState(() => remembered(storageKey));
   const [view, setView] = useState<"page" | "neurolib">("page");
   const [chatOpen, setChatOpen] = useState(false);
   const [navOpen, setNavOpen] = useState(true);
   const [ask, setAsk] = useState<{ text: string; at: number }>();
   const [sourcesOpen, setSourcesOpen] = useState(true);
-  const [presetOpen, setPresetOpen] = useState(false);
+  const [preview, setPreview] = useState<{ source: Source; pageId: string } | null>(null);
+  const editorRef = useRef<LexicalEditor | null>(null);
   const [mode, setMode] = useState<ModelMode>();
 
   useEffect(() => {
@@ -132,8 +134,8 @@ function WorkspaceView({ userId, storageKey, sync }: { userId?: string; storageK
       setSourcesOpen(true);
     },
     openNeurolib: () => setView("neurolib"),
-    openPreset: () => setPresetOpen(true),
     newPage: (type) => folder && newPage(folder.id, type),
+    pageType: page?.type ?? "notes",
     explain: (text) => {
       setNavOpen(true);
       setChatOpen(true);
@@ -221,7 +223,19 @@ function WorkspaceView({ userId, storageKey, sync }: { userId?: string; storageK
           <Neurolib key={folder.id} folder={folder} />
         ) : (
           <div className="flex-1 overflow-y-auto">
-            {page && (
+            {page?.type === "research" && (
+              <ResearchPage
+                key={page.id}
+                page={page}
+                folderPages={(pages ?? []).filter((p) => p.folderId === page.folderId)}
+                presets={(presets ?? []).filter((p) => p.folderId === page.folderId)}
+                sources={sources}
+                accepted={acceptedSources}
+                ctx={ctx}
+                editorRef={editorRef}
+              />
+            )}
+            {page && page.type !== "research" && (
               <div key={page.id} className="mx-auto max-w-2xl px-8 py-6">
                 <input
                   autoFocus={!page.title}
@@ -237,8 +251,20 @@ function WorkspaceView({ userId, storageKey, sync }: { userId?: string; storageK
           </div>
         )}
       </main>
-      {sourcesOpen && page && view === "page" && <SourcePanel key={page.id} page={page} sources={sources} userId={userId} />}
-      {presetOpen && <PresetDialog preset={preset ?? DEFAULT_PRESET} onClose={() => setPresetOpen(false)} />}
+      {sourcesOpen && page && view === "page" && preview?.pageId === page.id && (
+        <aside aria-label="Cite this source" className="w-96 shrink-0 overflow-y-auto bg-sand p-4">
+          <CitePreview key={preview.source.id} source={sources.get(preview.source.id) ?? preview.source} page={page} editorRef={editorRef} onDone={() => setPreview(null)} />
+        </aside>
+      )}
+      {sourcesOpen && page && view === "page" && preview?.pageId !== page.id && (
+        <SourcePanel
+          key={page.id}
+          page={page}
+          sources={sources}
+          userId={userId}
+          onAccept={page.type === "research" ? (source) => setPreview({ source, pageId: page.id }) : undefined}
+        />
+      )}
     </div>
   );
 }

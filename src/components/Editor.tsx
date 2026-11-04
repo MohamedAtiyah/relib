@@ -5,6 +5,7 @@ import { LinkNode } from "@lexical/link";
 import { ListItemNode, ListNode } from "@lexical/list";
 import { TRANSFORMERS } from "@lexical/markdown";
 import { CheckListPlugin } from "@lexical/react/LexicalCheckListPlugin";
+import { EditorRefPlugin } from "@lexical/react/LexicalEditorRefPlugin";
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
@@ -28,12 +29,13 @@ import {
   COMMAND_PRIORITY_LOW,
   KEY_ENTER_COMMAND,
   type EditorState,
+  type LexicalEditor,
 } from "lexical";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type RefObject } from "react";
 import type { SlashContext } from "@/lib/commands";
 import { db } from "@/lib/db";
 import type { Page, Source } from "@/lib/schemas";
-import { $isToggleNode, CalloutNode, PythonNode, SourceNode, ToggleNode } from "./nodes";
+import { $isToggleNode, CalloutNode, CitationNode, PythonNode, SourceNode, ToggleNode } from "./nodes";
 import { SelectionMenu } from "./SelectionMenu";
 import { SlashMenu } from "./SlashMenu";
 
@@ -68,6 +70,7 @@ const nodes = [
   ToggleNode,
   SourceNode,
   PythonNode,
+  CitationNode,
 ];
 
 function SavePlugin({ pageId }: { pageId: string }) {
@@ -130,7 +133,17 @@ function ToggleKeyPlugin() {
   return null;
 }
 
-export function Editor({ page, ctx, sources }: { page: Page; ctx: SlashContext; sources: Source[] }) {
+export function Editor({
+  page,
+  ctx,
+  sources,
+  editorRef,
+}: {
+  page: Page;
+  ctx: SlashContext;
+  sources: Source[];
+  editorRef?: RefObject<LexicalEditor | null>;
+}) {
   return (
     <LexicalComposer
       initialConfig={{
@@ -171,6 +184,7 @@ export function Editor({ page, ctx, sources }: { page: Page; ctx: SlashContext; 
       <SelectionMenu onExplain={ctx.explain} />
       <ToggleKeyPlugin />
       <SavePlugin pageId={page.id} />
+      {editorRef && <EditorRefPlugin editorRef={editorRef} />}
     </LexicalComposer>
   );
 }

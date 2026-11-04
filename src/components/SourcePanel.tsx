@@ -15,7 +15,17 @@ const STAGE_TEXT: Record<Stage, string> = {
 
 const WEAK_FIT = 25; // below this a match is mostly noise, so it waits behind a button
 
-export function SourcePanel({ page, sources, userId }: { page: Page; sources: Map<string, Source>; userId?: string }) {
+export function SourcePanel({
+  page,
+  sources,
+  userId,
+  onAccept,
+}: {
+  page: Page;
+  sources: Map<string, Source>;
+  userId?: string;
+  onAccept?(source: Source): void; // research pages open the citation preview
+}) {
   const suggestions = useLiveQuery(() => db.suggestions.where({ folderId: page.folderId }).toArray(), [page.folderId]) ?? [];
   const [stage, setStage] = useState<Stage | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -39,12 +49,16 @@ export function SourcePanel({ page, sources, userId }: { page: Page; sources: Ma
     return () => clearTimeout(timer);
   });
 
-  const setStatus = (s: Suggestion, status: Suggestion["status"]) =>
-    db.suggestions.update([s.pageId, s.sourceId], { status });
+  const setStatus = async (s: Suggestion, status: Suggestion["status"]) => {
+    await db.suggestions.update([s.pageId, s.sourceId], { status });
+    const source = sources.get(s.sourceId);
+    if (status === "accepted" && source) onAccept?.(source);
+  };
 
   const [showWeak, setShowWeak] = useState(false);
+  const yours = suggestions.filter((s) => s.status === "new" && s.pageId === page.id && s.addedBy === "you");
   const ranked = suggestions
-    .filter((s) => s.status === "new" && s.pageId === page.id)
+    .filter((s) => s.status === "new" && s.pageId === page.id && s.addedBy !== "you")
     .sort((a, b) => b.fitGap.relevance - a.fitGap.relevance);
   const weak = ranked.filter((s) => s.fitGap.relevance < WEAK_FIT).length;
   const fresh = showWeak ? ranked : ranked.filter((s) => s.fitGap.relevance >= WEAK_FIT);
@@ -60,11 +74,29 @@ export function SourcePanel({ page, sources, userId }: { page: Page; sources: Ma
       if (!source) throw new Error("not_found");
       const fitGap = await post<FitGap>("analyze", { notes: pageNotes(page) || page.title || source.title, source });
       await db.sources.put(source);
-      await db.suggestions.put({ pageId: page.id, sourceId: source.id, folderId: page.folderId, fitGap, status: "new", createdAt: Date.now() });
+      await db.suggestions.put({ pageId: page.id, sourceId: source.id, folderId: page.folderId, fitGap, status: "new", addedBy: "you", createdAt: Date.now() });
     } catch (err) {
       setError(err instanceof Error && err.message === "not_found" ? "No record found for that DOI or arXiv link." : errorText(err));
     }
     setAdding(false);
+  };
+
+  const card = (s: Suggestion) => {
+    const source = sources.get(s.sourceId);
+    return (
+      source && (
+        <SourceCard key={s.sourceId} source={source} fitGap={s.fitGap}>
+          <div className="flex gap-2">
+            <button onClick={() => setStatus(s, "declined")} className="rounded-full border border-hairline px-3 py-1 text-xs hover:bg-sand">
+              Decline
+            </button>
+            <button onClick={() => setStatus(s, "accepted")} className="rounded-full bg-ink px-3 py-1 text-xs text-paper">
+              Accept
+            </button>
+          </div>
+        </SourceCard>
+      )
+    );
   };
 
   return (
@@ -121,23 +153,10 @@ export function SourcePanel({ page, sources, userId }: { page: Page; sources: Ma
               : "No suggestions yet. They appear a few seconds after you stop typing."}
           </p>
         )}
-        {fresh.map((s) => {
-          const source = sources.get(s.sourceId);
-          return (
-            source && (
-              <SourceCard key={s.sourceId} source={source} fitGap={s.fitGap}>
-                <div className="flex gap-2">
-                  <button onClick={() => setStatus(s, "declined")} className="rounded-full border border-hairline px-3 py-1 text-xs hover:bg-sand">
-                    Decline
-                  </button>
-                  <button onClick={() => setStatus(s, "accepted")} className="rounded-full bg-ink px-3 py-1 text-xs text-paper">
-                    Accept
-                  </button>
-                </div>
-              </SourceCard>
-            )
-          );
-        })}
+        {yours.length > 0 && <h3 className="label pt-1">Added by you</h3>}
+        {yours.map(card)}
+        {yours.length > 0 && fresh.length > 0 && <h3 className="label pt-3">Suggested by Relib</h3>}
+        {fresh.map(card)}
         {weak > 0 && (
           <button onClick={() => setShowWeak(!showWeak)} className="text-xs text-muted underline hover:text-ink">
             {showWeak ? "Hide weaker matches" : `Show ${weak} weaker ${weak === 1 ? "match" : "matches"} (fit under ${WEAK_FIT})`}

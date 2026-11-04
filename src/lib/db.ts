@@ -104,17 +104,4 @@ export async function createStarter() {
   return id;
 }
 
-export const DEFAULT_PRESET: Preset = {
-  id: "default",
-  name: "University report",
-  fields: [
-    { label: "Title", value: "" },
-    { label: "Author", value: "" },
-    { label: "Course", value: "" },
-    { label: "Date", value: "" },
-  ],
-  citationStyle: "APA 7",
-  sections: ["Abstract", "Introduction", "Literature review", "Method", "Findings", "Discussion", "References"],
-};
-
 export const treeKey = (folderId: string) => `tree:${folderId}`;

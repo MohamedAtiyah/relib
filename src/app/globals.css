@@ -261,3 +261,11 @@ body {
 .rl-strike {
   text-decoration: line-through;
 }
+
+/* Research references: hanging indent, as every pinned style asks */
+.references .csl-entry {
+  padding-left: 2em;
+  text-indent: -2em;
+  margin-bottom: 0.5em;
+}
+

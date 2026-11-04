@@ -118,3 +118,13 @@ create table if not exists chunks (
   primary key (owner_id, file_id, idx)
 );
 alter table pages add column if not exists sources_on boolean;
+
+-- research pages, folder presets and citation fields
+alter table pages add column if not exists research jsonb;
+alter table presets add column if not exists folder_id text;
+alter table sources add column if not exists venue text;
+alter table sources add column if not exists volume text;
+alter table sources add column if not exists issue text;
+alter table sources add column if not exists pages text;
+alter table sources add column if not exists entered jsonb;
+alter table suggestions add column if not exists added_by text;

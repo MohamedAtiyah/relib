@@ -28,7 +28,6 @@ import {
   Network,
   NotebookPen,
   Quote,
-  Settings2,
   SquareTerminal,
   Table,
   type LucideIcon,
@@ -39,9 +38,9 @@ import type { PageType } from "./schemas";
 export type SlashContext = {
   openPanels(): void;
   openNeurolib(): void;
-  openPreset(): void;
   newPage(type: PageType): void;
   explain(text: string): void;
+  pageType: PageType;
 };
 
 export type SlashCommand = {
@@ -88,6 +87,5 @@ export const COMMANDS: SlashCommand[] = [
   { name: "notes", keywords: "page lecture new", icon: NotebookPen, run: (_, ctx) => ctx.newPage("notes") },
   { name: "research", keywords: "page paper essay new", icon: FileText, run: (_, ctx) => ctx.newPage("research") },
   { name: "programming", keywords: "page project notebook new", icon: SquareTerminal, run: (_, ctx) => ctx.newPage("programming") },
-  { name: "preset", keywords: "template title block sections citation", icon: Settings2, run: (_, ctx) => ctx.openPreset() },
   { name: "neurolib", keywords: "graph map bubbles", icon: Network, run: (_, ctx) => ctx.openNeurolib() },
 ];

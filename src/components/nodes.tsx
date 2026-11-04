@@ -14,6 +14,8 @@ import {
 } from "lexical";
 import type { ReactNode } from "react";
 import type { Source } from "@/lib/schemas";
+import type { CiteRef } from "@/lib/cite";
+import { CitationChip } from "./Citations";
 import { PythonCell } from "./PythonCell";
 
 export class CalloutNode extends ParagraphNode {
@@ -196,3 +198,48 @@ export class PythonNode extends DecoratorNode<ReactNode> {
 }
 
 export const $createPythonNode = () => new PythonNode();
+
+type SerializedCitation = SerializedLexicalNode & { refs: CiteRef[] };
+
+// An inline citation: stores source ids and page locators; the text comes from the page's style when drawn.
+export class CitationNode extends DecoratorNode<ReactNode> {
+  __refs: CiteRef[];
+
+  constructor(refs: CiteRef[], key?: NodeKey) {
+    super(key);
+    this.__refs = refs;
+  }
+  static getType() {
+    return "citation";
+  }
+  static clone(node: CitationNode) {
+    return new CitationNode(node.__refs, node.__key);
+  }
+  static importJSON(json: SerializedCitation) {
+    return new CitationNode(json.refs);
+  }
+  exportJSON(): SerializedCitation {
+    return { ...super.exportJSON(), refs: this.__refs };
+  }
+  createDOM() {
+    return document.createElement("span");
+  }
+  updateDOM() {
+    return false;
+  }
+  isInline() {
+    return true;
+  }
+  getTextContent() {
+    return "";
+  }
+  setRefs(refs: CiteRef[]) {
+    this.getWritable().__refs = refs;
+  }
+  decorate() {
+    return <CitationChip nodeKey={this.__key} refs={this.__refs} />;
+  }
+}
+
+export const $createCitationNode = (refs: CiteRef[]) => new CitationNode(refs);
+export const $isCitationNode = (node: LexicalNode | null | undefined): node is CitationNode => node instanceof CitationNode;

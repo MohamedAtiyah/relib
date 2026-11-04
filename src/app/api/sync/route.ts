@@ -27,11 +27,15 @@ const ROWS = {
     analysedText: text(200_000).optional(),
     lastOpenedAt: time.optional(),
     sourcesOn: z.boolean().optional(),
+    research: z
+      .object({ style: text(200), cover: z.array(z.object({ label: text(100), value: text(500) })).max(30), presetId: text(200).optional() })
+      .optional(),
     createdAt: time,
     updatedAt: time,
   }),
   presets: z.object({
     id,
+    folderId: id.optional(),
     name: text(200),
     fields: z.array(z.object({ label: text(100), value: text(500) })).max(30),
     citationStyle: text(50),
@@ -46,6 +50,7 @@ const ROWS = {
     folderId: id,
     fitGap: FitGapSchema,
     status: z.enum(["new", "accepted", "declined"]),
+    addedBy: z.literal("you").optional(),
     createdAt: time,
     updatedAt: time,
   }),
@@ -67,10 +72,10 @@ export const GET = userRoute(60, async (_req, userId) => {
   await db`insert into users (id, created_at) values (${userId}, ${Date.now()}) on conflict do nothing`;
   const [folders, pages, presets, sources, suggestions] = await Promise.all([
     db`select id, name, last_opened_at, created_at, updated_at from folders where owner_id = ${userId}`,
-    db`select id, folder_id, type, title, editor_state, plain_text, analysed_text, last_opened_at, sources_on, created_at, updated_at from pages where owner_id = ${userId}`,
-    db`select id, name, fields, citation_style, sections, updated_at from presets where owner_id = ${userId}`,
-    db`select id, origin, title, authors, year, url, doi, abstract, updated_at from sources where owner_id = ${userId}`,
-    db`select page_id, source_id, folder_id, fit_gap, status, created_at, updated_at from suggestions where owner_id = ${userId}`,
+    db`select id, folder_id, type, title, editor_state, plain_text, analysed_text, last_opened_at, sources_on, research, created_at, updated_at from pages where owner_id = ${userId}`,
+    db`select id, folder_id, name, fields, citation_style, sections, updated_at from presets where owner_id = ${userId}`,
+    db`select id, origin, title, authors, year, url, doi, abstract, venue, volume, issue, pages, entered, updated_at from sources where owner_id = ${userId}`,
+    db`select page_id, source_id, folder_id, fit_gap, status, added_by, created_at, updated_at from suggestions where owner_id = ${userId}`,
   ]);
   return Response.json({ folders, pages, presets, sources, suggestions });
 });

@@ -1,6 +1,6 @@
 // The one page a new workspace starts with. Written as Lexical JSON so it opens like any other note.
 
-type Block = { h?: string; p?: string; list?: string[]; python?: string };
+export type Block = { h?: string; p?: string; list?: string[]; python?: string };
 
 const BLOCKS: Block[] = [
   { p: "Relib keeps your notes, your lecture material and your sources in one place. It explains, cites where every explanation comes from, and never writes your work for you." },
@@ -55,8 +55,23 @@ function node(block: Block) {
   return paragraph(block.p ?? "");
 }
 
+export const lexicalDoc = (blocks: Block[]) => JSON.stringify({ root: { ...shared, type: "root", children: blocks.map(node) } });
+
+// The H2 headings of a saved page, in order: a paper's sections.
+export function headingsOf(editorState: string): string[] {
+  try {
+    const walk = (n: { type?: string; tag?: string; children?: unknown[]; text?: string }): string[] =>
+      n.type === "heading" && n.tag === "h2"
+        ? [(n.children as { text?: string }[]).map((c) => c.text ?? "").join("")]
+        : ((n.children ?? []) as (typeof n)[]).flatMap(walk);
+    return walk(JSON.parse(editorState).root).filter(Boolean);
+  } catch {
+    return [];
+  }
+}
+
 export const START_HERE = {
   title: "Start here: how Relib works",
-  editorState: JSON.stringify({ root: { ...shared, type: "root", children: BLOCKS.map(node) } }),
+  editorState: lexicalDoc(BLOCKS),
   plainText: BLOCKS.flatMap((b) => [b.h, b.p, ...(b.list ?? []), b.python].filter(Boolean)).join("\n\n"),
 };
