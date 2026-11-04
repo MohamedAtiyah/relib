@@ -92,3 +92,50 @@ create table if not exists cache (
 
 create index if not exists pages_folder on pages (owner_id, folder_id);
 create index if not exists suggestions_folder on suggestions (owner_id, folder_id);
+
+create table if not exists usage (
+  key text not null,
+  day text not null,
+  count integer not null default 0,
+  primary key (key, day)
+);
+
+-- academic rebuild: pages have a type; folders no longer have kinds or roles
+alter table pages add column if not exists type text not null default 'notes';
+alter table pages add column if not exists last_opened_at double precision;
+alter table folders drop column if exists kind;
+alter table folders drop column if exists agent_role;
+
+-- materials: uploaded files keep their extracted text in chunks, each with its slide, page or sheet
+alter table files add column if not exists kind text;
+alter table files add column if not exists concepts jsonb;
+create table if not exists chunks (
+  owner_id text not null,
+  file_id text not null,
+  idx integer not null,
+  location text not null,
+  text text not null,
+  primary key (owner_id, file_id, idx)
+);
+alter table pages add column if not exists sources_on boolean;
+
+-- research pages, folder presets and citation fields
+alter table pages add column if not exists research jsonb;
+alter table presets add column if not exists folder_id text;
+alter table sources add column if not exists venue text;
+alter table sources add column if not exists volume text;
+alter table sources add column if not exists issue text;
+alter table sources add column if not exists pages text;
+alter table sources add column if not exists entered jsonb;
+alter table suggestions add column if not exists added_by text;
+
+-- one E2B sandbox per project; files live in Neon and are re-synced, so a lost sandbox loses nothing
+create table if not exists sandboxes (
+  owner_id text not null,
+  project_id text not null,
+  sandbox_id text not null,
+  ready boolean not null default false,
+  updated_at double precision not null,
+  primary key (owner_id, project_id)
+);
+alter table pages add column if not exists program jsonb;

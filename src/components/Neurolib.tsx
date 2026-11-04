@@ -6,6 +6,7 @@ import dynamic from "next/dynamic";
 import { useEffect, useMemo, useState } from "react";
 import { errorText, getMode, post } from "@/lib/api";
 import { cached, db, treeKey } from "@/lib/db";
+import type { EndPoint } from "@/lib/agent/neurolib";
 import type { Folder, TreeNode } from "@/lib/schemas";
 import { nodeWeight } from "@/lib/weight";
 import type { GraphNode } from "./NeurolibGraph";
@@ -25,6 +26,7 @@ export function Neurolib({ folder }: { folder: Folder }) {
   const [notice, setNotice] = useState<string | null>(null);
   const [expanded, setExpanded] = useState(new Set<string>());
   const [openSource, setOpenSource] = useState<string | null>(null);
+  const [openTopic, setOpenTopic] = useState<string | null>(null);
 
   const sources = useMemo(() => new Map(sourceList?.map((s) => [s.id, s])), [sourceList]);
   const accepted = useMemo(() => new Set(suggestions?.filter((s) => s.status === "accepted").map((s) => s.sourceId)), [suggestions]);
@@ -48,7 +50,7 @@ export function Neurolib({ folder }: { folder: Folder }) {
     (async () => {
       try {
         const mode = await getMode();
-        const { nodes } = await cached(["neurolib", mode, input], () => post<{ nodes: TreeNode[] }>("neurolib", body));
+        const { nodes } = await cached(["neurolib", mode, input], () => post<{ nodes: TreeNode[] }>("neurolib", { ...body, folderId: folder.id }));
         await db.cache.put({ key: treeKey(folder.id), value: nodes });
         if (live) setTree(nodes);
       } catch (err) {
@@ -78,7 +80,8 @@ export function Neurolib({ folder }: { folder: Folder }) {
     if (!nodes.length) return [];
     const show: GraphNode[] = [{ id: CENTRE, label: folder.name, kind: "folder", radius: 16 }];
     const add = (n: TreeNode) => {
-      show.push({ id: n.id, label: n.label, kind: "topic", radius: radius(n), parentId: n.parentId ?? CENTRE, selected: expanded.has(n.id) });
+      const covered = n.sourceIds.some((id) => accepted.has(id)) || nodeWeight(n, nodes, weighed, accepted) >= 4;
+      show.push({ id: n.id, label: n.label, kind: "topic", radius: radius(n), parentId: n.parentId ?? CENTRE, selected: expanded.has(n.id) || openTopic === n.id, thin: !covered });
       if (!expanded.has(n.id)) return;
       nodes.filter((c) => c.parentId === n.id).forEach(add);
       for (const id of n.sourceIds) {
@@ -88,11 +91,16 @@ export function Neurolib({ folder }: { folder: Folder }) {
     nodes.filter((n) => !n.parentId).forEach(add);
     return show;
     // eslint-disable-next-line react-hooks/exhaustive-deps -- radius derives from these
-  }, [nodes, expanded, accepted, sources, openSource, weighed, folder.name]);
+  }, [nodes, expanded, accepted, sources, openSource, openTopic, weighed, folder.name]);
 
   const activate = (id: string) => {
     if (id === CENTRE) return;
     if (id.startsWith("s:")) return setOpenSource(id.slice(2));
+    // an end point (no subtopics) opens its explanation as well as its sources
+    if (!nodes.some((n) => n.parentId === id)) {
+      setOpenSource(null);
+      setOpenTopic(id === openTopic ? null : id);
+    }
     setExpanded((prev) => {
       const next = new Set(prev);
       if (!next.delete(id)) next.add(id);
@@ -121,6 +129,24 @@ export function Neurolib({ folder }: { folder: Folder }) {
             </ul>
           </nav>
           <NeurolibGraph nodes={visible} onClick={activate} />
+          {openTopic && !open && (
+            <aside aria-label="Concept" className="w-96 shrink-0 overflow-y-auto border-l border-hairline p-4">
+              <button onClick={() => setOpenTopic(null)} aria-label="Close concept" className="mb-2 rounded-lg p-1 text-muted hover:bg-sand">
+                <X size={18} strokeWidth={1.5} />
+              </button>
+              <EndPointCard
+                key={openTopic}
+                node={nodes.find((n) => n.id === openTopic)!}
+                neighbours={nodes.filter((n) => n.parentId === nodes.find((m) => m.id === openTopic)?.parentId && n.id !== openTopic).map((n) => n.label)}
+                pages={(pages ?? []).map((p) => ({ title: p.title || "Untitled", text: p.plainText }))}
+                sources={[...accepted].flatMap((id) => sources.get(id)?.title ?? [])}
+                folderId={folder.id}
+                onOpenSource={setOpenSource}
+                sourceTitle={(id) => sources.get(id)?.title}
+                accepted={accepted}
+              />
+            </aside>
+          )}
           {open && openFit && (
             <aside aria-label="Source detail" className="w-96 shrink-0 overflow-y-auto border-l border-hairline p-4">
               <button onClick={() => setOpenSource(null)} aria-label="Close source" className="mb-2 rounded-lg p-1 text-muted hover:bg-sand">
@@ -176,5 +202,101 @@ function TopicItem({
         </ul>
       )}
     </li>
+  );
+}
+
+// What a concept is, how it relates to its neighbours, an example, and where each part comes from.
+function EndPointCard({
+  node,
+  neighbours,
+  pages,
+  sources,
+  folderId,
+  accepted,
+  sourceTitle,
+  onOpenSource,
+}: {
+  node: TreeNode;
+  neighbours: string[];
+  pages: { title: string; text: string }[];
+  sources: string[];
+  folderId: string;
+  accepted: Set<string>;
+  sourceTitle(id: string): string | undefined;
+  onOpenSource(id: string): void;
+}) {
+  const [card, setCard] = useState<EndPoint | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  useEffect(() => {
+    let live = true;
+    const relevant = pages.filter((p) => p.text.toLowerCase().includes(node.label.toLowerCase().split(" ")[0])).slice(0, 8);
+    post<EndPoint>("neurolib/explain", { concept: node.label, neighbours, notes: relevant.length ? relevant : pages.slice(0, 5), sources: sources.slice(0, 30), folderId })
+      .then((c) => live && setCard(c))
+      .catch((err) => live && setError(errorText(err)));
+    return () => {
+      live = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- one explanation per opened concept
+  }, [node.id]);
+  const own = node.sourceIds.filter((id) => accepted.has(id));
+  return (
+    <article className="space-y-3 text-sm">
+      <h2 className="font-display text-xl font-semibold">{node.label}</h2>
+      {!card && !error && (
+        <p className="flex items-center gap-2 text-muted">
+          <span className="h-2 w-2 animate-pulse rounded-full bg-spark" aria-hidden="true" /> Reading the folder…
+        </p>
+      )}
+      {error && <p role="alert">{error}</p>}
+      {card && (
+        <>
+          <section>
+            <h3 className="label">What it is</h3>
+            <p className="mt-1">{card.what}</p>
+          </section>
+          {card.relations.length > 0 && (
+            <section>
+              <h3 className="label">How it relates</h3>
+              <ul className="mt-1 space-y-1">
+                {card.relations.map((r) => (
+                  <li key={r.neighbour}>
+                    <span className="font-medium">{r.neighbour}:</span> {r.how}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+          <section className="rounded-lg bg-sand p-3">
+            <h3 className="label">Example</h3>
+            <p className="mt-1">{card.example}</p>
+          </section>
+          <section>
+            <h3 className="label">Where it comes from</h3>
+            <ul className="mt-1 space-y-1">
+              {card.from.map((f) => (
+                <li key={f.label} className={f.kind === "outside" ? "text-spark-ink" : ""}>
+                  {f.kind === "outside" ? "Outside your folder: " : ""}
+                  {f.label}
+                </li>
+              ))}
+            </ul>
+          </section>
+        </>
+      )}
+      {own.length > 0 && (
+        <section>
+          <h3 className="label">Sources</h3>
+          <ul className="mt-1 space-y-1">
+            {own.map((id) => (
+              <li key={id}>
+                <button onClick={() => onOpenSource(id)} className="text-left underline hover:text-spark-ink">
+                  {sourceTitle(id) ?? id}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+    </article>
   );
 }

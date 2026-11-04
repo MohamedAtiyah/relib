@@ -1,7 +1,7 @@
 import type postgres from "postgres";
 import { z } from "zod";
 import { userRoute } from "@/lib/route";
-import { FitGapSchema, FOLDER_KINDS, SourceSchema } from "@/lib/schemas";
+import { FitGapSchema, PAGE_TYPES, SourceSchema } from "@/lib/schemas";
 import { sql } from "@/lib/sql";
 
 const id = z.string().min(1).max(200);
@@ -13,8 +13,6 @@ const ROWS = {
   folders: z.object({
     id,
     name: text(200),
-    kind: z.enum(FOLDER_KINDS),
-    agentRole: text(200),
     lastOpenedAt: time.optional(),
     createdAt: time,
     updatedAt: time,
@@ -22,15 +20,46 @@ const ROWS = {
   pages: z.object({
     id,
     folderId: id,
+    type: z.enum(PAGE_TYPES),
     title: text(500),
     editorState: text(2_000_000),
     plainText: text(200_000),
     analysedText: text(200_000).optional(),
+    lastOpenedAt: time.optional(),
+    sourcesOn: z.boolean().optional(),
+    research: z
+      .object({ style: text(200), cover: z.array(z.object({ label: text(100), value: text(500) })).max(30), presetId: text(200).optional() })
+      .optional(),
+    program: z
+      .discriminatedUnion("mode", [
+        z.object({
+          mode: z.literal("notebook"),
+          cells: z
+            .array(
+              z.object({
+                id,
+                kind: z.enum(["code", "text"]),
+                source: text(200_000),
+                output: text(50_000).optional(),
+                images: z.array(text(1_500_000)).max(4).optional(),
+                error: z.boolean().optional(),
+              }),
+            )
+            .max(300),
+        }),
+        z.object({
+          mode: z.literal("project"),
+          files: z.array(z.object({ path: text(300), content: text(500_000) })).max(300),
+          open: z.array(text(300)).max(30).optional(),
+        }),
+      ])
+      .optional(),
     createdAt: time,
     updatedAt: time,
   }),
   presets: z.object({
     id,
+    folderId: id.optional(),
     name: text(200),
     fields: z.array(z.object({ label: text(100), value: text(500) })).max(30),
     citationStyle: text(50),
@@ -45,6 +74,7 @@ const ROWS = {
     folderId: id,
     fitGap: FitGapSchema,
     status: z.enum(["new", "accepted", "declined"]),
+    addedBy: z.literal("you").optional(),
     createdAt: time,
     updatedAt: time,
   }),
@@ -65,11 +95,11 @@ export const GET = userRoute(60, async (_req, userId) => {
   const db = sql();
   await db`insert into users (id, created_at) values (${userId}, ${Date.now()}) on conflict do nothing`;
   const [folders, pages, presets, sources, suggestions] = await Promise.all([
-    db`select id, name, kind, agent_role, last_opened_at, created_at, updated_at from folders where owner_id = ${userId}`,
-    db`select id, folder_id, title, editor_state, plain_text, analysed_text, created_at, updated_at from pages where owner_id = ${userId}`,
-    db`select id, name, fields, citation_style, sections, updated_at from presets where owner_id = ${userId}`,
-    db`select id, origin, title, authors, year, url, doi, abstract, updated_at from sources where owner_id = ${userId}`,
-    db`select page_id, source_id, folder_id, fit_gap, status, created_at, updated_at from suggestions where owner_id = ${userId}`,
+    db`select id, name, last_opened_at, created_at, updated_at from folders where owner_id = ${userId}`,
+    db`select id, folder_id, type, title, editor_state, plain_text, analysed_text, last_opened_at, sources_on, research, program, created_at, updated_at from pages where owner_id = ${userId}`,
+    db`select id, folder_id, name, fields, citation_style, sections, updated_at from presets where owner_id = ${userId}`,
+    db`select id, origin, title, authors, year, url, doi, abstract, venue, volume, issue, pages, entered, updated_at from sources where owner_id = ${userId}`,
+    db`select page_id, source_id, folder_id, fit_gap, status, added_by, created_at, updated_at from suggestions where owner_id = ${userId}`,
   ]);
   return Response.json({ folders, pages, presets, sources, suggestions });
 });

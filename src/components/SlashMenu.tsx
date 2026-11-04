@@ -10,7 +10,7 @@ import { useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import { COMMANDS, type SlashCommand, type SlashContext } from "@/lib/commands";
 import type { Source } from "@/lib/schemas";
-import { $createSourceNode } from "./nodes";
+import { $createCitationNode, $createSourceNode } from "./nodes";
 
 class SlashOption extends MenuOption {
   command: SlashCommand;
@@ -20,8 +20,16 @@ class SlashOption extends MenuOption {
   }
 }
 
-const sourceCommands = (sources: Source[]): SlashCommand[] =>
-  sources.length
+// On a research page an accepted source becomes a live in-text citation; elsewhere a source card.
+const sourceCommands = (sources: Source[], research: boolean): SlashCommand[] =>
+  research
+    ? sources.map((source) => ({
+        name: `cite: ${source.title}`,
+        keywords: "citation reference cite",
+        icon: BookMarked,
+        run: () => $insertNodes([$createCitationNode([{ id: source.id }])]),
+      }))
+    : sources.length
     ? sources.map((source) => ({
         name: `source: ${source.title}`,
         keywords: "citation reference",
@@ -37,12 +45,12 @@ export function SlashMenu({ ctx, sources }: { ctx: SlashContext; sources: Source
 
   const options = useMemo(() => {
     const q = (query ?? "").toLowerCase();
-    return [...COMMANDS, ...sourceCommands(sources)]
+    return [...COMMANDS, ...sourceCommands(sources, ctx.pageType === "research")]
       .filter((c) => `${c.name} ${c.keywords}`.toLowerCase().includes(q))
       // a command named like the query beats one that only has it as a keyword
       .sort((a, b) => Number(b.name.startsWith(q)) - Number(a.name.startsWith(q)))
       .map((c) => new SlashOption(c));
-  }, [query, sources]);
+  }, [query, sources, ctx.pageType]);
 
   return (
     <LexicalTypeaheadMenuPlugin<SlashOption>

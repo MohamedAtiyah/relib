@@ -15,7 +15,6 @@ const params = { params: Promise.resolve({}) };
 
 type Sync = typeof import("../src/app/api/sync/route");
 let sync: Sync;
-let files: typeof import("../src/app/api/files/[id]/route");
 let sql: typeof import("../src/lib/sql").sql;
 
 const as = (user: string | null) => (signedIn = user);
@@ -24,6 +23,7 @@ const push = (body: unknown) => sync.POST(new Request(url, { method: "POST", bod
 const page = (title: string, updatedAt: number) => ({
   id: "same-id",
   folderId: "f1",
+  type: "notes",
   title,
   editorState: "",
   plainText: title,
@@ -34,7 +34,6 @@ const page = (title: string, updatedAt: number) => ({
 before(async () => {
   if (skip) return;
   sync = await import("../src/app/api/sync/route");
-  files = await import("../src/app/api/files/[id]/route");
   sql = (await import("../src/lib/sql")).sql;
 });
 
@@ -80,6 +79,7 @@ test("bad rows are refused", { skip }, async () => {
 });
 
 test("another user's file id is not found", { skip }, async () => {
+  const files = await import("../src/app/api/files/[id]/route");
   await sql()`insert into files ${sql()({ ownerId: A, id: "file-1", folderId: "f1", storageKey: `${A}/x.pdf`, filename: "x.pdf", mime: "application/pdf", size: 1, createdAt: 1 })}`;
   as(B);
   const req = new Request("http://localhost/api/files/file-1");

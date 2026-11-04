@@ -1,27 +1,37 @@
 import { z } from "zod";
-
-export const FOLDER_KINDS = ["study", "research", "work", "personal"] as const;
+import type { Program } from "./notebook";
 
 export type Folder = {
   id: string;
   name: string;
-  kind: (typeof FOLDER_KINDS)[number];
-  agentRole: string; // what Relib v1 is for in this folder, e.g. "Analyst"
   lastOpenedAt?: number;
   createdAt: number;
   updatedAt?: number;
 };
 
+export const PAGE_TYPES = ["notes", "research", "programming"] as const;
+export type PageType = (typeof PAGE_TYPES)[number];
+
 export type Page = {
   id: string;
   folderId: string;
+  type: PageType;
   title: string;
   editorState: string; // Lexical JSON
   plainText: string;
   createdAt: number;
   updatedAt: number;
   analysedText?: string; // the notes the agent last ran on
+  lastOpenedAt?: number;
+  sourcesOn?: boolean; // off by default: each suggestion run spends model calls
+  research?: Research;
+  program?: Program; // a /programming page's notebook cells or project files
 };
+
+export type CoverField = { label: string; value: string };
+
+// A research page's citation style and cover page. presetId marks a cover still exactly as the preset filled it.
+export type Research = { style: string; cover: CoverField[]; presetId?: string };
 
 export const SourceSchema = z.object({
   id: z.string().max(100),
@@ -32,6 +42,11 @@ export const SourceSchema = z.object({
   url: z.url({ protocol: /^https?$/ }).max(2000),
   doi: z.string().max(300).optional(),
   origin: z.enum(["openalex", "arxiv", "user"]),
+  venue: z.string().max(500).optional(),
+  volume: z.string().max(50).optional(),
+  issue: z.string().max(50).optional(),
+  pages: z.string().max(50).optional(),
+  entered: z.array(z.string().max(20)).max(10).optional(), // fields the student typed rather than fetched
 });
 export type Source = z.infer<typeof SourceSchema>;
 
@@ -63,12 +78,14 @@ export type Suggestion = {
   folderId: string;
   fitGap: FitGap;
   status: "new" | "accepted" | "declined";
+  addedBy?: "you"; // a DOI or link the student added, listed apart from suggestions
   createdAt?: number;
   updatedAt?: number;
 };
 
 export type Preset = {
   id: string;
+  folderId?: string;
   name: string;
   fields: { label: string; value: string }[]; // the title block
   citationStyle: string;
@@ -98,13 +115,20 @@ export const ChatInput = z.object({
   notes: z.string().max(50000),
   sources: z.array(z.string().max(1000)).max(100),
   role: z.string().max(200).optional(),
+  folderId: z.string().max(200).optional(),
   // no "system" role: a client must not be able to replace the tutor's rules
   messages: z
     .array(z.object({ role: z.enum(["user", "assistant"]), content: z.string().min(1).max(4000) }))
     .min(1)
     .max(20),
 });
+export const TopicInput = z.object({
+  notes: z.string().min(1).max(50000),
+  sources: z.array(z.string().max(1000)).max(100),
+  folderId: z.string().max(200).optional(),
+});
 export const NeurolibInput = z.object({
   pages: z.array(z.object({ title: z.string().max(500), text: z.string().max(50000) })).max(100),
   sources: z.array(z.object({ id: z.string().max(100), title: z.string().max(1000) })).max(300),
+  folderId: z.string().max(200).optional(),
 });

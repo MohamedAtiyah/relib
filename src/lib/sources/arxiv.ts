@@ -35,3 +35,10 @@ export async function searchArxiv(query: string, limit = 5): Promise<Source[]> {
   if (!res.ok) throw new Error(`arXiv ${res.status}`);
   return parseArxiv(await res.text());
 }
+
+export async function arxivById(id: string): Promise<Source | null> {
+  await nextSlot();
+  const res = await fetch(`https://export.arxiv.org/api/query?id_list=${encodeURIComponent(id)}`, { signal: AbortSignal.timeout(10_000) });
+  if (!res.ok) throw new Error(`arXiv ${res.status}`);
+  return parseArxiv(await res.text())[0] ?? null;
+}

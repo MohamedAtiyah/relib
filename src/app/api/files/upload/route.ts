@@ -1,17 +1,21 @@
-import { handleUpload, type HandleUploadBody } from "@vercel/blob/client";
+import { z } from "zod";
+import { MATERIAL_TYPES } from "@/lib/extract";
+import { MAX_FILE } from "@/lib/files";
+import { presign, r2Ready } from "@/lib/r2";
 import { userRoute } from "@/lib/route";
-import { MAX_PDF } from "@/lib/files";
 
-// Hands the browser a short-lived token to upload one PDF straight to Blob, under the user's own prefix.
+const Body = z.object({
+  filename: z.string().min(1).max(300),
+  size: z.number().int().positive().max(MAX_FILE),
+  mime: z.enum(Object.keys(MATERIAL_TYPES) as [keyof typeof MATERIAL_TYPES]),
+});
+
+// Hands the browser a 10-minute URL to put one file under the user's own prefix.
 export const POST = userRoute(30, async (req, userId) => {
-  const body = (await req.json()) as HandleUploadBody;
-  const result = await handleUpload({
-    body,
-    request: req,
-    onBeforeGenerateToken: async (pathname) => {
-      if (!pathname.startsWith(`${userId}/`)) throw new Error("Upload path outside the user's folder");
-      return { allowedContentTypes: ["application/pdf"], maximumSizeInBytes: MAX_PDF, addRandomSuffix: true };
-    },
-  });
-  return Response.json(result);
+  if (!r2Ready()) return Response.json({ error: "storage_off" }, { status: 503 });
+  const parsed = Body.safeParse(await req.json().catch(() => null));
+  if (!parsed.success) return Response.json({ error: "invalid_input" }, { status: 400 });
+  const safe = parsed.data.filename.replace(/[^\w.-]+/g, "_").slice(-120);
+  const key = `${userId}/${crypto.randomUUID()}-${safe}`;
+  return Response.json({ key, url: await presign(key, "PUT") });
 });

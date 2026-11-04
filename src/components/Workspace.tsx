@@ -2,28 +2,29 @@
 
 import { UserButton } from "@clerk/nextjs";
 import { useLiveQuery } from "dexie-react-hooks";
-import { BookOpen, Network, NotebookPen } from "lucide-react";
+import { BookOpen, Network, NotebookPen, PanelLeftOpen } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import type { LexicalEditor } from "lexical";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { getMode } from "@/lib/api";
 import type { SlashContext } from "@/lib/commands";
-import { createFolder, createPage, db, DEFAULT_PRESET, ensureSeed, openWorkspace } from "@/lib/db";
+import { createFolder, createPage, createStarter, db, openWorkspace } from "@/lib/db";
 import type { ModelMode } from "@/lib/model";
-import type { Folder } from "@/lib/schemas";
+import type { PageType, Source } from "@/lib/schemas";
 import { pageNotes } from "@/lib/suggest";
 import { onSyncStatus, pull, queueRows, type SyncStatus } from "@/lib/sync";
-import { CatchUp } from "./CatchUp";
 import { ChatPanel } from "./ChatPanel";
 import { Editor } from "./Editor";
 import { Neurolib } from "./Neurolib";
-import { PresetDialog } from "./PresetDialog";
-import { Sidebar } from "./Sidebar";
+import { CitePreview } from "./CitePreview";
+import { Programming } from "./Programming";
+import { ResearchPage } from "./ResearchPage";
+import { ROLE, Sidebar } from "./Sidebar";
 import { SourcePanel } from "./SourcePanel";
-import { UploadButton } from "./UploadButton";
 
 const MODE_TAG: Partial<Record<ModelMode, string>> = {
   standin: "Stand-in model: keyword heuristics, not AI",
-  demo: "Demo: saved results only",
+  off: "Live AI is switched off",
 };
 
 const SYNC_TAG: Record<SyncStatus, string> = { saved: "Saved", saving: "Saving…", offline: "Not saved yet: retrying" };
@@ -33,7 +34,10 @@ const booted = new Map<string, Promise<void>>();
 
 function boot(userId?: string) {
   return async () => {
-    if (!userId) return ensureSeed();
+    if (!userId) {
+      if (!(await db.folders.count())) await createStarter();
+      return;
+    }
     try {
       await pull();
     } catch (err) {
@@ -41,8 +45,7 @@ function boot(userId?: string) {
       if (!(await db.folders.count())) throw err;
       return;
     }
-    if (!(await db.folders.count())) await createFolder("My first folder", "study", "Tutor");
-    if (!(await db.presets.count())) await db.presets.put(DEFAULT_PRESET);
+    if (!(await db.folders.count())) await createStarter();
   };
 }
 
@@ -93,12 +96,15 @@ function WorkspaceView({ userId, storageKey, sync }: { userId?: string; storageK
   const pages = useLiveQuery(() => db.pages.toCollection().sortBy("createdAt"));
   const sourceList = useLiveQuery(() => db.sources.toArray());
   const suggestions = useLiveQuery(() => db.suggestions.toArray());
-  const preset = useLiveQuery(() => db.presets.toCollection().first());
+  const presets = useLiveQuery(() => db.presets.toArray());
   const [pageId, setPageId] = useState(() => remembered(storageKey));
   const [view, setView] = useState<"page" | "neurolib">("page");
   const [chatOpen, setChatOpen] = useState(false);
+  const [navOpen, setNavOpen] = useState(true);
+  const [ask, setAsk] = useState<{ text: string; at: number }>();
   const [sourcesOpen, setSourcesOpen] = useState(true);
-  const [presetOpen, setPresetOpen] = useState(false);
+  const [preview, setPreview] = useState<{ source: Source; pageId: string } | null>(null);
+  const editorRef = useRef<LexicalEditor | null>(null);
   const [mode, setMode] = useState<ModelMode>();
 
   useEffect(() => {
@@ -129,49 +135,72 @@ function WorkspaceView({ userId, storageKey, sync }: { userId?: string; storageK
       setSourcesOpen(true);
     },
     openNeurolib: () => setView("neurolib"),
-    openPreset: () => setPresetOpen(true),
-    preset: () => preset,
-    pageTitle: () => page?.title ?? "",
+    newPage: (type) => folder && newPage(folder.id, type),
+    pageType: page?.type ?? "notes",
+    explain: (text) => {
+      setNavOpen(true);
+      setChatOpen(true);
+      setAsk({ text, at: Date.now() });
+    },
   };
 
-  const newFolder = async (name: string, kind: Folder["kind"], role: string) => select(await createFolder(name, kind, role));
-  const newPage = async (folderId: string) => select(await createPage(folderId));
+  const newFolder = async (name: string) => select(await createPage(await createFolder(name)));
+  const newPage = async (folderId: string, type: PageType) => select(await createPage(folderId, type));
 
   return (
     <div className="flex h-dvh overflow-hidden">
-      <Sidebar
-        folders={folders ?? []}
-        pages={pages ?? []}
-        suggestions={suggestions ?? []}
-        pageId={page?.id}
-        folder={folder}
-        onSelect={select}
-        onNewFolder={newFolder}
-        onNewPage={newPage}
-        onRelib={() => setChatOpen(!chatOpen)}
-        account={
-          !userId ? (
-            <Link href="/" className="text-xs text-muted underline hover:text-ink">
-              Demo workspace · sign in to keep your own
-            </Link>
-          ) : (
-            <UserButton showName />
-          )
-        }
-      />
-      {chatOpen && folder && (
-        <ChatPanel key={folder.id} folder={folder} notes={page ? pageNotes(page) : ""} sources={acceptedSources.map((s) => s.title)} />
+      {/* the left column holds either the folder tree or Relib v1, as in the design */}
+      {navOpen && chatOpen && folder && page ? (
+        <ChatPanel
+          key={folder.id}
+          folder={folder}
+          role={ROLE[page.type ?? "notes"]}
+          notes={pageNotes(page)}
+          ask={ask}
+          sources={acceptedSources.map((s) => `${s.title}${s.year ? ` (${s.year})` : ""}: ${s.abstract.slice(0, 500)}`)}
+          onClose={() => setChatOpen(false)}
+        />
+      ) : (
+        navOpen && (
+          <Sidebar
+            onCollapse={() => setNavOpen(false)}
+            folders={folders ?? []}
+            pages={pages ?? []}
+            page={page}
+            onSelect={select}
+            onNewFolder={newFolder}
+            onNewPage={newPage}
+            onRelib={() => setChatOpen(true)}
+            account={
+              !userId ? (
+                <Link href="/" className="text-xs text-muted underline hover:text-ink">
+                  Demo workspace · sign in to keep your own
+                </Link>
+              ) : (
+                <UserButton showName />
+              )
+            }
+          />
+        )
       )}
       <main className="flex min-w-0 flex-1 flex-col">
         <header className="flex h-14 shrink-0 items-center gap-1 px-4">
+          {!navOpen && (
+            <button onClick={() => setNavOpen(true)} aria-label="Show sidebar" title="Show sidebar" className="mr-2 rounded-lg p-2 text-muted hover:bg-sand">
+              <PanelLeftOpen size={18} strokeWidth={1.5} />
+            </button>
+          )}
           <p className="mr-auto flex min-w-0 items-center gap-2 text-sm text-muted">
             <span className="truncate">{folder?.name}</span>
             <span aria-hidden="true">/</span>
             <span className="truncate text-ink">{view === "neurolib" ? "Neurolib" : page?.title || "Untitled"}</span>
             {mode && MODE_TAG[mode] && <span className="ml-2 shrink-0 rounded-full bg-sand px-3 py-1 text-xs">{MODE_TAG[mode]}</span>}
-            {sync && <span role="status" className="ml-2 shrink-0 text-xs">{SYNC_TAG[sync]}</span>}
+            {sync && (
+              <span role="status" className="ml-2 shrink-0 text-xs">
+                {SYNC_TAG[sync]}
+              </span>
+            )}
           </p>
-          {userId && folder && <UploadButton userId={userId} folderId={folder.id} pageId={page?.id} />}
           <button
             onClick={() => setView(view === "neurolib" ? "page" : "neurolib")}
             aria-pressed={view === "neurolib"}
@@ -181,7 +210,13 @@ function WorkspaceView({ userId, storageKey, sync }: { userId?: string; storageK
           >
             {view === "neurolib" ? <NotebookPen size={18} strokeWidth={1.5} /> : <Network size={18} strokeWidth={1.5} />}
           </button>
-          <button onClick={() => setSourcesOpen(!sourcesOpen)} aria-pressed={sourcesOpen} aria-label="Sources" title="Sources" className="rounded-lg p-2 text-muted hover:bg-sand">
+          <button
+            onClick={() => setSourcesOpen(!sourcesOpen)}
+            aria-pressed={sourcesOpen}
+            aria-label="Sources"
+            title="Sources"
+            className="rounded-lg p-2 text-muted hover:bg-sand"
+          >
             <BookOpen size={18} strokeWidth={1.5} />
           </button>
         </header>
@@ -189,8 +224,31 @@ function WorkspaceView({ userId, storageKey, sync }: { userId?: string; storageK
           <Neurolib key={folder.id} folder={folder} />
         ) : (
           <div className="flex-1 overflow-y-auto">
-            {folder && <CatchUp key={folder.id} folder={folder} sources={sources} />}
-            {page && (
+            {page?.type === "research" && (
+              <ResearchPage
+                key={page.id}
+                page={page}
+                folderPages={(pages ?? []).filter((p) => p.folderId === page.folderId)}
+                presets={(presets ?? []).filter((p) => p.folderId === page.folderId)}
+                sources={sources}
+                accepted={acceptedSources}
+                ctx={ctx}
+                editorRef={editorRef}
+              />
+            )}
+            {page?.type === "programming" && (
+              <div key={page.id} className="flex min-h-full flex-col">
+                <input
+                  value={page.title}
+                  onChange={(e) => db.pages.update(page.id, { title: e.target.value, updatedAt: Date.now() })}
+                  aria-label="Page title"
+                  placeholder="Untitled project"
+                  className="w-full bg-transparent px-8 pt-4 pb-2 font-display text-2xl font-semibold outline-none placeholder:text-muted"
+                />
+                <Programming page={page} />
+              </div>
+            )}
+            {page && (page.type ?? "notes") === "notes" && (
               <div key={page.id} className="mx-auto max-w-2xl px-8 py-6">
                 <input
                   autoFocus={!page.title}
@@ -206,8 +264,20 @@ function WorkspaceView({ userId, storageKey, sync }: { userId?: string; storageK
           </div>
         )}
       </main>
-      {sourcesOpen && page && view === "page" && <SourcePanel key={page.id} page={page} sources={sources} />}
-      {presetOpen && <PresetDialog preset={preset ?? DEFAULT_PRESET} onClose={() => setPresetOpen(false)} />}
+      {sourcesOpen && page && view === "page" && preview?.pageId === page.id && (
+        <aside aria-label="Cite this source" className="w-96 shrink-0 overflow-y-auto bg-sand p-4">
+          <CitePreview key={preview.source.id} source={sources.get(preview.source.id) ?? preview.source} page={page} editorRef={editorRef} onDone={() => setPreview(null)} />
+        </aside>
+      )}
+      {sourcesOpen && page && page.type !== "programming" && view === "page" && preview?.pageId !== page.id && (
+        <SourcePanel
+          key={page.id}
+          page={page}
+          sources={sources}
+          userId={userId}
+          onAccept={page.type === "research" ? (source) => setPreview({ source, pageId: page.id }) : undefined}
+        />
+      )}
     </div>
   );
 }

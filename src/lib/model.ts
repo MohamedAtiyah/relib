@@ -1,7 +1,5 @@
-import { AsyncLocalStorage } from "node:async_hooks";
 import { createHash } from "node:crypto";
 import { z } from "zod";
-import demoCache from "../../seed/demo-cache.json";
 import { standIn } from "./standin";
 
 export type Role = "system" | "user" | "assistant";
@@ -12,47 +10,44 @@ type ChatOpts = {
   schema?: { name: string; schema: object }; // Meta documents json_schema output, not a plain JSON mode
   temperature?: number; // Meta advises leaving this unset for Muse Spark
   tag?: string; // labels token logs and stand-in routing
-  cacheKey?: string; // overrides the message hash for demo mode lookups
+  model?: "spark" | "code";
 };
 
-export class DemoMiss extends Error {}
+// Live AI is switched off on this deployment (DEMO_MODE=true).
+export class AiOff extends Error {}
 
-export type ModelMode = "demo" | "standin" | "meta";
+export type ModelMode = "off" | "standin" | "meta";
 
 export function liveMode(): ModelMode {
-  if (process.env.DEMO_MODE === "true") return "demo";
+  if (process.env.DEMO_MODE === "true") return "off";
   return process.env.META_API_KEY ? "meta" : "standin";
 }
 
-// Routes run each request inside a mode, so a signed-out visitor never spends credit.
-export const requestMode = new AsyncLocalStorage<ModelMode>();
+export const modelMode = liveMode;
 
-export const modelMode = (): ModelMode => requestMode.getStore() ?? liveMode();
+// Identical inputs cost one call per server instance.
+// shortcut: in-memory and unbounded per instance; move to the Neon cache table if memory grows
+const results = new Map<string, Promise<string>>();
 
-// Every result this process produced, so scripts/build-seed.ts can write the demo cache.
-export const recorded = new Map<string, string>();
-
-export async function chat(opts: ChatOpts): Promise<string> {
-  const key =
-    opts.cacheKey ??
-    createHash("sha256")
-      .update(JSON.stringify([opts.schema?.name, opts.messages]))
-      .digest("hex");
+export function chat(opts: ChatOpts): Promise<string> {
   const mode = modelMode();
-  if (mode === "demo") {
-    const hit = (demoCache as Record<string, string>)[key];
-    if (hit === undefined) throw new DemoMiss();
-    return hit;
-  }
-  const out = mode === "standin" ? standIn(opts.messages, opts.schema?.name) : await callMeta(opts);
-  recorded.set(key, out);
-  return out;
+  if (mode === "off") return Promise.reject(new AiOff());
+  if (mode === "standin") return Promise.resolve(standIn(opts.messages, opts.schema?.name));
+  const key = createHash("sha256").update(JSON.stringify([opts.model, opts.schema?.name, opts.messages])).digest("hex");
+  const hit = results.get(key);
+  if (hit) return hit;
+  const run = callMeta(opts);
+  if (results.size > 1000) results.clear();
+  results.set(key, run);
+  run.catch(() => results.delete(key)); // a failure must not stick
+  return run;
 }
 
 async function callMeta(opts: ChatOpts): Promise<string> {
   const base = process.env.META_API_BASE_URL || "https://api.meta.ai/v1";
   const body = {
-    model: process.env.META_MODEL_SPARK || "muse-spark-1.3",
+    // the code agent uses META_MODEL_CODE when the deployment sets one, otherwise Muse Spark
+    model: (opts.model === "code" && process.env.META_MODEL_CODE) || process.env.META_MODEL_SPARK || "muse-spark-1.3",
     messages: opts.messages,
     reasoning_effort: "low", // Muse Spark always reasons; "none" is a 400
     temperature: opts.temperature,

@@ -14,7 +14,11 @@ import {
 } from "lexical";
 import type { ReactNode } from "react";
 import type { Source } from "@/lib/schemas";
-import { PythonCell } from "./PythonCell";
+import type { CiteRef } from "@/lib/cite";
+import { CitationChip } from "./Citations";
+import type { Operation } from "@/lib/sympy";
+import { CodeCell, type CellData } from "./CodeCell";
+import { MathBlock } from "./MathBlock";
 
 export class CalloutNode extends ParagraphNode {
   static getType() {
@@ -149,29 +153,30 @@ export class SourceNode extends DecoratorNode<ReactNode> {
 
 export const $createSourceNode = (source: SourceData) => new SourceNode(source);
 
-type SerializedPython = SerializedLexicalNode & { code: string; output: string };
+type SerializedCell = SerializedLexicalNode & CellData;
 
-// A Python cell: the code and its last output are saved with the note.
-export class PythonNode extends DecoratorNode<ReactNode> {
-  __code: string;
-  __output: string;
+// A code cell. Its JSON type stays "python" from before it ran other languages, so saved pages still open.
+export class CodeCellNode extends DecoratorNode<ReactNode> {
+  __data: CellData;
 
-  constructor(code = "", output = "", key?: NodeKey) {
+  constructor(data: CellData = { code: "", output: "" }, key?: NodeKey) {
     super(key);
-    this.__code = code;
-    this.__output = output;
+    this.__data = data;
   }
   static getType() {
     return "python";
   }
-  static clone(node: PythonNode) {
-    return new PythonNode(node.__code, node.__output, node.__key);
+  static clone(node: CodeCellNode) {
+    return new CodeCellNode(node.__data, node.__key);
   }
-  static importJSON(json: SerializedPython) {
-    return new PythonNode(json.code, json.output);
+  static importJSON(json: SerializedCell) {
+    const data: Partial<SerializedCell> = { ...json };
+    delete data.type;
+    delete data.version;
+    return new CodeCellNode({ ...data, code: data.code ?? "", output: data.output ?? "" });
   }
-  exportJSON(): SerializedPython {
-    return { ...super.exportJSON(), code: this.__code, output: this.__output };
+  exportJSON(): SerializedCell {
+    return { ...super.exportJSON(), ...this.__data };
   }
   createDOM() {
     return document.createElement("div");
@@ -183,16 +188,111 @@ export class PythonNode extends DecoratorNode<ReactNode> {
     return false;
   }
   getTextContent() {
-    return `${this.__code}\n${this.__output}`;
+    return `${this.__data.code}\n${this.__data.output}`;
   }
-  set(code: string, output: string) {
+  patch(patch: Partial<CellData>) {
     const self = this.getWritable();
-    self.__code = code;
-    self.__output = output;
+    self.__data = { ...self.__data, ...patch };
   }
   decorate() {
-    return <PythonCell nodeKey={this.__key} code={this.__code} output={this.__output} />;
+    return <CodeCell nodeKey={this.__key} data={this.__data} />;
   }
 }
 
-export const $createPythonNode = () => new PythonNode();
+export const $createCodeCellNode = () => new CodeCellNode();
+
+type SerializedCitation = SerializedLexicalNode & { refs: CiteRef[] };
+
+// An inline citation: stores source ids and page locators; the text comes from the page's style when drawn.
+export class CitationNode extends DecoratorNode<ReactNode> {
+  __refs: CiteRef[];
+
+  constructor(refs: CiteRef[], key?: NodeKey) {
+    super(key);
+    this.__refs = refs;
+  }
+  static getType() {
+    return "citation";
+  }
+  static clone(node: CitationNode) {
+    return new CitationNode(node.__refs, node.__key);
+  }
+  static importJSON(json: SerializedCitation) {
+    return new CitationNode(json.refs);
+  }
+  exportJSON(): SerializedCitation {
+    return { ...super.exportJSON(), refs: this.__refs };
+  }
+  createDOM() {
+    return document.createElement("span");
+  }
+  updateDOM() {
+    return false;
+  }
+  isInline() {
+    return true;
+  }
+  getTextContent() {
+    return "";
+  }
+  setRefs(refs: CiteRef[]) {
+    this.getWritable().__refs = refs;
+  }
+  decorate() {
+    return <CitationChip nodeKey={this.__key} refs={this.__refs} />;
+  }
+}
+
+export const $createCitationNode = (refs: CiteRef[]) => new CitationNode(refs);
+export const $isCitationNode = (node: LexicalNode | null | undefined): node is CitationNode => node instanceof CitationNode;
+
+export type MathData = {
+  latex: string;
+  display: boolean;
+  solved?: { op: Operation; result: string }; // SymPy's answer, saved with the page
+};
+type SerializedMath = SerializedLexicalNode & MathData;
+
+// An equation stored as LaTeX: inline inside a line, or display on its own.
+export class MathNode extends DecoratorNode<ReactNode> {
+  __data: MathData;
+
+  constructor(data: MathData, key?: NodeKey) {
+    super(key);
+    this.__data = data;
+  }
+  static getType() {
+    return "math";
+  }
+  static clone(node: MathNode) {
+    return new MathNode(node.__data, node.__key);
+  }
+  static importJSON(json: SerializedMath) {
+    return new MathNode({ latex: json.latex ?? "", display: Boolean(json.display), solved: json.solved });
+  }
+  exportJSON(): SerializedMath {
+    return { ...super.exportJSON(), ...this.__data };
+  }
+  createDOM() {
+    return document.createElement(this.__data.display ? "div" : "span");
+  }
+  updateDOM() {
+    return false;
+  }
+  isInline() {
+    return !this.__data.display;
+  }
+  getTextContent() {
+    const tex = this.__data.latex;
+    return this.__data.display ? `\n${tex}\n` : tex;
+  }
+  patch(patch: Partial<MathData>) {
+    const self = this.getWritable();
+    self.__data = { ...self.__data, ...patch };
+  }
+  decorate() {
+    return <MathBlock nodeKey={this.__key} data={this.__data} />;
+  }
+}
+
+export const $createMathNode = (data: MathData) => new MathNode(data);

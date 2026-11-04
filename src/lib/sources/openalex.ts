@@ -8,7 +8,8 @@ type Work = {
   publication_year?: number | null;
   authorships?: { author?: { display_name?: string } }[];
   abstract_inverted_index?: Record<string, number[]> | null;
-  primary_location?: { landing_page_url?: string | null } | null;
+  primary_location?: { landing_page_url?: string | null; source?: { display_name?: string | null } | null } | null;
+  biblio?: { volume?: string | null; issue?: string | null; first_page?: string | null; last_page?: string | null } | null;
 };
 
 export function rebuildAbstract(index: Record<string, number[]>): string {
@@ -29,6 +30,11 @@ export function normalise(work: Work): Source | null {
     url,
     doi: work.doi?.replace("https://doi.org/", ""),
     origin: "openalex",
+    // citation fields exactly as OpenAlex holds them; missing ones stay missing
+    venue: work.primary_location?.source?.display_name ?? undefined,
+    volume: work.biblio?.volume ?? undefined,
+    issue: work.biblio?.issue ?? undefined,
+    pages: [work.biblio?.first_page, work.biblio?.last_page].filter(Boolean).join("–") || undefined,
   };
 }
 
@@ -38,7 +44,7 @@ export async function searchOpenAlex(query: string, limit = 10): Promise<Source[
     "search.semantic": query,
     filter: "has_abstract:true,language:en,type:article",
     "per-page": String(limit),
-    select: "id,doi,title,publication_year,authorships,abstract_inverted_index,primary_location",
+    select: "id,doi,title,publication_year,authorships,abstract_inverted_index,primary_location,biblio",
   });
   if (process.env.OPENALEX_MAILTO) params.set("mailto", process.env.OPENALEX_MAILTO);
   if (process.env.OPENALEX_API_KEY) params.set("api_key", process.env.OPENALEX_API_KEY);
@@ -46,4 +52,16 @@ export async function searchOpenAlex(query: string, limit = 10): Promise<Source[
   if (!res.ok) throw new Error(`OpenAlex ${res.status}`);
   const data: { results: Work[] } = await res.json();
   return data.results.flatMap((w) => normalise(w) ?? []);
+}
+
+export async function openAlexByDoi(doi: string): Promise<Source | null> {
+  const params = new URLSearchParams({ select: "id,doi,title,publication_year,authorships,abstract_inverted_index,primary_location,biblio" });
+  if (process.env.OPENALEX_MAILTO) params.set("mailto", process.env.OPENALEX_MAILTO);
+  if (process.env.OPENALEX_API_KEY) params.set("api_key", process.env.OPENALEX_API_KEY);
+  const res = await fetch(`https://api.openalex.org/works/doi:${encodeURIComponent(doi)}?${params}`, { signal: AbortSignal.timeout(10_000) });
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error(`OpenAlex ${res.status}`);
+  const work: Work = await res.json();
+  // a source the student added by hand is kept even without an abstract; the card then says so
+  return normalise({ ...work, abstract_inverted_index: work.abstract_inverted_index ?? { "(No abstract available.)": [0] } });
 }

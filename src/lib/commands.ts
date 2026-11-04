@@ -5,15 +5,12 @@ import { $createHeadingNode, $createQuoteNode } from "@lexical/rich-text";
 import { $setBlocksType } from "@lexical/selection";
 import { INSERT_TABLE_COMMAND } from "@lexical/table";
 import {
-  $createLineBreakNode,
   $createParagraphNode,
-  $createTextNode,
   $getSelection,
   $insertNodes,
   $isRangeSelection,
   type ElementNode,
   type LexicalEditor,
-  type LexicalNode,
 } from "lexical";
 import {
   Braces,
@@ -29,21 +26,23 @@ import {
   ListTree,
   Minus,
   Network,
+  NotebookPen,
   Quote,
-  Settings2,
+  Sigma,
+  SquareTerminal,
   Table,
   type LucideIcon,
 } from "lucide-react";
-import { $createCalloutNode, $createPythonNode, $createToggleNode } from "@/components/nodes";
-import { DEFAULT_PRESET } from "./db";
-import type { Preset } from "./schemas";
+import { OPEN_ON_MOUNT } from "@/components/MathBlock";
+import { $createCalloutNode, $createCodeCellNode, $createMathNode, $createToggleNode } from "@/components/nodes";
+import type { PageType } from "./schemas";
 
 export type SlashContext = {
   openPanels(): void;
   openNeurolib(): void;
-  openPreset(): void;
-  preset(): Preset | undefined;
-  pageTitle(): string;
+  newPage(type: PageType): void;
+  explain(text: string): void;
+  pageType: PageType;
 };
 
 export type SlashCommand = {
@@ -58,16 +57,6 @@ const block = (create: () => ElementNode) => () => {
   if ($isRangeSelection(selection)) $setBlocksType(selection, create);
 };
 
-// The title block from the saved preset: the page title and today's date fill in when the preset leaves them blank.
-function $titleBlock(preset: Preset, title: string) {
-  const fill: Record<string, string> = { title, date: new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }) };
-  const lines = [
-    ...preset.fields.map((f) => `${f.label}: ${f.value || fill[f.label.toLowerCase()] || ""}`),
-    `Citation style: ${preset.citationStyle}`,
-  ];
-  return $createCalloutNode().append(...lines.flatMap((line, i): LexicalNode[] => (i ? [$createLineBreakNode(), $createTextNode(line)] : [$createTextNode(line)])));
-}
-
 export const COMMANDS: SlashCommand[] = [
   { name: "h1", keywords: "heading title", icon: Heading1, run: block(() => $createHeadingNode("h1")) },
   { name: "h2", keywords: "heading subtitle", icon: Heading2, run: block(() => $createHeadingNode("h2")) },
@@ -79,9 +68,19 @@ export const COMMANDS: SlashCommand[] = [
   { name: "snippet", keywords: "code block monospace", icon: Braces, run: block($createCodeNode) },
   {
     name: "code",
-    keywords: "python run",
+    keywords: "python javascript typescript sql html run",
     icon: Code,
-    run: () => $insertNodes([$createPythonNode(), $createParagraphNode()]),
+    run: () => $insertNodes([$createCodeCellNode(), $createParagraphNode()]),
+  },
+  {
+    name: "math",
+    keywords: "equation formula latex",
+    icon: Sigma,
+    run() {
+      const math = $createMathNode({ latex: "", display: true });
+      OPEN_ON_MOUNT.add(math.getKey());
+      $insertNodes([math, $createParagraphNode()]);
+    },
   },
   { name: "divider", keywords: "rule line", icon: Minus, run: (e) => e.dispatchCommand(INSERT_HORIZONTAL_RULE_COMMAND, undefined) },
   { name: "callout", keywords: "note highlight", icon: Info, run: block($createCalloutNode) },
@@ -96,19 +95,9 @@ export const COMMANDS: SlashCommand[] = [
     },
   },
   { name: "table", keywords: "grid", icon: Table, run: (e) => e.dispatchCommand(INSERT_TABLE_COMMAND, { rows: "3", columns: "3" }) },
-  {
-    name: "research",
-    keywords: "paper template report preset",
-    icon: FileText,
-    run(_, ctx) {
-      const preset = ctx.preset() ?? DEFAULT_PRESET;
-      $insertNodes([
-        $titleBlock(preset, ctx.pageTitle()),
-        ...preset.sections.flatMap((title) => [$createHeadingNode("h2").append($createTextNode(title)), $createParagraphNode()]),
-      ]);
-      ctx.openPanels();
-    },
-  },
-  { name: "preset", keywords: "template title block sections citation", icon: Settings2, run: (_, ctx) => ctx.openPreset() },
+  // these make a new page of that type in the folder, so they work from any line
+  { name: "notes", keywords: "page lecture new", icon: NotebookPen, run: (_, ctx) => ctx.newPage("notes") },
+  { name: "research", keywords: "page paper essay new", icon: FileText, run: (_, ctx) => ctx.newPage("research") },
+  { name: "programming", keywords: "page project notebook new", icon: SquareTerminal, run: (_, ctx) => ctx.newPage("programming") },
   { name: "neurolib", keywords: "graph map bubbles", icon: Network, run: (_, ctx) => ctx.openNeurolib() },
 ];

@@ -13,8 +13,21 @@
   color-scheme: light;
 }
 
+/* Dark: explicit choice, or System when the OS is dark. The head script sets data-theme before paint. */
+:root[data-theme="dark"] {
+  --paper: #14161f;
+  --ink: #faf5eb;
+  --surface: #1e212c;
+  --sand: #262a38;
+  --hairline: #2e3240;
+  --muted: #a3a6b3;
+  --spark-ink: #f29a5a;
+  --spark-wash: #3a2415;
+  color-scheme: dark;
+}
+
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --paper: #14161f;
     --ink: #faf5eb;
     --surface: #1e212c;
@@ -39,6 +52,7 @@
   --color-spark-wash: var(--spark-wash);
   --font-sans: var(--font-inter);
   --font-display: var(--font-fraunces);
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
   --radius-card: 12px;
 }
 
@@ -46,6 +60,42 @@ body {
   background: var(--paper);
   color: var(--ink);
   font-family: var(--font-inter), system-ui, sans-serif;
+}
+
+/* Small caps labels and chips (design: 11px semibold, letter-spaced, muted; chips on sand with an orange dot) */
+.label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 999px;
+  background: var(--sand);
+  padding: 2px 10px;
+  font-size: 12px;
+}
+.chip::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--spark);
+}
+
+/* Code surfaces are dark in both themes */
+.code-surface {
+  --code-bg: #14161f;
+  --code-fg: #faf5eb;
+  --code-line: #2e3240;
+  --code-muted: #a3a6b3;
+  background: var(--code-bg);
+  color: var(--code-fg);
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
 }
 
 :focus-visible {
@@ -57,8 +107,8 @@ body {
 .rl-editor {
   outline: none;
   min-height: 50vh;
-  line-height: 1.7;
-  font-size: 16px;
+  line-height: 28px;
+  font-size: 18px;
   padding-bottom: 30vh;
 }
 .rl-editor p {
@@ -92,7 +142,7 @@ body {
 }
 .rl-editor code,
 .rl-code {
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
   font-size: 0.875em;
 }
 .rl-code {
@@ -211,3 +261,27 @@ body {
 .rl-strike {
   text-decoration: line-through;
 }
+
+/* Research references: hanging indent, as every pinned style asks */
+.references .csl-entry {
+  padding-left: 2em;
+  text-indent: -2em;
+  margin-bottom: 0.5em;
+}
+
+
+/* Syntax colours for code cells (dark surface in both themes) */
+.code-surface .hljs-keyword,
+.code-surface .hljs-built_in,
+.code-surface .hljs-selector-tag { color: #f29a5a; }
+.code-surface .hljs-string,
+.code-surface .hljs-attr,
+.code-surface .hljs-regexp { color: #a8d5a2; }
+.code-surface .hljs-number,
+.code-surface .hljs-literal { color: #e6c07b; }
+.code-surface .hljs-comment { color: #7d8191; font-style: italic; }
+.code-surface .hljs-title,
+.code-surface .hljs-title\.function_,
+.code-surface .hljs-name { color: #8fbcff; }
+.code-surface .hljs-meta,
+.code-surface .hljs-type { color: #c7a6ff; }
