@@ -128,3 +128,13 @@ alter table sources add column if not exists issue text;
 alter table sources add column if not exists pages text;
 alter table sources add column if not exists entered jsonb;
 alter table suggestions add column if not exists added_by text;
+
+-- one E2B sandbox per project; files live in Neon and are re-synced, so a lost sandbox loses nothing
+create table if not exists sandboxes (
+  owner_id text not null,
+  project_id text not null,
+  sandbox_id text not null,
+  ready boolean not null default false,
+  updated_at double precision not null,
+  primary key (owner_id, project_id)
+);

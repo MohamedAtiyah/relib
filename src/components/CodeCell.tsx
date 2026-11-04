@@ -1,12 +1,14 @@
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { $getNodeByKey, type NodeKey } from "lexical";
-import { Play } from "lucide-react";
-import { useMemo, useState } from "react";
+import { Play, Square } from "lucide-react";
+import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { errorText, post } from "@/lib/api";
+import { CLOUD_RUN, runInCloud } from "@/lib/cloud";
 import { runJs } from "@/lib/jsrun";
 import { detectLanguage, highlightCode, LANGUAGES, RUNTIME, type Language } from "@/lib/lang";
 import { runPython, type RunResult } from "@/lib/python";
 import { checkSchema, parseSchema, runSql, type SqlTable } from "@/lib/sqlrun";
+import { PageIdContext } from "./Editor";
 import type { CodeCellNode } from "./nodes";
 import { SchemaDiagram } from "./SchemaDiagram";
 
@@ -27,7 +29,8 @@ function diffLines(before: string[], after: string[]) {
   const n = before.length;
   const m = after.length;
   const lcs = Array.from({ length: n + 1 }, () => new Array<number>(m + 1).fill(0));
-  for (let i = n - 1; i >= 0; i--) for (let j = m - 1; j >= 0; j--) lcs[i][j] = before[i] === after[j] ? lcs[i + 1][j + 1] + 1 : Math.max(lcs[i + 1][j], lcs[i][j + 1]);
+  for (let i = n - 1; i >= 0; i--)
+    for (let j = m - 1; j >= 0; j--) lcs[i][j] = before[i] === after[j] ? lcs[i + 1][j + 1] + 1 : Math.max(lcs[i + 1][j], lcs[i][j + 1]);
   const out: { kind: " " | "-" | "+"; text: string }[] = [];
   let i = 0;
   let j = 0;
@@ -51,6 +54,16 @@ export function CodeCell({ nodeKey, data }: { nodeKey: NodeKey; data: CellData }
   const [help, setHelp] = useState<string | null>(null);
   const [fix, setFix] = useState<{ explanation: string; code: string } | null>(null);
   const [asking, setAsking] = useState(false);
+  const page = useContext(PageIdContext);
+  const stopper = useRef<AbortController | null>(null);
+  const [seconds, setSeconds] = useState(0);
+
+  useEffect(() => {
+    if (!running) return;
+    const started = Date.now();
+    const timer = setInterval(() => setSeconds(Math.round((Date.now() - started) / 1000)), 500);
+    return () => clearInterval(timer);
+  }, [running]);
   const language: Language = data.language ?? "python";
   const runtime = RUNTIME[language];
   const design = language === "sql" && data.sqlMode === "design";
@@ -67,8 +80,29 @@ export function CodeCell({ nodeKey, data }: { nodeKey: NodeKey; data: CellData }
     setHelp(null);
     setFix(null);
     let result: RunResult & { tables?: SqlTable[] } = { output: "" };
-    if (runtime === "pyodide") result = await runPython(data.code, editor.getKey());
-    else if (runtime === "js") result = await runJs(data.code, language === "typescript");
+    if (runtime === "pyodide") result = await runPython(data.code, page);
+    else if (runtime === "cloud") {
+      // compiled languages run in the page's cloud sandbox; output streams in as it arrives
+      const { file, command } = CLOUD_RUN[language];
+      let output = "";
+      let exit = 0;
+      stopper.current = new AbortController();
+      await runInCloud(
+        `page:${page}`,
+        command,
+        [{ path: file, content: data.code }],
+        (e) => {
+          if (e.type === "exit") exit = e.code;
+          else {
+            output += e.type === "info" || e.type === "error" ? `[${e.text}]\n` : e.text;
+            if (e.type === "error") exit = -1;
+          }
+          save({ output, error: false, images: undefined, tables: undefined, log: undefined });
+        },
+        stopper.current.signal,
+      );
+      result = { output: output || "(no output)", error: exit !== 0 };
+    } else if (runtime === "js") result = await runJs(data.code, language === "typescript");
     else if (runtime === "sql" && !design) {
       const { tables, error } = await runSql(data.code);
       result = { output: error ?? (tables.length ? "" : "Done. No rows returned."), tables, error: Boolean(error) };
@@ -129,14 +163,20 @@ export function CodeCell({ nodeKey, data }: { nodeKey: NodeKey; data: CellData }
           </span>
         )}
         <span className="ml-auto" />
-        {runtime === "cloud" ? (
-          <span>Needs the cloud runtime</span>
-        ) : (
-          runtime !== "preview" && (
-            <button onClick={run} disabled={running || !data.code.trim()} className="flex items-center gap-1 rounded-full bg-spark px-2.5 py-0.5 text-[#14161f] disabled:opacity-50">
-              <Play size={12} strokeWidth={1.5} /> {running ? "Running…" : design ? "Check" : "Run"}
-            </button>
-          )
+        {runtime === "cloud" && <span>Cloud sandbox</span>}
+        {running && runtime === "cloud" && (
+          <button onClick={() => stopper.current?.abort()} className="flex items-center gap-1 rounded-full border border-[var(--code-muted)] px-2.5 py-0.5">
+            <Square size={10} strokeWidth={1.5} /> Stop · {seconds}s
+          </button>
+        )}
+        {runtime !== "preview" && (
+          <button
+            onClick={run}
+            disabled={running || !data.code.trim()}
+            className="flex items-center gap-1 rounded-full bg-spark px-2.5 py-0.5 text-[#14161f] disabled:opacity-50"
+          >
+            <Play size={12} strokeWidth={1.5} /> {running ? "Running…" : design ? "Check" : "Run"}
+          </button>
         )}
       </div>
       <div className="flex max-h-[28rem] overflow-auto text-sm leading-6">
@@ -147,12 +187,16 @@ export function CodeCell({ nodeKey, data }: { nodeKey: NodeKey; data: CellData }
         </div>
         <div className="relative min-w-0 flex-1">
           {/* highlighted copy underneath; the textarea on top takes the typing */}
-          <pre aria-hidden="true" className="hljs pointer-events-none m-0 bg-transparent py-2 pr-3 whitespace-pre" dangerouslySetInnerHTML={{ __html: `${highlighted}\n` }} />
+          <pre
+            aria-hidden="true"
+            className="hljs pointer-events-none m-0 bg-transparent py-2 pr-3 whitespace-pre"
+            dangerouslySetInnerHTML={{ __html: `${highlighted}\n` }}
+          />
           <textarea
             value={data.code}
             onChange={(e) => edit(e.target.value)}
             onKeyDown={(e) => {
-              if (e.key === "Enter" && (e.metaKey || e.ctrlKey || e.shiftKey) && runtime !== "cloud") {
+              if (e.key === "Enter" && (e.metaKey || e.ctrlKey || e.shiftKey) && runtime !== "preview") {
                 e.preventDefault();
                 run();
               }
@@ -182,7 +226,9 @@ export function CodeCell({ nodeKey, data }: { nodeKey: NodeKey; data: CellData }
         <iframe
           title="Preview"
           sandbox="allow-scripts"
-          srcDoc={language === "css" ? `<style>${data.code}</style><h1>Heading</h1><p>Paragraph with <a href="#">a link</a>.</p><button>Button</button>` : data.code}
+          srcDoc={
+            language === "css" ? `<style>${data.code}</style><h1>Heading</h1><p>Paragraph with <a href="#">a link</a>.</p><button>Button</button>` : data.code
+          }
           className="h-64 w-full border-t border-[var(--code-line)] bg-white"
         />
       )}
@@ -220,17 +266,21 @@ export function CodeCell({ nodeKey, data }: { nodeKey: NodeKey; data: CellData }
           ))}
         </div>
       ) : null}
-      {(data.error || runtime === "cloud") && data.code.trim() && (
+      {data.error && data.code.trim() && !running && (
         <div className="space-y-2 border-t border-[var(--code-line)] px-3 py-2 font-sans text-xs">
           <div className="flex gap-2">
-            <button onClick={() => ask("explain")} disabled={asking} className="rounded-full border border-[var(--code-muted)] px-2.5 py-0.5 disabled:opacity-50">
-              {data.error ? "Explain this error" : "Explain this code"}
+            <button
+              onClick={() => ask("explain")}
+              disabled={asking}
+              className="rounded-full border border-[var(--code-muted)] px-2.5 py-0.5 disabled:opacity-50"
+            >
+              Explain this error
             </button>
-            {data.error && (
+            {
               <button onClick={() => ask("fix")} disabled={asking} className="rounded-full border border-[var(--code-muted)] px-2.5 py-0.5 disabled:opacity-50">
                 Show a fix
               </button>
-            )}
+            }
             {asking && <span className="text-[var(--code-muted)]">Reading your code…</span>}
           </div>
           {help && <p className="whitespace-pre-wrap text-[var(--code-fg)]">{help}</p>}

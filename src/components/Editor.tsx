@@ -22,17 +22,8 @@ import { TablePlugin } from "@lexical/react/LexicalTablePlugin";
 import { HeadingNode, QuoteNode } from "@lexical/rich-text";
 import { TableCellNode, TableNode, TableRowNode } from "@lexical/table";
 import { $findMatchingParent } from "@lexical/utils";
-import {
-  $getRoot,
-  $getSelection,
-  $isRangeSelection,
-  COMMAND_PRIORITY_LOW,
-  KEY_ENTER_COMMAND,
-  TextNode,
-  type EditorState,
-  type LexicalEditor,
-} from "lexical";
-import { useEffect, useRef, type RefObject } from "react";
+import { $getRoot, $getSelection, $isRangeSelection, COMMAND_PRIORITY_LOW, KEY_ENTER_COMMAND, TextNode, type EditorState, type LexicalEditor } from "lexical";
+import { createContext, useEffect, useRef, type RefObject } from "react";
 import type { SlashContext } from "@/lib/commands";
 import { db } from "@/lib/db";
 import type { Page, Source } from "@/lib/schemas";
@@ -159,59 +150,50 @@ function ToggleKeyPlugin() {
   return null;
 }
 
-export function Editor({
-  page,
-  ctx,
-  sources,
-  editorRef,
-}: {
-  page: Page;
-  ctx: SlashContext;
-  sources: Source[];
-  editorRef?: RefObject<LexicalEditor | null>;
-}) {
+// Which page a code cell belongs to: its Python session and cloud sandbox are per page.
+export const PageIdContext = createContext("default");
+
+export function Editor({ page, ctx, sources, editorRef }: { page: Page; ctx: SlashContext; sources: Source[]; editorRef?: RefObject<LexicalEditor | null> }) {
   return (
-    <LexicalComposer
-      initialConfig={{
-        namespace: "relib",
-        theme,
-        nodes,
-        editorState: page.editorState || undefined,
-        onError: (error) => {
-          throw error;
-        },
-      }}
-    >
-      <div className="relative">
-        <RichTextPlugin
-          contentEditable={
-            <ContentEditable
-              className="rl-editor"
-              aria-label="Notes"
-              aria-placeholder="Write, or press / for commands"
-              placeholder={
-                <p className="pointer-events-none absolute top-0 left-0 mt-[0.35em] text-muted">
-                  Write, or press / for commands
-                </p>
-              }
-            />
-          }
-          ErrorBoundary={LexicalErrorBoundary}
-        />
-      </div>
-      <HistoryPlugin />
-      <ListPlugin />
-      <CheckListPlugin />
-      <LinkPlugin />
-      <TablePlugin />
-      <HorizontalRulePlugin />
-      <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
-      <SlashMenu ctx={ctx} sources={sources} />
-      <SelectionMenu onExplain={ctx.explain} />
-      <ToggleKeyPlugin />
-      <MathTriggerPlugin />
-      <SavePlugin pageId={page.id} />
-      {editorRef && <EditorRefPlugin editorRef={editorRef} />}
-    </LexicalComposer>
+    <PageIdContext.Provider value={page.id}>
+      <LexicalComposer
+        initialConfig={{
+          namespace: "relib",
+          theme,
+          nodes,
+          editorState: page.editorState || undefined,
+          onError: (error) => {
+            throw error;
+          },
+        }}
+      >
+        <div className="relative">
+          <RichTextPlugin
+            contentEditable={
+              <ContentEditable
+                className="rl-editor"
+                aria-label="Notes"
+                aria-placeholder="Write, or press / for commands"
+                placeholder={<p className="pointer-events-none absolute top-0 left-0 mt-[0.35em] text-muted">Write, or press / for commands</p>}
+              />
+            }
+            ErrorBoundary={LexicalErrorBoundary}
+          />
+        </div>
+        <HistoryPlugin />
+        <ListPlugin />
+        <CheckListPlugin />
+        <LinkPlugin />
+        <TablePlugin />
+        <HorizontalRulePlugin />
+        <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
+        <SlashMenu ctx={ctx} sources={sources} />
+        <SelectionMenu onExplain={ctx.explain} />
+        <ToggleKeyPlugin />
+        <MathTriggerPlugin />
+        <SavePlugin pageId={page.id} />
+        {editorRef && <EditorRefPlugin editorRef={editorRef} />}
+      </LexicalComposer>
+    </PageIdContext.Provider>
   );
 }
